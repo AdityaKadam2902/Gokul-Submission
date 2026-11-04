@@ -1,0 +1,18 @@
+{
+  "id": "F3",
+  "label": "Contact page archetype",
+  "synthetic": true,
+  "invented_data": true,
+  "not_a_live_scrape": true,
+  "archetype": "contact",
+  "reference_archetype": "Generic practice contact page with a multi-scope opening-hours table.",
+  "reference_url_note": "Register row S1 structural reference only; content 100% invented.",
+  "intended_fields": ["organisation_name", "public_address", "public_phone", "public_email", "opening_hours_clinic", "opening_hours_pathology", "opening_hours_reception"],
+  "edge_cases": [
+    "Multi-scope hours table: clinic hours ≠ pathology collection hours ≠ reception hours; must never be compared as one field (DECISION_LOG D11).",
+    "External booking link (example booking service) is present but must NOT be collected as practice website.",
+    "After-hours note is a phone service, not clinic opening hours (scope trap)."
+  ],
+  "synthesis_rationale": "Primary scope-classification and business-contact-rule edge case page; hours per scope plus contact fields plus one off-scope external link.",
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Contact — Alara Park Medical Practice</title></head><body><h1>Contact us</h1><main><h2>Address</h2><p>45 Paperbark Lane, Cassandra Heights QLD 4444 (entry via Palm Court)</p><h2>Phone and email</h2><p>Practice phone: (07) 5550 0100</p><p>Practice email: reception@alara-park.example.com</p><p>Pathology collection enquiries are handled by the collector at the premises, not by this practice.</p><h2>Opening hours</h2><table border=\"1\"><caption>Please note: each row below is a different service with different hours.</caption><thead><tr><th>Service</th><th>Day</th><th>Hours</th></tr></thead><tbody><tr><td>Clinic consultations</td><td>Monday</td><td>7:00 AM – 2:00 PM</td></tr><tr><td>Clinic consultations</td><td>Tuesday</td><td>7:00 AM – 2:00 PM</td></tr><tr><td>Clinic consultations</td><td>Wednesday</td><td>7:00 AM – 5:00 PM</td></tr><tr><td>Clinic consultations</td><td>Thursday</td><td>7:00 AM – 5:00 PM</td></tr><tr><td>Clinic consultations</td><td>Friday</td><td>7:00 AM – 4:00 PM</td></tr><tr><td>Clinic consultations</td><td>Saturday</td><td>8:00 AM – 12:00 PM</td></tr><tr><td>Clinic consultations</td><td>Sunday</td><td>Closed</td></tr><tr><td>Pathology collection</td><td>Monday – Friday</td><td>8:00 AM – 10:00 AM</td></tr><tr><td>Pathology collection</td><td>Saturday</td><td>Closed</td></tr><tr><td>Reception desk</td><td>Monday – Friday</td><td>6:30 AM – 6:00 PM</td></tr></tbody></table><p>After-hours medical problems: phone the after-hours GP service on (07) 5550 0900. This is a separate service and not part of clinic opening hours.</p><h2>Bookings</h2><p>Consultation bookings are made via our external booking provider: <a href=\"https://appointments.example-booking.com/alara-park\">online booking page</a>.</p></main></body></html>"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "F2",
+  "label": "Services page archetype",
+  "synthetic": true,
+  "invented_data": true,
+  "not_a_live_scrape": true,
+  "archetype": "services",
+  "reference_archetype": "Generic practice services page with service categories as headings and short descriptions.",
+  "reference_url_note": "Register row S1 structural reference only; content 100% invented.",
+  "intended_fields": ["service_names", "service_categories"],
+  "edge_cases": ["Services grouped under category headings (heading chain matters).", "One service (telehealth) has eligibility constraints that must stay as published wording without interpretation."],
+  "synthesis_rationale": "Exercises service extraction with heading-based categorisation and qualification wording that must not be paraphrased.",
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Services — Alara Park Medical Practice</title></head><body><h1>Services</h1><main><h2>General Practice</h2><ul><li>General consultations (by appointment)</li><li>Chronic disease management plans</li><li>Annual health assessments (eligible patients)</li><li>Minor procedures: wound care, skin lesion removal</li></ul><h2>Telehealth</h2><p>Telehealth consultations are available to patients who attended in person within the last twelve months. Telehealth availability depends on practitioner rostering and is confirmed at booking time.</p><h2>Pathology collection</h2><p>An independent pathology collector attends our premises for specimen collection ordered by your doctor. Collection hours are listed on our contact page.</p></main></body></html>"
+}

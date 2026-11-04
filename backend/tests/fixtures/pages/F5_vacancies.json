@@ -1,0 +1,18 @@
+{
+  "id": "F5",
+  "label": "Vacancies page archetype",
+  "synthetic": true,
+  "invented_data": true,
+  "not_a_live_scrape": true,
+  "archetype": "vacancies",
+  "reference_archetype": "Generic practice vacancies page listing doctor/nurse opportunities with realistic wording.",
+  "reference_url_note": "Register row S1 structural reference only; content 100% invented.",
+  "intended_fields": ["vacancy_title", "vacancy_role_category", "vacancy_public_wording", "vacancy_contact_channel"],
+  "edge_cases": [
+    "Doctor vacancy uses 'Immediate start' — wording shows value with publication context, NOT proof of live availability (no vacancy date anywhere on page).",
+    "Nurse vacancy lists role category (RN) with published qualification wording ('Full AHPRA registration'), which must be kept as published text.",
+    "One entry explicitly says applications are closed — negative case so the reviewer sees a clear non-candidate."
+  ],
+  "synthesis_rationale": "Provides the doctor/nurse vacancy extraction archetype with status-ambiguity and role-category-classification cases.",
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Vacancies — Alara Park Medical Practice</title></head><body><h1>Work with us</h1><main><h2>General Practitioner — Immediate start</h2><p>We are seeking a VR-qualified General Practitioner for our Cassandra Heights practice. Flexible sessional arrangements; on-site support and existing patient panel. Immediate start available for the right candidate.</p><p>To apply, email your CV to practice.jobs@alara-park.example.com; enquiries by phone to the practice manager on (07) 5550 0100 only (recruitment enquiries, not clinical).</p><p>Applicants must hold current AHPRA registration.</p><h2>Registered Nurse (RN) — Casual pool</h2><p>Registered Nurses are wanted for a casual pool covering clinic days and Saturday mornings. You must be AHPRA-registered with demonstrated immunisation experience.</p><p>Apply per the address above.</p><h2>Reception — applications closed</h2><p>The December reception intake has closed. We thank all applicants and will not receive further CVs for this round.</p><p>We do not collect applications through third-party portals.</p></main></body></html>"
+}

@@ -1,0 +1,50 @@
+# PracticeSignal — .gitignore (M0)
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# --- Python runtime data ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- SQLite / runtime data (never in Git) ---
+*.db
+*.sqlite
+*.sqlite3
+backend/data/
+data/
+*.db-journal
+*.db-wal
+*.db-shm
+
+# --- Raw downloaded page content (never in Git; D15) ---
+raw_pages/
+captures/
+snapshots_html/
+
+# --- Node / frontend build ---
+node_modules/
+frontend/dist/
+frontend/.vite/
+coverage/
+*.log
+
+# --- OS noise ---
+.DS_Store
+Thumbs.db
+
+# NOTE: backend/tests/fixtures/ is intentionally NOT ignored — it holds the
+# synthetic fixture corpus (invented data, D15/D17).

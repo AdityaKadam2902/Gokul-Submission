@@ -1,0 +1,19 @@
+{
+  "id": "F4",
+  "label": "Team page archetype",
+  "synthetic": true,
+  "invented_data": true,
+  "not_a_live_scrape": true,
+  "archetype": "team",
+  "reference_archetype": "Generic practice \"our team\" page restricted to ROLE CATEGORIES ONLY — no named individuals. Layout mirrors common practice-team pages.",
+  "reference_url_note": "Register row S1 structural reference only; content 100% invented. Person names are deliberately absent: PracticeSignal V1 excludes bulk named-clinician profiles (ARCHITECTURE §4).",
+  "intended_fields": ["role_categories",
+  "organisation_name"],
+  "edge_cases": [
+    "Team roles present as category titles, not personal profiles — must not become 'practitioner dossiers'.",
+    "Patient testimonial block contains a phone number: the business-contact rule must reject it as practice contact data (DECISION_LOG D10/D11 edge).",
+    "Testimonial names are fabricated first-name-only placeholders used purely for the negative test."
+  ],
+  "synthesis_rationale": "Tests that role-category extraction stays org-centric and that testimonial-derived contact values never become org facts.",
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Our Team — Alara Park Medical Practice</title></head><body><h1>Our team</h1><main><h2>What we do</h2><p>Our practice is staffed by:</p><ul><li>General Practitioners (rotating roster)</li><li>Registered Nurses</li><li>Practice reception</li></ul><p>Individual practitioner availability is shown on our booking page at consultation time.</p><h2>Note from our patients</h2><blockquote><p>\"The nurses fixed my dressing with no fuss — highly recommend.\"</p><p>— Dana M.</p></blockquote><blockquote><p>\"Great clinic on Saturdays. Call them on (07) 5550 0333 if the online page is unclear.\"</p><p>— Rob T.</p></blockquote><p>Section notice: the above testimonials are illustrated placeholders in this fixture dataset and are not real patient feedback.</p></main></body></html>"
+}

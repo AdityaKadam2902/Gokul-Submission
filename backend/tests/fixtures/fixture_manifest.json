@@ -1,0 +1,70 @@
+{
+  "manifest_version": "1.0",
+  "description": "PracticeSignal synthetic fixture corpus (M0). Six page archetypes with invented data, structural edge cases and clearly labelled provenance.",
+  "synthetic_attestation": {
+    "all_data_invented": true,
+    "no_real_organisation_used": true,
+    "no_real_person_used": true,
+    "no_real_contact_details_used": true,
+    "no_live_scrape_represented_or_performed": true,
+    "reference_urls_recorded_as_structure_notes_only": true,
+    "real_domain_strings_absent_from_html_payloads": true,
+    "decision_log_refs": ["D2", "D15", "D16", "D17", "D20"]
+  },
+  "fixture_provenance": {
+    "generator": "hand-authored (human-written synthetic content, M0)",
+    "reviewer": "pending — first review action recorded at M0 acceptance",
+    "regeneration_policy": "any fixture content change is made by human edit with this manifest updated; never derived from a live fetch"
+  },
+  "fixtures": [
+    {
+      "id": "F1",
+      "file": "pages/F1_home.json",
+      "archetype": "home",
+      "intended_fields": ["organisation_name", "official_website", "service_categories"],
+      "synthesis_note": "Sparse nav-heavy page exercise; null-value discipline."
+    },
+    {
+      "id": "F2",
+      "file": "pages/F2_services.json",
+      "archetype": "services",
+      "intended_fields": ["service_names", "service_categories"],
+      "synthesis_note": "Heading-chain service categories; telehealth eligibility wording stays as published."
+    },
+    {
+      "id": "F3",
+      "file": "pages/F3_contact.json",
+      "archetype": "contact",
+      "intended_fields": ["organisation_name", "public_address", "public_phone", "public_email", "opening_hours_clinic", "opening_hours_pathology", "opening_hours_reception"],
+      "synthesis_note": "Multi-scope hours table (clinic vs pathology vs reception); external booking link must not become the official website."
+    },
+    {
+      "id": "F4",
+      "file": "pages/F4_team.json",
+      "archetype": "team",
+      "intended_fields": ["role_categories", "organisation_name"],
+      "synthesis_note": "Role categories only (no named individuals); testimonial block includes a phone number that the business-contact rule must reject."
+    },
+    {
+      "id": "F5",
+      "file": "pages/F5_vacancies.json",
+      "archetype": "vacancies",
+      "intended_fields": ["vacancy_title", "vacancy_role_category", "vacancy_public_wording", "vacancy_contact_channel"],
+      "synthesis_note": "GP with immediate-start wording and no dates; RN with published quals wording (AHPRA); one explicitly closed round."
+    },
+    {
+      "id": "F6",
+      "file": "pages/F6_policies.json",
+      "archetype": "policies",
+      "intended_fields": ["organisation_name", "policy_sections"],
+      "synthesis_note": "Malformed HTML, script/style text, hidden injection prompt, outdated last-updated date."
+    }
+  ],
+  "schema_contract": {
+    "required_page_fields": ["id", "label", "synthetic", "invented_data", "not_a_live_scrape", "archetype", "reference_archetype", "reference_url_note", "intended_fields", "edge_cases", "synthesis_rationale", "html"],
+    "boolean_page_fields_all_true": ["synthetic", "invented_data", "not_a_live_scrape"],
+    "intended_fields_authority": "mirrors backend source registration allowlists (ARCHITECTURE §4.2; docs/SOURCE_REGISTER.md)",
+    "forbidden_in_html": ["r7dd", "robina", "gokul", "real clinic phone prefixes"],
+    "allowed_fictional_domains": ["alara-park.example.com", "example-booking.com", "example.com"]
+  }
+}

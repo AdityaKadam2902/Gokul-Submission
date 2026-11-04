@@ -1,0 +1,14 @@
+{
+  "id": "F1",
+  "label": "Home page archetype",
+  "synthetic": true,
+  "invented_data": true,
+  "not_a_live_scrape": true,
+  "archetype": "home",
+  "reference_archetype": "Generic Australian GP practice home page; structure only. No real site content is stored here.",
+  "reference_url_note": "Register row S1 (r7dd.com) is the structural reference only; its content is NOT used. This file is 100% invented.",
+  "intended_fields": ["organisation_name", "official_website", "service_categories"],
+  "edge_cases": ["Sparse nav-heavy page: few extractable facts; model must return null, not invent."],
+  "synthesis_rationale": "Exercises the disciplined 'no invented facts' outcome on a page whose home page yields name/website but few other facts.",
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Alara Park Medical Practice — Homepage</title><style>.sr-only{position:absolute;left:-9999px}</style></head><body><header><div class=\"sr-only\">Skip to content</div><h1>Alara Park Medical Practice</h1><nav><a href=\"/\">Home</a><a href=\"/services/\">Services</a><a href=\"/contact/\">Contact</a><a href=\"/team/\">Team</a><a href=\"/vacancies/\">Vacancies</a><a href=\"/policies/\">Policies</a></nav></header><main><p>Welcome to Alara Park Medical Practice. We provide general medical services to the Cassandra Heights community, with pathology collection and allied health services nearby.</p><p><em>Note:</em> consultations are by appointment; walk-in availability varies daily and is shown at reception.</p></main><footer><p>Alara Park Medical Practice · 45 Paperbark Lane, Cassandra Heights QLD 4444 · Phone (07) 5550 0100</p></footer></body></html>"
+}
