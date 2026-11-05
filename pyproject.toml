@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "practicesignal-backend"
-version = "0.1.0.m0"
+version = "0.1.0.dev0"  # M0 baseline (PEP 440 valid; '0.1.0.m0' broke editable installs)
 description = "PracticeSignal — Healthcare Practice & Workforce Intelligence (local-first, zero-cost assessment prototype)"
 readme = "README.md"
 requires-python = ">=3.11"
