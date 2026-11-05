@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-from backend.app.db.orm import PageSnapshot, Source
+from backend.app.db.orm import Evidence, Fact, PageSnapshot, PromptRun, Source
 
 
 def _iso(dt: datetime | None) -> str | None:
@@ -79,3 +79,59 @@ def to_snapshot_read(snapshot: PageSnapshot, source: Source) -> dict:
         "source_label": source.label,
         "source_fixture": source.kind == "fixture",
     }
+
+
+def to_fact_read(fact: Fact) -> dict:
+    ev = fact.evidence
+    return {
+        "id": fact.id,
+        "snapshot_id": fact.snapshot_id,
+        "organisation_id": fact.organisation_id,
+        "field_key": fact.field_key,
+        "scope_key": fact.scope_key,
+        "raw_value": fact.raw_value,
+        "normalized_value": fact.normalized_value,
+        "timezone": fact.timezone,
+        "evidence_id": fact.evidence_id,
+        "evidence_quote": ev.quote if ev else None,
+        "evidence_start_offset": ev.start_offset if ev else None,
+        "evidence_end_offset": ev.end_offset if ev else None,
+        "model_tag": fact.model_tag,
+        "prompt_version": fact.prompt_version,
+        "via": fact.via,
+        "status": fact.status,
+        "needs_review_reason": fact.needs_review_reason,
+        "created_at": _iso(fact.created_at) or "",
+    }
+
+
+def to_evidence_read(evidence: Evidence) -> dict:
+    return {
+        "id": evidence.id,
+        "snapshot_id": evidence.snapshot_id,
+        "start_offset": evidence.start_offset,
+        "end_offset": evidence.end_offset,
+        "quote": evidence.quote,
+        "captured_at": _iso(evidence.captured_at) or "",
+        "match_algorithm_version": evidence.match_algorithm_version,
+    }
+
+
+def to_prompt_run_read(run: PromptRun) -> dict:
+    return {
+        "id": run.id,
+        "snapshot_id": run.snapshot_id,
+        "model_tag": run.model_tag,
+        "prompt_version": run.prompt_version,
+        "request_payload_hash": run.request_payload_hash,
+        "raw_response_ref": run.raw_response_ref,
+        "parse_ok": bool(run.parse_ok),
+        "validation_errors": list(run.validation_errors or []),
+        "latency_ms": float(run.latency_ms),
+        "prompt_eval_count": int(run.prompt_eval_count),
+        "eval_count": int(run.eval_count),
+        "tokens_per_second": float(run.tokens_per_second),
+        "evidence_checks": dict(run.evidence_checks or {}),
+        "created_at": _iso(run.created_at) or "",
+    }
+

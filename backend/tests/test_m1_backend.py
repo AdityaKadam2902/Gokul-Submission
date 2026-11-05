@@ -317,7 +317,8 @@ def test_create_all_is_idempotent(tmp_path):
     from sqlalchemy import inspect
 
     tables = sorted(inspect(engine).get_table_names())
-    assert tables == ["page_snapshots", "sources"]
+    assert set(["page_snapshots", "sources"]).issubset(set(tables))
+    assert {"evidence", "facts", "prompt_runs"}.issubset(set(tables))
     engine.dispose()
 
 

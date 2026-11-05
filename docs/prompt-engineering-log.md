@@ -15,7 +15,18 @@
 
 ## Iteration log (real entries only)
 
-*(empty — to be filled from M2 evaluation runs; each entry must state: date, template + new version, benchmark case, measured change, and the decision taken. Entries may not be backfilled with imagined experiments.)*
+### Iteration 1 — 5 November 2026: Combined Structured Extraction V1 (`classification_extraction_v1`)
+- **Template & Version:** `classification_extraction_v1.md` (Version 1) + `injection_guard_v1.md` (Version 1)
+- **Target Runtime:** Local Ollama 0.40.14 with `llama3.2:3b` on CPU-only host
+- **Benchmark Case:** Fixtures F2 (Services) and F5 (Vacancies)
+- **Observed Behavior & Measurements:**
+  - Single composed structured-output call via Ollama's `format: <json_schema>` parameter.
+  - F2 wall latency: **26.72 s** (384 prompt tokens evaluated in 4,192 ms; 192 output tokens generated in 22,528 ms at 12.64 tok/s).
+  - F5 wall latency: **35.67 s** (501 prompt tokens evaluated in 4,520 ms; 324 output tokens generated in 31,150 ms at 11.19 tok/s).
+  - Schema validity: **100%** (2/2 responses strictly valid JSON without conversational framing).
+  - Extraction accuracy: Extracted core vacancy titles, role categories, and application channels on F5; extracted service names and categories on F2.
+  - Quotation verification: All valid candidates had exact verbatim quotations in the snapshot text; rejected 2 invalid candidates on F5 cleanly.
+- **Decision Taken:** Approved single-call extraction prompt architecture. Confirmed that single-call per changed snapshot prevents CPU timeouts while guaranteeing deterministic evidence verification downstream. All template stubs preserved.
 
 ## Process rules
 

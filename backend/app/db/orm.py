@@ -77,9 +77,105 @@ class PageSnapshot(Base):
     headings: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
 
     source: Mapped[Source] = relationship(back_populates="snapshots")
+    facts: Mapped[list["Fact"]] = relationship(
+        back_populates="snapshot",
+        cascade="all, delete-orphan",
+        order_by="Fact.id.asc()",
+    )
+    evidence_items: Mapped[list["Evidence"]] = relationship(
+        back_populates="snapshot",
+        cascade="all, delete-orphan",
+        order_by="Evidence.id.asc()",
+    )
+    prompt_runs: Mapped[list["PromptRun"]] = relationship(
+        back_populates="snapshot",
+        cascade="all, delete-orphan",
+        order_by="PromptRun.id.desc()",
+    )
 
     __table_args__ = (
         Index("ix_page_snapshots_source_id", "source_id"),
         Index("ix_page_snapshots_content_hash", "content_hash"),
         UniqueConstraint("source_id", "content_hash", name="uq_snapshot_source_hash"),
     )
+
+
+class Evidence(Base):
+    """Immutable excerpt citation linking a candidate fact to exact snapshot text."""
+
+    __tablename__ = "evidence"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    snapshot_id: Mapped[int] = mapped_column(ForeignKey("page_snapshots.id", ondelete="CASCADE"), nullable=False)
+    start_offset: Mapped[int] = mapped_column(Integer, nullable=False)
+    end_offset: Mapped[int] = mapped_column(Integer, nullable=False)
+    quote: Mapped[str] = mapped_column(Text, nullable=False)
+    captured_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, nullable=False)
+    match_algorithm_version: Mapped[str] = mapped_column(String(64), nullable=False, default="py_subslice_v1")
+
+    snapshot: Mapped[PageSnapshot] = relationship(back_populates="evidence_items")
+    facts: Mapped[list["Fact"]] = relationship(back_populates="evidence")
+
+    __table_args__ = (
+        Index("ix_evidence_snapshot_id", "snapshot_id"),
+    )
+
+
+class Fact(Base):
+    """One candidate fact extracted from a page snapshot (ARCHITECTURE §6.3)."""
+
+    __tablename__ = "facts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    organisation_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    snapshot_id: Mapped[int] = mapped_column(ForeignKey("page_snapshots.id", ondelete="CASCADE"), nullable=False)
+    field_key: Mapped[str] = mapped_column(String(64), nullable=False)
+    scope_key: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    raw_value: Mapped[str] = mapped_column(Text, nullable=False)
+    normalized_value: Mapped[str | None] = mapped_column(Text, nullable=True)
+    timezone: Mapped[str] = mapped_column(String(64), default="Australia/Brisbane", nullable=False)
+    evidence_id: Mapped[int | None] = mapped_column(ForeignKey("evidence.id", ondelete="SET NULL"), nullable=True)
+    model_tag: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    prompt_version: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    via: Mapped[str] = mapped_column(String(32), default="ai_extraction", nullable=False)
+    status: Mapped[str] = mapped_column(String(32), default="candidate", nullable=False)
+    needs_review_reason: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, nullable=False)
+
+    snapshot: Mapped[PageSnapshot] = relationship(back_populates="facts")
+    evidence: Mapped[Evidence | None] = relationship(back_populates="facts")
+
+    __table_args__ = (
+        Index("ix_facts_snapshot_id", "snapshot_id"),
+        Index("ix_facts_field_key", "field_key"),
+        Index("ix_facts_status", "status"),
+    )
+
+
+class PromptRun(Base):
+    """Audit of every AI inference call regardless of outcome (ARCHITECTURE §6.3)."""
+
+    __tablename__ = "prompt_runs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    snapshot_id: Mapped[int] = mapped_column(ForeignKey("page_snapshots.id", ondelete="CASCADE"), nullable=False)
+    model_tag: Mapped[str] = mapped_column(String(64), nullable=False)
+    prompt_version: Mapped[str] = mapped_column(String(64), nullable=False)
+    request_payload_hash: Mapped[str] = mapped_column(String(64), nullable=False)
+    raw_response_ref: Mapped[str] = mapped_column(Text, nullable=False)
+    parse_ok: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    validation_errors: Mapped[list] = mapped_column(JSON, default=list, nullable=False)
+    latency_ms: Mapped[float] = mapped_column(Integer, default=0, nullable=False)
+    prompt_eval_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    eval_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    tokens_per_second: Mapped[float] = mapped_column(Integer, default=0, nullable=False)
+    evidence_checks: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, nullable=False)
+
+    snapshot: Mapped[PageSnapshot] = relationship(back_populates="prompt_runs")
+
+    __table_args__ = (
+        Index("ix_prompt_runs_snapshot_id", "snapshot_id"),
+        Index("ix_prompt_runs_request_hash", "request_payload_hash"),
+    )
+

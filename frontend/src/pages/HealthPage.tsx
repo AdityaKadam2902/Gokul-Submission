@@ -55,12 +55,21 @@ export function HealthPage() {
               <div className="v">{health.database_ok ? 'reachable' : 'ERROR'}</div>
               <div className="s small mono">{health.database_path}</div>
             </div>
+            <div className="stat-card">
+              <div className="k">Local Ollama AI</div>
+              <div className="v" style={{ color: health.ollama_ok ? 'var(--ok)' : 'var(--warn)' }}>
+                {health.ollama_ok ? 'Ready' : 'Offline'}
+              </div>
+              <div className="s small mono">llama3.2:3b</div>
+            </div>
           </div>
           <Panel title="Runtime components" actions={<span className="muted small">checked {formatTimestamp(checkedAt)}</span>}>
             <dl className="kv">
               <dt>Ollama (AI runtime)</dt>
               <dd>
-                <Badge kind="neutral">configured for M2</Badge>{' '}
+                <Badge kind={health.ollama_ok ? 'ok' : 'blocked'}>
+                  {health.ollama_ok ? 'operational' : 'unavailable'}
+                </Badge>{' '}
                 <span className="small">{health.ollama}</span>
               </dd>
               <dt>Robots tool</dt>
@@ -69,9 +78,10 @@ export function HealthPage() {
           </Panel>
           <Panel title="Milestone posture">
             <ul className="small" style={{ margin: 0, paddingLeft: 18, color: 'var(--text-2)' }}>
-              <li>M1 performs <strong>no outbound network access</strong> — ingestion runs on ingested synthetic fixtures only.</li>
-              <li>Ins doingestions are policy-gated server-side; arejected sources never reach any fetch stage.</li>
-              <li>All timestamps are timezone-explicit (ISO-8601, UTC-annotated). Default timezone: Australia/Brisbane.</li>
+              <li><strong>Zero-Cost &amp; Local-First:</strong> Local Ollama runtime (<code>llama3.2:3b</code>) performs all structured inference without cloud APIs or fees.</li>
+              <li><strong>Evidence-Backed Extraction:</strong> Candidate facts require exact quotation verification and Python-calculated offsets before persistence.</li>
+              <li><strong>Candidate-Only Integrity:</strong> Model output is always candidate; human reviewers hold exclusive approval authority (M4).</li>
+              <li><strong>Deterministic Scoping &amp; Allowlist:</strong> Headings define operational scope; off-allowlist and testimonial contacts are rejected.</li>
             </ul>
           </Panel>
         </>

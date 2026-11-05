@@ -7,6 +7,8 @@ import { HealthPage } from './pages/HealthPage'
 import { SnapshotPage } from './pages/SnapshotPage'
 import { SourceDetailPage } from './pages/SourceDetailPage'
 import { SourcesPage } from './pages/SourcesPage'
+import { FactsPage } from './pages/FactsPage'
+import { PromptRunsPage } from './pages/PromptRunsPage'
 import { parseHash, navTo, type Loc } from './routing'
 
 
@@ -47,10 +49,12 @@ export default function App() {
       <header className="app-header">
         <div className="brand">
           <span className="brand-name">PracticeSignal</span>
-          <span className="brand-tag">Healthcare Practice &amp; Workforce Intelligence · M1</span>
+          <span className="brand-tag">Healthcare Practice &amp; Workforce Intelligence · M2</span>
         </div>
         <nav className="top-nav">
           <a href="#/sources" className={active('sources') || active('source') || active('snapshot')}>Sources</a>
+          <a href="#/facts" className={active('facts')}>Candidate Facts</a>
+          <a href="#/prompt-runs" className={active('prompt-runs')}>Prompt Audits</a>
           <a href="#/health" className={active('health')}>Health</a>
         </nav>
         <div className="header-right">
@@ -67,6 +71,8 @@ export default function App() {
         {loc.page === 'sources' && <SourcesPage nav={nav} />}
         {loc.page === 'source' && loc.id != null && <SourceDetailPage id={loc.id} nav={nav} />}
         {loc.page === 'snapshot' && loc.id != null && <SnapshotPage id={loc.id} nav={nav} />}
+        {loc.page === 'facts' && <FactsPage nav={nav} />}
+        {loc.page === 'prompt-runs' && <PromptRunsPage nav={nav} />}
         {loc.page === 'health' && <HealthPage />}
       </main>
 

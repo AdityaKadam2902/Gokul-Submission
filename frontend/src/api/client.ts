@@ -10,6 +10,9 @@ export type SnapshotRead = components['schemas']['SnapshotRead']
 export type IngestionResult = components['schemas']['IngestionResult']
 export type HealthStatus = components['schemas']['HealthStatus']
 export type HeadingSpan = components['schemas']['HeadingSpan']
+export type FactRead = components['schemas']['FactRead']
+export type PromptRunRead = components['schemas']['PromptRunRead']
+export type ExtractionResultRead = components['schemas']['ExtractionResultRead']
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000'
 
@@ -69,6 +72,21 @@ export const api = {
   deleteSource: (id: number) => request<void>(`/api/sources/${id}`, { method: 'DELETE' }),
   ingest: (sourceId: number) => request<IngestionResult>(`/api/ingestions/${sourceId}`, { method: 'POST' }),
   getSnapshot: (id: number) => request<SnapshotRead>(`/api/snapshots/${id}`),
+  extractSnapshot: (snapshotId: number, force = false) =>
+    request<ExtractionResultRead>(`/api/snapshots/${snapshotId}/extract?force=${force}`, { method: 'POST' }),
+  getSnapshotFacts: (snapshotId: number) => request<FactRead[]>(`/api/snapshots/${snapshotId}/facts`),
+  getSnapshotPromptRuns: (snapshotId: number) => request<PromptRunRead[]>(`/api/snapshots/${snapshotId}/prompt-runs`),
+  listFacts: (params?: { status?: string; field_key?: string; snapshot_id?: number }) => {
+    const q = new URLSearchParams()
+    if (params?.status) q.set('status', params.status)
+    if (params?.field_key) q.set('field_key', params.field_key)
+    if (params?.snapshot_id) q.set('snapshot_id', String(params.snapshot_id))
+    return request<FactRead[]>(`/api/facts${q.toString() ? `?${q}` : ''}`)
+  },
+  listPromptRuns: (snapshotId?: number) => {
+    const q = snapshotId ? `?snapshot_id=${snapshotId}` : ''
+    return request<PromptRunRead[]>(`/api/prompt-runs${q}`)
+  },
 }
 
 // Static inventory of the M0 fixture corpus (ids + archetypes match the

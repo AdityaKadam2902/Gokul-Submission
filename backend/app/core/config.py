@@ -31,6 +31,8 @@ _ENV_DEFAULTS: dict[str, str] = {
     "DATABASE_PATH": "backend/data/practicesignal.db",
     "OLLAMA_URL": "http://localhost:11434",
     "OLLAMA_MODEL": "llama3.2:3b",
+    "OLLAMA_TIMEOUT_SECONDS": "90",
+    "MAX_PROMPT_CHARS": "16000",
     "FETCH_DELAY_SECONDS": "3",
     "FETCH_TIMEOUT_SECONDS": "20",
     "MAX_RESPONSE_BYTES": "2000000",
@@ -69,6 +71,8 @@ class Settings:
     database_path: str
     ollama_url: str
     ollama_model: str
+    ollama_timeout_seconds: int
+    max_prompt_chars: int
     fetch_delay_seconds: int
     fetch_timeout_seconds: int
     max_response_bytes: int
@@ -111,6 +115,8 @@ def _compute_settings() -> Settings:
         database_path=resolved["DATABASE_PATH"],
         ollama_url=resolved["OLLAMA_URL"],
         ollama_model=resolved["OLLAMA_MODEL"],
+        ollama_timeout_seconds=_int("OLLAMA_TIMEOUT_SECONDS", 10),
+        max_prompt_chars=_int("MAX_PROMPT_CHARS", 1000),
         fetch_delay_seconds=_int("FETCH_DELAY_SECONDS"),
         fetch_timeout_seconds=_int("FETCH_TIMEOUT_SECONDS"),
         max_response_bytes=_int("MAX_RESPONSE_BYTES"),

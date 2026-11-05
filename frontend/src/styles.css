@@ -113,6 +113,9 @@ table.data tbody tr.rowlink:hover { background: var(--surface-2); }
 .badge.blocked { background: var(--danger-soft); color: var(--danger); border-color: #f0cbc8; }
 .badge.ok { background: var(--ok-soft); color: var(--ok); border-color: #bfe4cd; }
 .badge.neutral { background: var(--surface-2); color: var(--text-2); border-color: var(--border-strong); }
+.badge.candidate { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+.badge.needs_review { background: var(--warn-soft); color: var(--warn); border-color: #f0dcae; }
+.badge.rejected { background: var(--danger-soft); color: var(--danger); border-color: #f0cbc8; }
 
 .chip {
   display: inline-block; background: var(--surface-2); border: 1px solid var(--border);
@@ -181,6 +184,7 @@ label.field input:focus, label.field select:focus, label.field textarea:focus {
   border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-wrap: anywhere;
 }
 .snapshot-text .hl-heading { background: #fdf3d1; box-shadow: inset 0 0 0 1px #f0dcae; border-radius: 3px; }
+.snapshot-text .hl-evidence { background: #bae6fd; color: #0284c7; box-shadow: inset 0 0 0 1px #38bdf8; border-radius: 3px; font-weight: 600; }
 .snapshot-text .hl-hover { outline: 1px dashed var(--text-3); }
 
 .headings-panel li { margin: 2px 0; }

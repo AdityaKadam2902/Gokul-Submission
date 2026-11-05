@@ -75,3 +75,57 @@ class ValidationError_(PracticeSignalError):
 class SnapshotImmutabilityViolation(PracticeSignalError):
     http_status = 409
     error_code = "snapshot_immutable"
+
+
+# ---------------------------------------------------------------------------
+# M2: AI Adapter & Extraction Exceptions (ARCHITECTURE §8)
+# ---------------------------------------------------------------------------
+
+class OllamaUnavailable(PracticeSignalError):
+    """Local Ollama service is unreachable or not running."""
+
+    http_status = 503
+    error_code = "ollama_unavailable"
+
+
+class OllamaTimeout(PracticeSignalError):
+    """Local inference exceeded the configured timeout ceiling."""
+
+    http_status = 504
+    error_code = "ollama_timeout"
+
+
+class OllamaModelNotFound(PracticeSignalError):
+    """The pinned model tag is not installed in the local Ollama runtime."""
+
+    http_status = 503
+    error_code = "ollama_model_not_found"
+
+
+class OllamaInferenceError(PracticeSignalError):
+    """Ollama API returned an unexpected error response."""
+
+    http_status = 502
+    error_code = "ollama_inference_error"
+
+
+class OllamaInputTooLarge(PracticeSignalError):
+    """Page snapshot text exceeds the maximum safe excerpt budget."""
+
+    http_status = 413
+    error_code = "ollama_input_too_large"
+
+
+class SchemaValidationError(PracticeSignalError):
+    """Model output failed Pydantic schema validation."""
+
+    http_status = 422
+    error_code = "schema_validation_error"
+
+
+class EvidenceVerificationFailed(PracticeSignalError):
+    """Extracted candidate failed deterministic quotation or value verification."""
+
+    http_status = 422
+    error_code = "evidence_verification_failed"
+

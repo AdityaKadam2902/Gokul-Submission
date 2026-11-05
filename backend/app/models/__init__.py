@@ -7,6 +7,8 @@ hand-written.
 
 from __future__ import annotations
 
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
 
 PAGE_TYPES = ("home", "services", "contact", "team", "vacancies", "about", "other")
@@ -135,6 +137,81 @@ class HealthStatus(BaseModel):
     app_ok: bool
     database_ok: bool
     database_path: str
-    ollama: str  # configured for M2, not used in M1
+    ollama: str
+    ollama_ok: bool = False
     robots_tool: str
     version: str
+
+
+# ---------------------------------------------------------------------------
+# M2 Models: Facts, Evidence and Prompt Runs (ARCHITECTURE §6.2, §6.3)
+# ---------------------------------------------------------------------------
+
+class EvidenceRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    snapshot_id: int
+    start_offset: int
+    end_offset: int
+    quote: str
+    captured_at: str
+    match_algorithm_version: str
+
+
+class FactRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    snapshot_id: int
+    organisation_id: int | None = None
+    field_key: str
+    scope_key: str | None = None
+    raw_value: str
+    normalized_value: str | None = None
+    timezone: str
+    evidence_id: int | None = None
+    evidence_quote: str | None = None
+    evidence_start_offset: int | None = None
+    evidence_end_offset: int | None = None
+    model_tag: str | None = None
+    prompt_version: str | None = None
+    via: str
+    status: str  # candidate | needs_review | rejected | reviewed | superseded
+    needs_review_reason: str | None = None
+    created_at: str
+
+
+class PromptRunRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    snapshot_id: int
+    model_tag: str
+    prompt_version: str
+    request_payload_hash: str
+    raw_response_ref: str
+    parse_ok: bool
+    validation_errors: list[str]
+    latency_ms: float
+    prompt_eval_count: int
+    eval_count: int
+    tokens_per_second: float
+    evidence_checks: dict[str, Any]
+    created_at: str
+
+
+class ExtractionResultRead(BaseModel):
+    snapshot_id: int
+    prompt_run_id: int
+    is_idempotent_skip: bool
+    parse_ok: bool
+    total_candidates: int
+    accepted_candidates: int
+    needs_review_candidates: int
+    rejected_candidates: int
+    latency_ms: float
+    model_tag: str
+    prompt_version: str
+    message: str
+

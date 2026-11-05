@@ -65,3 +65,19 @@ Per the change-control rule, the following smallest-consistent decisions made du
 | D26 | Registered-URL sources are creatable via the API but are permanently un-fetchable in M1: the API refuses the `approved_live` state entirely (422), ingestion of kind=url is a structural 409 (no fetcher exists), and no socket is ever opened — asserted by a test that monkey-patches `socket.socket` to fail. | SOURCE_REGISTER hard rule "live fetching requires an approved_live row"; zero such rows exist. |
 | D27 | Ingestion for a `blocked` source is refused with 409 (`source_blocked`); `manual_fixture_pending_policy_check` and `unavailable` sources may ingest fixtures only (local synthetic data; never the network). | Register §1 state semantics applied mechanically by code, not judgement. |
 | D28 | `approved_live` is never settable through the API. State changes happen only through the SOURCE_REGISTER §3 manual procedure recorded in the register file. | Prevents self-approval; keeps one decision path. |
+
+---
+
+## M2 addendum (5 November 2026 — AI extraction & evidence verification decisions)
+
+Per the change-control rule, the following decisions made during M2 implementation are recorded here:
+
+| ID | Decision | Rationale |
+|---|---|---|
+| D29 | `facts`, `evidence`, and `prompt_runs` tables are added incrementally (D9). To maintain strict milestone boundaries without premature entity resolution or deduplication (M3), `facts.organisation_id` remains a nullable integer column (per D25); candidate facts are anchored to `page_snapshots.id`. | Avoids premature entity-resolution abstractions in M2 while supporting full provenance. |
+| D30 | Strict inference concurrency ceiling of 1: Ollama calls are guarded by an asynchronous/thread lock. | Prevents CPU contention, thrashing, and timeout cascades on CPU-only host during structured inference. |
+| D31 | Field-specific value-to-evidence validation: quotation existence is necessary but not sufficient. Candidate raw values must be grounded in and substantiated by the quote; testimonial contact details are rejected deterministically; external booking links cannot become official websites. | Protects against model hallucinations and adversarial/misleading quotations. |
+| D32 | Scope assignment determinism: operational scopes (`clinic`, `pathology`, `reception`, etc.) are assigned from the snapshot heading chain. Conflicting or ambiguous heading keywords route to `needs_review`; model proposal is an advisory fallback only. | Prevents silent scope confusion across healthcare services. |
+| D33 | Data-preserving normalization: raw values are ALWAYS preserved in `raw_value`. Unparseable or non-standard phone numbers, emails, URLs, or hours leave `normalized_value = None` and flag `needs_review`; normalization never guesses or invents. | Prevents data loss and false certainty from aggressive parsers. |
+| D34 | Candidate status integrity: all AI-generated facts persist strictly as `candidate`, `needs_review`, or `rejected`. No model or automated step has authority to mark a fact `reviewed` or `approved`; human review authority is deferred to M4. | Upholds the core principle: AI proposes, Python verifies, humans review. |
+

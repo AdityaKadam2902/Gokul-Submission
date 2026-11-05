@@ -14,6 +14,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from backend.app import __version__
+from backend.app.ai.client import get_ollama_client
 from backend.app.core.config import get_settings
 from backend.app.db.base import get_db
 from backend.app.models import HealthStatus
@@ -31,12 +32,26 @@ def health(db: Session = Depends(get_db)) -> dict:
         db.execute(text("SELECT 1"))
     except Exception:
         database_ok = False
+
+    ollama_client = get_ollama_client()
+    ollama_probe = ollama_client.check_health()
+    ollama_ok = ollama_probe.get("available", False) and ollama_probe.get("model_present", False)
+    if ollama_ok:
+        ollama_msg = f"connected ({settings.ollama_url}) model={settings.ollama_model} available (not used in M1; active in M2)"
+    elif ollama_probe.get("available", False):
+        ollama_msg = f"connected ({settings.ollama_url}) model={settings.ollama_model} NOT FOUND (not used in M1; active in M2)"
+    else:
+        ollama_msg = f"unreachable ({settings.ollama_url}): {ollama_probe.get('error', 'offline')} (not used in M1; active in M2)"
+
+    overall_status = "ok" if (database_ok and ollama_ok) else "degraded"
+
     return {
-        "status": "ok" if database_ok else "degraded",
+        "status": overall_status,
         "app_ok": True,
         "database_ok": database_ok,
         "database_path": str(settings.database_file),
-        "ollama": f"configured {settings.ollama_url} model={settings.ollama_model} (not used in M1)",
+        "ollama": ollama_msg,
+        "ollama_ok": ollama_ok,
         "robots_tool": "available (urllib.robotparser, stdlib) — used only after a future manual source approval",
         "version": __version__,
     }

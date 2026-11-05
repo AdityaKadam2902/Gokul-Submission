@@ -102,11 +102,13 @@ def create_app() -> FastAPI:
                                "details": {}}},
         )
 
-    from backend.app.api.routers import health, snapshots, sources
+    from backend.app.api.routers import facts, health, prompt_runs, snapshots, sources
 
     app.include_router(health.router)
     app.include_router(snapshots.router)
     app.include_router(sources.router)
+    app.include_router(facts.router)
+    app.include_router(prompt_runs.router)
 
     @app.get("/", tags=["meta"])
     def root() -> dict:

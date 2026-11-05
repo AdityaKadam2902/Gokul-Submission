@@ -38,6 +38,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/snapshots/{snapshot_id}/extract": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Extract Snapshot */
+        post: operations["extract_snapshot_api_snapshots__snapshot_id__extract_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/snapshots/{snapshot_id}/facts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Snapshot Facts */
+        get: operations["get_snapshot_facts_api_snapshots__snapshot_id__facts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/snapshots/{snapshot_id}/prompt-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Snapshot Prompt Runs */
+        get: operations["get_snapshot_prompt_runs_api_snapshots__snapshot_id__prompt_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/sources": {
         parameters: {
             query?: never;
@@ -92,6 +143,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/facts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Facts */
+        get: operations["list_facts_api_facts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/facts/{fact_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Fact */
+        get: operations["get_fact_api_facts__fact_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/prompt-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Prompt Runs */
+        get: operations["list_prompt_runs_api_prompt_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/prompt-runs/{run_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Prompt Run */
+        get: operations["get_prompt_run_api_prompt_runs__run_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/": {
         parameters: {
             query?: never;
@@ -113,6 +232,72 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ExtractionResultRead */
+        ExtractionResultRead: {
+            /** Snapshot Id */
+            snapshot_id: number;
+            /** Prompt Run Id */
+            prompt_run_id: number;
+            /** Is Idempotent Skip */
+            is_idempotent_skip: boolean;
+            /** Parse Ok */
+            parse_ok: boolean;
+            /** Total Candidates */
+            total_candidates: number;
+            /** Accepted Candidates */
+            accepted_candidates: number;
+            /** Needs Review Candidates */
+            needs_review_candidates: number;
+            /** Rejected Candidates */
+            rejected_candidates: number;
+            /** Latency Ms */
+            latency_ms: number;
+            /** Model Tag */
+            model_tag: string;
+            /** Prompt Version */
+            prompt_version: string;
+            /** Message */
+            message: string;
+        };
+        /** FactRead */
+        FactRead: {
+            /** Id */
+            id: number;
+            /** Snapshot Id */
+            snapshot_id: number;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Field Key */
+            field_key: string;
+            /** Scope Key */
+            scope_key?: string | null;
+            /** Raw Value */
+            raw_value: string;
+            /** Normalized Value */
+            normalized_value?: string | null;
+            /** Timezone */
+            timezone: string;
+            /** Evidence Id */
+            evidence_id?: number | null;
+            /** Evidence Quote */
+            evidence_quote?: string | null;
+            /** Evidence Start Offset */
+            evidence_start_offset?: number | null;
+            /** Evidence End Offset */
+            evidence_end_offset?: number | null;
+            /** Model Tag */
+            model_tag?: string | null;
+            /** Prompt Version */
+            prompt_version?: string | null;
+            /** Via */
+            via: string;
+            /** Status */
+            status: string;
+            /** Needs Review Reason */
+            needs_review_reason?: string | null;
+            /** Created At */
+            created_at: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -144,6 +329,11 @@ export interface components {
             database_path: string;
             /** Ollama */
             ollama: string;
+            /**
+             * Ollama Ok
+             * @default false
+             */
+            ollama_ok: boolean;
             /** Robots Tool */
             robots_tool: string;
             /** Version */
@@ -164,6 +354,39 @@ export interface components {
             content_hash?: string | null;
             /** Message */
             message: string;
+        };
+        /** PromptRunRead */
+        PromptRunRead: {
+            /** Id */
+            id: number;
+            /** Snapshot Id */
+            snapshot_id: number;
+            /** Model Tag */
+            model_tag: string;
+            /** Prompt Version */
+            prompt_version: string;
+            /** Request Payload Hash */
+            request_payload_hash: string;
+            /** Raw Response Ref */
+            raw_response_ref: string;
+            /** Parse Ok */
+            parse_ok: boolean;
+            /** Validation Errors */
+            validation_errors: string[];
+            /** Latency Ms */
+            latency_ms: number;
+            /** Prompt Eval Count */
+            prompt_eval_count: number;
+            /** Eval Count */
+            eval_count: number;
+            /** Tokens Per Second */
+            tokens_per_second: number;
+            /** Evidence Checks */
+            evidence_checks: {
+                [key: string]: unknown;
+            };
+            /** Created At */
+            created_at: string;
         };
         /**
          * SnapshotHead
@@ -406,6 +629,102 @@ export interface operations {
             };
         };
     };
+    extract_snapshot_api_snapshots__snapshot_id__extract_post: {
+        parameters: {
+            query?: {
+                /** @description Force re-extraction even if identical hash was previously run */
+                force?: boolean;
+            };
+            header?: never;
+            path: {
+                snapshot_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtractionResultRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_snapshot_facts_api_snapshots__snapshot_id__facts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                snapshot_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_snapshot_prompt_runs_api_snapshots__snapshot_id__prompt_runs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                snapshot_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromptRunRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_sources_api_sources_get: {
         parameters: {
             query?: never;
@@ -572,6 +891,140 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["IngestionResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_facts_api_facts_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by fact status (candidate|needs_review|rejected|reviewed) */
+                status?: string | null;
+                /** @description Filter by field key */
+                field_key?: string | null;
+                /** @description Filter by snapshot id */
+                snapshot_id?: number | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_fact_api_facts__fact_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_prompt_runs_api_prompt_runs_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by snapshot id */
+                snapshot_id?: number | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromptRunRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_prompt_run_api_prompt_runs__run_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromptRunRead"];
                 };
             };
             /** @description Validation Error */
