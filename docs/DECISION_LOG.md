@@ -81,3 +81,16 @@ Per the change-control rule, the following decisions made during M2 implementati
 | D33 | Data-preserving normalization: raw values are ALWAYS preserved in `raw_value`. Unparseable or non-standard phone numbers, emails, URLs, or hours leave `normalized_value = None` and flag `needs_review`; normalization never guesses or invents. | Prevents data loss and false certainty from aggressive parsers. |
 | D34 | Candidate status integrity: all AI-generated facts persist strictly as `candidate`, `needs_review`, or `rejected`. No model or automated step has authority to mark a fact `reviewed` or `approved`; human review authority is deferred to M4. | Upholds the core principle: AI proposes, Python verifies, humans review. |
 
+---
+
+## M2 remediation addendum (5 November 2026 — audit corrections)
+
+Per the change-control rule, the following corrective decisions approved in the M2 audit remediation are recorded here:
+
+| ID | Decision | Rationale |
+|---|---|---|
+| D35 | **Timezone data integrity (nullable without default):** `facts.timezone` is changed to `Mapped[str | None]` (nullable, default `None`). The automatic `"Australia/Brisbane"` default is removed. Timezone is populated only when supported by explicit quotation evidence (e.g., AEST/AEDT, Brisbane/Sydney/Perth) or validated location rules. Historical ungrounded Brisbane values are migrated to `NULL` via safe SQLite table rebuild. | Prevents false certainty and ungrounded geographic assumptions outside Queensland. |
+| D36 | **Direct prompt-run lineage:** `facts.prompt_run_id` is added as a nullable foreign key referencing `prompt_runs.id` (`ON DELETE SET NULL`) with index `ix_facts_prompt_run_id`. Every newly created candidate fact must reference its exact extraction run. Historical rows where prompt run cannot be uniquely established remain `NULL` rather than guessing. | Guarantees exact relational provenance from candidate fact to inference execution. |
+| D37 | **Repeated quotation scope disambiguation:** When an identical quotation appears multiple times in snapshot text, `resolve_quote_offsets` checks enclosing headings. If the quotation spans different headings and context cannot uniquely resolve the scope, status routes to `needs_review`. The verifier never silently binds to the first occurrence when it could belong to a different operational scope. | Prevents misattribution of hours or service details across clinic vs pathology departments. |
+| D38 | **Deterministic visible prompt-injection defence:** Layered structural defences tested against visible untrusted text in HTML body: (1) immutable source field allowlist cannot be expanded by prompt commands; (2) candidate verifier checks quote and enclosing section context for injection keywords (`INJECTION_PATTERNS`); (3) claims unsupported by genuine practice context are rejected. Security boundary is code-owned and does not rely on model obeying prompt instructions. | Complies with responsible AI engineering principles; model compliance is never trusted as a security gate. |
+

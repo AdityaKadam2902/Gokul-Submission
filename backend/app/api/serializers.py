@@ -86,6 +86,7 @@ def to_fact_read(fact: Fact) -> dict:
     return {
         "id": fact.id,
         "snapshot_id": fact.snapshot_id,
+        "prompt_run_id": fact.prompt_run_id,
         "organisation_id": fact.organisation_id,
         "field_key": fact.field_key,
         "scope_key": fact.scope_key,

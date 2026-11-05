@@ -164,12 +164,13 @@ class FactRead(BaseModel):
 
     id: int
     snapshot_id: int
+    prompt_run_id: int | None = None
     organisation_id: int | None = None
     field_key: str
     scope_key: str | None = None
     raw_value: str
     normalized_value: str | None = None
-    timezone: str
+    timezone: str | None = None
     evidence_id: int | None = None
     evidence_quote: str | None = None
     evidence_start_offset: int | None = None

@@ -1,7 +1,8 @@
 # PracticeSignal — AI Development Handoff (Fresh Session Continuation)
 
 > **Document purpose:** Self-contained persistent engineering handoff allowing any coding agent or engineer to resume work immediately without prior session history.
-> **Current Milestone:** **M2 Complete** (AI Extraction & Evidence Verification)
+> **Current Milestone:** **M2 Audit Remediation Complete** (AI Extraction, Evidence Verification & Audit Remediation)
+> **Baseline Checkpoint Commit:** `d544e10`
 > **Date:** 5 November 2026
 > **Operating Environment:** Windows 11 Enterprise (Build 26300), Python 3.12.6 (.venv), Node v24.20.0, npm 11.19.0, Ollama 0.40.14 (`llama3.2:3b`), CPU-only host.
 
@@ -16,7 +17,7 @@ PracticeSignal is an evidence-first healthcare practice & workforce intelligence
 
 ---
 
-## 2. Completed Work in M2
+## 2. Completed Work in M2 (Including Audit Remediation)
 
 ### Phase A: Local Model Feasibility & Benchmark
 - Verified Ollama 0.40.14 running at `http://127.0.0.1:11434` with model `llama3.2:3b` (ID: `a80c4f17acd5`, 2.0 GB).
@@ -44,10 +45,11 @@ PracticeSignal is an evidence-first healthcare practice & workforce intelligence
   - Verifies field is in source allowlist (D6).
   - Exact and whitespace-tolerant quote matching against snapshot text.
   - Python calculates authoritative character offsets `[start_offset..end_offset)`.
+  - **Repeated Quotation Disambiguation (Requirement 6, D37):** `resolve_quote_offsets` maps repeated quotes to their enclosing headings. Ambiguous occurrences across distinct scopes route to `needs_review` rather than silently picking the first match.
   - **Value-to-evidence validation (Requirement 4):** verifies raw value is genuinely grounded in quote.
   - **Business-contact rule (D6/D10):** rejects phone/email originating from testimonial/review context (F4).
   - **External booking rejection (F3):** prevents external booking links from becoming official websites.
-  - **Prompt injection guard (D10, F6):** rejects injected instructions structurally.
+  - **Prompt injection guard (D10, D38, F6):** rejects injected instructions structurally; checks quote and section context window.
 - `field_normalizer.py`:
   - Preserves original raw value always (Requirement 5).
   - Normalizes Australian phones to E.164, emails to lowercase, URLs to canonical form.
@@ -57,17 +59,19 @@ PracticeSignal is an evidence-first healthcare practice & workforce intelligence
   - Ambiguous headings route to `needs_review`.
   - Model proposal is an advisory fallback only when no heading exists.
 
-### Phase E: Database & Idempotency (`backend/app/db/orm.py`)
-- Incremental SQLite migration (D9) adding:
+### Phase E: Database & Idempotency (`backend/app/db/`)
+- Incremental SQLite migration (D9, D35, D36) adding:
   - `evidence`: immutable quote excerpts with exact offsets.
-  - `facts`: candidate facts with scope, raw value, normalized value, evidence link, and unapproved status (`candidate`, `needs_review`, `rejected`).
+  - `facts`: candidate facts with scope, raw value, normalized value, nullable timezone, prompt_run_id lineage, evidence link, and unapproved status (`candidate`, `needs_review`, `rejected`).
   - `prompt_runs`: immutable audit of every inference call (latency, tokens, validation errors, evidence checks summary).
+- **Timezone Data Integrity (Requirement 3, D35):** `facts.timezone` is `Mapped[str | None]` with no automatic Brisbane assumption.
+- **Direct PromptRun Lineage (Requirement 4, D36):** `facts.prompt_run_id` references `prompt_runs.id` on delete `SET NULL` with index.
+- **Safe SQLite Migration (`backend/app/db/migrations.py`):** 12-step table rebuild with automatic `.bak` pre-migration backup and verified rollback.
 - Idempotency: equivalent extractions (matching snapshot ID and payload hash) skip model inference (D4).
-- Safe incremental bootstrap: `init_db()` is idempotent; existing sources and snapshots remain untouched.
 
-### Phase F: FastAPI Endpoints
+### Phase F: FastAPI Endpoints & Serializers
 - `POST /api/snapshots/{snapshot_id}/extract`: triggers extraction (with optional `force=true` query param).
-- `GET /api/snapshots/{snapshot_id}/facts`: lists candidate facts with evidence quote & offsets.
+- `GET /api/snapshots/{snapshot_id}/facts`: lists candidate facts with evidence quote, offsets, and `prompt_run_id`.
 - `GET /api/snapshots/{snapshot_id}/prompt-runs`: lists prompt runs for snapshot.
 - `GET /api/facts`: global facts listing with status/field/snapshot filters.
 - `GET /api/facts/{fact_id}`: single fact detail.
@@ -75,7 +79,7 @@ PracticeSignal is an evidence-first healthcare practice & workforce intelligence
 - `GET /api/health`: probes local Ollama status and reports live connectivity.
 
 ### Phase G: Frontend Evidence & Candidate Display (`frontend/`)
-- Regenerated TypeScript contracts from live OpenAPI schema via `openapi-typescript` (D19).
+- Regenerated TypeScript contracts from live OpenAPI schema in `frontend/src/api/schema.d.ts` (D19).
 - Enhanced `SnapshotPage.tsx`:
   - "Extract with Local AI" / "Force Re-run" controls.
   - Candidate Facts table with prominent unapproved candidate badge.
@@ -83,17 +87,16 @@ PracticeSignal is an evidence-first healthcare practice & workforce intelligence
   - Local AI Prompt Runs table showing latencies, tokens, tokens/sec, and schema status.
 - Added `FactsPage.tsx` (`#/facts`): global candidate facts explorer with status filter.
 - Added `PromptRunsPage.tsx` (`#/prompt-runs`): global AI inference audit log.
-- Updated `HealthPage.tsx` and `App.tsx` top navigation.
 - Strict typecheck (`tsc --noEmit`) and Vite production build: 0 errors.
 
 ---
 
 ## 3. Current Test Status
 
-- **Total Backend Tests:** **63 / 63 passed** (`pytest backend/tests -v` in ~6.5s)
+- **Total Backend Tests:** **67 / 67 passed** (`pytest backend/tests -v` in ~11.2s)
   - 18 M0 conformance tests
   - 29 M1 vertical-slice tests
-  - 16 M2 AI extraction, evidence verification, and live smoke tests
+  - 20 M2 AI extraction, evidence verification, migration, repeated quotation, prompt run lineage, and visible injection tests
 - **Frontend Typecheck (`npx tsc --noEmit`):** **0 errors**
 - **Frontend Production Build (`npm run build`):** **0 errors** (43 modules transformed)
 
@@ -102,49 +105,26 @@ PracticeSignal is an evidence-first healthcare practice & workforce intelligence
 ## 4. Git State & Working Tree
 
 - **Current Branch:** `main`
-- **Head Commit:** `a184c91` (M1 final baseline)
-- **Status:** Uncommitted changes ready for M2 checkpoint commit.
+- **Baseline Checkpoint Commit:** `d544e10`
+- **Status:** M2 remediation patch applied and verified green across backend and frontend.
 
-### Files Modified & Created for M2:
-- Created: `backend/app/ai/__init__.py`
-- Created: `backend/app/ai/client.py`
-- Created: `backend/app/ai/prompt_store.py`
-- Created: `backend/app/ingest/evidence_verifier.py`
-- Created: `backend/app/ingest/field_normalizer.py`
-- Created: `backend/app/ingest/scope_assignment.py`
-- Created: `backend/app/extraction/__init__.py`
-- Created: `backend/app/extraction/candidates.py`
-- Created: `backend/app/api/routers/facts.py`
-- Created: `backend/app/api/routers/prompt_runs.py`
-- Created: `backend/tests/test_m2_ai_and_evidence.py`
-- Created: `frontend/src/pages/FactsPage.tsx`
-- Created: `frontend/src/pages/PromptRunsPage.tsx`
-- Created: `docs/RESULTS.md`
-- Created: `docs/AI_DEVELOPMENT_HANDOFF.md`
-- Modified: `backend/app/core/config.py`
-- Modified: `backend/app/core/exceptions.py`
-- Modified: `backend/app/db/orm.py`
-- Modified: `backend/app/models/__init__.py`
-- Modified: `backend/app/api/main.py`
-- Modified: `backend/app/api/serializers.py`
-- Modified: `backend/app/api/routers/health.py`
-- Modified: `backend/app/api/routers/snapshots.py`
-- Modified: `backend/tests/test_m1_backend.py`
-- Modified: `scripts/benchmark_ai.py`
-- Modified: `docs/DECISION_LOG.md`
-- Modified: `docs/prompt-engineering-log.md`
-- Modified: `frontend/src/api/client.ts`
-- Modified: `frontend/src/api/schema.d.ts`
-- Modified: `frontend/src/App.tsx`
-- Modified: `frontend/src/routing.ts`
-- Modified: `frontend/src/styles.css`
-- Modified: `frontend/src/pages/HealthPage.tsx`
-- Modified: `frontend/src/pages/SnapshotPage.tsx`
+### Files Modified & Created for M2 Remediation:
+- Created: `backend/app/db/migrations.py` (safe SQLite migration & rollback)
+- Modified: `backend/app/db/orm.py` (nullable timezone, prompt_run_id column & relationship)
+- Modified: `backend/app/db/base.py` (idempotent migration trigger in init_db)
+- Modified: `backend/app/models/__init__.py` (FactRead prompt_run_id and nullable timezone)
+- Modified: `backend/app/api/serializers.py` (prompt_run_id in to_fact_read)
+- Modified: `backend/app/ingest/evidence_verifier.py` (repeated quote disambiguation, visible injection context)
+- Modified: `backend/app/extraction/candidates.py` (prompt_run_id assignment, explicit evidence timezone)
+- Modified: `backend/tests/test_m2_ai_and_evidence.py` (4 new comprehensive tests for visible injection, repeated quotes, lineage, migration)
+- Modified: `frontend/src/api/schema.d.ts` (updated TypeScript contracts for FactRead)
+- Modified: `docs/RESULTS.md` (corrected Ollama native benchmark calculations and evaluation breakdown)
+- Modified: `docs/DECISION_LOG.md` (recorded D35–D38 remediation decisions)
+- Modified: `docs/AI_DEVELOPMENT_HANDOFF.md` (updated progress and test counts)
 
 ---
 
-## 5. Exact Next Action for Next Session
+## 5. Strict Boundaries
 
-1. Review and create a clean git checkpoint for M2 (`git add . && git commit -m "M2: AI extraction, evidence verification, candidate persistence, prompt audits, frontend evidence display"`).
-2. Await human review of M2 deliverables.
-3. Do not proceed to M3 until authorized.
+- **M2 Remediation Only:** Milestone 3 (cross-source conflict detection, entity resolution, opportunity lifecycle management) has **NOT** been started.
+- Await human review and formal milestone authorization before proceeding to M3.

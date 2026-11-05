@@ -193,11 +193,13 @@ def run_extraction_for_snapshot(
         quote = str(item.get("evidence_quote", "")).strip()
         model_scope = item.get("scope_proposal")
 
-        # Deterministic verification
+        # Deterministic verification with repeated quote disambiguation
         ver_res = evidence_verifier.verify_candidate_evidence(
             candidate=item,
             snapshot_text=snapshot.text,
             intended_fields=intended_fields,
+            surrounding_context=str(model_scope or ""),
+            headings=headings_list,
         )
 
         evidence_row: Evidence | None = None
@@ -231,6 +233,10 @@ def run_extraction_for_snapshot(
             status = "rejected"
             review_reason = ver_res.rejection_reason
             evidence_checks_summary["rejected"] += 1
+        elif ver_res.status == "needs_review":
+            status = "needs_review"
+            review_reason = ver_res.rejection_reason
+            evidence_checks_summary["needs_review"] += 1
         elif scope_res.is_ambiguous:
             status = "needs_review"
             review_reason = scope_res.review_reason
@@ -253,14 +259,30 @@ def run_extraction_for_snapshot(
             }
         )
 
+        if prompt_run.id is None:
+            raise ValueError("Candidate facts created via ai_extraction must reference an authoritative prompt_run_id")
+
+        # Explicit evidence-backed timezone only (never assume Brisbane)
+        fact_tz: str | None = None
+        comb_text = f"{norm_res.raw_value} {ver_res.matched_quote or quote}".lower()
+        if any(ind in comb_text for ind in ("brisbane", "qld", "queensland", "aest")):
+            fact_tz = "Australia/Brisbane"
+        elif any(ind in comb_text for ind in ("sydney", "nsw", "aedt")):
+            fact_tz = "Australia/Sydney"
+        elif any(ind in comb_text for ind in ("melbourne", "vic")):
+            fact_tz = "Australia/Melbourne"
+        elif any(ind in comb_text for ind in ("perth", "wa", "awst")):
+            fact_tz = "Australia/Perth"
+
         fact = Fact(
             snapshot_id=snapshot.id,
+            prompt_run_id=prompt_run.id,
             organisation_id=source.organisation_id if source else None,
             field_key=field_key,
             scope_key=scope_res.scope_key,
             raw_value=norm_res.raw_value,
             normalized_value=norm_res.normalized_value,
-            timezone="Australia/Brisbane",
+            timezone=fact_tz,
             evidence_id=evidence_row.id if evidence_row else None,
             model_tag=inference_result.model,
             prompt_version=prompt_version,

@@ -82,34 +82,48 @@ def _normalize_whitespace(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def find_quote_offsets(snapshot_text: str, quote: str) -> tuple[int, int, str] | None:
-    """Find exact or whitespace-tolerant quote in snapshot text.
+def find_all_quote_offsets(snapshot_text: str, quote: str) -> list[tuple[int, int, str]]:
+    """Find all exact or whitespace-tolerant occurrences of quote in snapshot_text.
 
-    Returns (start_offset, end_offset, matched_substring) or None.
+    Returns a list of (start_offset, end_offset, matched_substring).
     """
     clean_quote = quote.strip()
     if not clean_quote:
-        return None
+        return []
 
-    # 1. Exact match attempt
-    idx = snapshot_text.find(clean_quote)
-    if idx != -1:
-        return idx, idx + len(clean_quote), snapshot_text[idx : idx + len(clean_quote)]
+    # 1. Exact match attempts
+    occurrences: list[tuple[int, int, str]] = []
+    idx = 0
+    while True:
+        pos = snapshot_text.find(clean_quote, idx)
+        if pos == -1:
+            break
+        occurrences.append((pos, pos + len(clean_quote), snapshot_text[pos : pos + len(clean_quote)]))
+        idx = pos + 1
+
+    if occurrences:
+        return occurrences
 
     # 2. Case-insensitive exact match
     lower_snap = snapshot_text.lower()
     lower_quote = clean_quote.lower()
-    idx = lower_snap.find(lower_quote)
-    if idx != -1:
-        return idx, idx + len(clean_quote), snapshot_text[idx : idx + len(clean_quote)]
+    idx = 0
+    while True:
+        pos = lower_snap.find(lower_quote, idx)
+        if pos == -1:
+            break
+        occurrences.append((pos, pos + len(clean_quote), snapshot_text[pos : pos + len(clean_quote)]))
+        idx = pos + 1
+
+    if occurrences:
+        return occurrences
 
     # 3. Whitespace-normalized regex search
     norm_quote = _normalize_whitespace(clean_quote)
     tokens = [token for token in norm_quote.split(" ") if token]
     if not tokens:
-        return None
+        return []
 
-    # Replace dashes in tokens with regex that matches any dash or sequence of dashes
     pattern_tokens = []
     for token in tokens:
         escaped = re.escape(token)
@@ -118,13 +132,92 @@ def find_quote_offsets(snapshot_text: str, quote: str) -> tuple[int, int, str] |
 
     pattern_str = r"\s+".join(pattern_tokens)
     try:
-        match = re.search(pattern_str, snapshot_text, re.IGNORECASE)
-        if match:
-            return match.start(), match.end(), snapshot_text[match.start() : match.end()]
+        for match in re.finditer(pattern_str, snapshot_text, re.IGNORECASE):
+            occurrences.append((match.start(), match.end(), snapshot_text[match.start() : match.end()]))
     except re.error:
         pass
 
-    return None
+    return occurrences
+
+
+def resolve_quote_offsets(
+    snapshot_text: str,
+    quote: str,
+    headings: list[dict[str, Any]] | None = None,
+    heading_hint: str | None = None,
+    scope_hint: str | None = None,
+) -> tuple[int, int, str, bool] | None:
+    """Resolve quote offsets taking into account repeated occurrences and heading scope.
+
+    Returns (start_offset, end_offset, matched_substring, is_ambiguous) or None.
+    """
+    occurrences = find_all_quote_offsets(snapshot_text, quote)
+    if not occurrences:
+        return None
+
+    if len(occurrences) == 1:
+        return occurrences[0][0], occurrences[0][1], occurrences[0][2], False
+
+    # Multiple occurrences: check if they belong to different headings
+    if not headings:
+        # Without headings, repeated quote across page cannot be disambiguated
+        return occurrences[0][0], occurrences[0][1], occurrences[0][2], True
+
+    def _nearest_heading(offset: int) -> dict[str, Any] | None:
+        preceding = [h for h in headings if h.get("start_offset", 0) <= offset]
+        if not preceding:
+            return None
+        return sorted(preceding, key=lambda h: h.get("start_offset", 0), reverse=True)[0]
+
+    # Map each occurrence to its enclosing heading
+    occ_with_headings: list[tuple[tuple[int, int, str], dict[str, Any] | None]] = []
+    distinct_headings: set[str] = set()
+
+    for occ in occurrences:
+        h = _nearest_heading(occ[0])
+        h_text = h.get("text", "").strip() if h else ""
+        distinct_headings.add(h_text.lower())
+        occ_with_headings.append((occ, h))
+
+    # If all occurrences belong to the exact same heading, they share the same scope
+    if len(distinct_headings) <= 1:
+        return occurrences[0][0], occurrences[0][1], occurrences[0][2], False
+
+    # They fall under DIFFERENT headings (different operational scopes).
+    # Try to match heading_hint or scope_hint
+    signals = []
+    if heading_hint:
+        signals.append(heading_hint.lower())
+    if scope_hint:
+        signals.append(scope_hint.lower())
+
+    matched_candidates: list[tuple[int, int, str]] = []
+    if signals:
+        for occ, h in occ_with_headings:
+            h_text = (h.get("text", "") if h else "").lower()
+            if any(s in h_text or h_text in s for s in signals):
+                matched_candidates.append(occ)
+
+    if len(matched_candidates) == 1:
+        # Uniquely resolved by heading/scope context!
+        chosen = matched_candidates[0]
+        return chosen[0], chosen[1], chosen[2], False
+
+    # Ambiguous across multiple scopes: do NOT silently select first occurrence
+    first = occurrences[0]
+    return first[0], first[1], first[2], True
+
+
+def find_quote_offsets(snapshot_text: str, quote: str) -> tuple[int, int, str] | None:
+    """Find exact or whitespace-tolerant quote in snapshot text.
+
+    Returns (start_offset, end_offset, matched_substring) or None.
+    Preserved for backwards-compatibility.
+    """
+    res = resolve_quote_offsets(snapshot_text, quote)
+    if res is None:
+        return None
+    return res[0], res[1], res[2]
 
 
 def validate_value_against_evidence(
@@ -143,7 +236,7 @@ def validate_value_against_evidence(
 
     # Rule 1: Prompt Injection Guard
     for pat in INJECTION_PATTERNS:
-        if pat.search(clean_val) or pat.search(clean_quote):
+        if pat.search(clean_val) or pat.search(clean_quote) or pat.search(combined_context):
             return False, "prompt_injection_payload_detected"
 
     # Rule 2: Business-Contact Rule (ARCHITECTURE §4, DECISION_LOG D6/D10)
@@ -195,6 +288,7 @@ def verify_candidate_evidence(
     snapshot_text: str,
     intended_fields: list[str],
     surrounding_context: str = "",
+    headings: list[dict[str, Any]] | None = None,
 ) -> VerificationResult:
     """Verify an individual candidate proposed by the LLM."""
     field_key = candidate.get("field_key", "")
@@ -232,9 +326,17 @@ def verify_candidate_evidence(
             rejection_reason="candidate evidence_quote is missing",
         )
 
-    # Gate 3: Exact or tolerant quote matching in snapshot text
-    match_offsets = find_quote_offsets(snapshot_text, evidence_quote)
-    if match_offsets is None:
+    # Gate 3: Exact or tolerant quote matching with repeated quote disambiguation
+    scope_hint = str(candidate.get("scope_proposal") or "")
+    heading_hint = str(candidate.get("heading_context") or surrounding_context or "")
+    match_res = resolve_quote_offsets(
+        snapshot_text=snapshot_text,
+        quote=evidence_quote,
+        headings=headings,
+        heading_hint=heading_hint,
+        scope_hint=scope_hint,
+    )
+    if match_res is None:
         return VerificationResult(
             verified=False,
             status="rejected",
@@ -244,11 +346,43 @@ def verify_candidate_evidence(
             rejection_reason="evidence_quote not found in snapshot text",
         )
 
-    start_offset, end_offset, matched_str = match_offsets
+    start_offset, end_offset, matched_str, is_ambiguous = match_res
 
-    # Extract surrounding context window (up to 300 chars before and 150 after) to capture enclosing headings/notes
-    window_start = max(0, start_offset - 300)
+    # If identical quote occurs under multiple headings and context is ambiguous,
+    # route to needs_review rather than silently selecting the first occurrence (Requirement 6).
+    if is_ambiguous:
+        return VerificationResult(
+            verified=True,
+            status="needs_review",
+            start_offset=start_offset,
+            end_offset=end_offset,
+            matched_quote=matched_str,
+            rejection_reason="ambiguous_repeated_quote_across_multiple_scopes",
+        )
+
+    # Extract surrounding context window bounded by section/paragraph to avoid cross-section contamination
+    window_start = max(0, start_offset - 200)
+    if headings:
+        preceding = [h for h in headings if h.get("start_offset", 0) <= start_offset]
+        if preceding:
+            nearest_h_start = max(h.get("start_offset", 0) for h in preceding)
+            window_start = max(window_start, nearest_h_start)
+    else:
+        p_boundary = snapshot_text.rfind("\n\n", 0, start_offset)
+        if p_boundary != -1 and p_boundary >= window_start:
+            window_start = p_boundary + 2
+
     window_end = min(len(snapshot_text), end_offset + 150)
+    if headings:
+        subsequent = [h for h in headings if h.get("start_offset", 0) > end_offset]
+        if subsequent:
+            next_h_start = min(h.get("start_offset", 0) for h in subsequent)
+            window_end = min(window_end, next_h_start)
+    else:
+        next_p = snapshot_text.find("\n\n", end_offset)
+        if next_p != -1 and next_p <= window_end:
+            window_end = next_p
+
     context_window = snapshot_text[window_start:window_end]
     full_context = f"{context_window} {surrounding_context}"
 

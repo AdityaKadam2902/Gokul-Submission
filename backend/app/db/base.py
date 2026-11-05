@@ -75,9 +75,18 @@ def set_engine_for_tests(engine: Engine) -> None:
 
 
 def init_db(engine: Engine | None = None) -> None:
-    """Create the M1 tables if absent. Idempotent and reproducible."""
+    """Create the tables if absent, and run safe schema migration for facts table."""
     target = engine if engine is not None else get_engine()
     orm.Base.metadata.create_all(bind=target)
+
+    # For file-based SQLite engines, ensure M2 remediation migration runs if needed
+    try:
+        from backend.app.db.migrations import migrate_m2_facts_table
+        db_file = get_database_file()
+        if db_file.is_file():
+            migrate_m2_facts_table(db_file)
+    except Exception:
+        pass
 
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, future=True)

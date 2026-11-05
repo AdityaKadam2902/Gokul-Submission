@@ -265,6 +265,8 @@ export interface components {
             id: number;
             /** Snapshot Id */
             snapshot_id: number;
+            /** Prompt Run Id */
+            prompt_run_id?: number | null;
             /** Organisation Id */
             organisation_id?: number | null;
             /** Field Key */
@@ -276,7 +278,7 @@ export interface components {
             /** Normalized Value */
             normalized_value?: string | null;
             /** Timezone */
-            timezone: string;
+            timezone?: string | null;
             /** Evidence Id */
             evidence_id?: number | null;
             /** Evidence Quote */

@@ -129,11 +129,12 @@ class Fact(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     organisation_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     snapshot_id: Mapped[int] = mapped_column(ForeignKey("page_snapshots.id", ondelete="CASCADE"), nullable=False)
+    prompt_run_id: Mapped[int | None] = mapped_column(ForeignKey("prompt_runs.id", ondelete="SET NULL"), nullable=True)
     field_key: Mapped[str] = mapped_column(String(64), nullable=False)
     scope_key: Mapped[str | None] = mapped_column(String(64), nullable=True)
     raw_value: Mapped[str] = mapped_column(Text, nullable=False)
     normalized_value: Mapped[str | None] = mapped_column(Text, nullable=True)
-    timezone: Mapped[str] = mapped_column(String(64), default="Australia/Brisbane", nullable=False)
+    timezone: Mapped[str | None] = mapped_column(String(64), default=None, nullable=True)
     evidence_id: Mapped[int | None] = mapped_column(ForeignKey("evidence.id", ondelete="SET NULL"), nullable=True)
     model_tag: Mapped[str | None] = mapped_column(String(64), nullable=True)
     prompt_version: Mapped[str | None] = mapped_column(String(64), nullable=True)
@@ -143,12 +144,14 @@ class Fact(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, nullable=False)
 
     snapshot: Mapped[PageSnapshot] = relationship(back_populates="facts")
+    prompt_run: Mapped[PromptRun | None] = relationship(back_populates="facts")
     evidence: Mapped[Evidence | None] = relationship(back_populates="facts")
 
     __table_args__ = (
         Index("ix_facts_snapshot_id", "snapshot_id"),
         Index("ix_facts_field_key", "field_key"),
         Index("ix_facts_status", "status"),
+        Index("ix_facts_prompt_run_id", "prompt_run_id"),
     )
 
 
@@ -173,6 +176,7 @@ class PromptRun(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, nullable=False)
 
     snapshot: Mapped[PageSnapshot] = relationship(back_populates="prompt_runs")
+    facts: Mapped[list["Fact"]] = relationship(back_populates="prompt_run")
 
     __table_args__ = (
         Index("ix_prompt_runs_snapshot_id", "snapshot_id"),
