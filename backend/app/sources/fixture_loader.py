@@ -101,7 +101,7 @@ def load_fixture(fixture_id: str) -> Fixture:
     if entry is None:
         raise FixtureError(
             f"unknown fixture id '{fixture_id}'",
-            known=sorted(manifest["fixtures"]),
+            details={"known": sorted(manifest["fixtures"])},
         )
     page_path = FIXTURES_DIR / entry["file"]
     try:
