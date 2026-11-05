@@ -1,0 +1,83 @@
+/* Thin fetch helpers over the documented API — response types come from the
+ * OpenAPI-generated schema (src/api/schema.d.ts, D19). No hand-written API types
+ * beyond narrow local unions for rendering.
+ */
+import type { components, paths as _paths } from './schema'
+
+export type SourceRead = components['schemas']['SourceRead']
+export type SourceDetailRead = components['schemas']['SourceDetailRead']
+export type SnapshotRead = components['schemas']['SnapshotRead']
+export type IngestionResult = components['schemas']['IngestionResult']
+export type HealthStatus = components['schemas']['HealthStatus']
+export type HeadingSpan = components['schemas']['HeadingSpan']
+
+const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000'
+
+export class ApiError extends Error {
+  status: number
+  code: string
+  details: Record<string, unknown>
+  constructor(status: number, code: string, message: string, details: Record<string, unknown> = {}) {
+    super(message)
+    this.status = status
+    this.code = code
+    this.details = details
+  }
+}
+
+async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  let response: Response
+  try {
+    response = await fetch(`${BASE}${path}`, {
+      headers: { 'Content-Type': 'application/json' },
+      ...init,
+    })
+  } catch (cause) {
+    throw new ApiError(0, 'backend_unavailable', `backend not reachable at ${BASE}`, { cause: String(cause) })
+  }
+  if (response.status === 204) return undefined as T
+  const bodyText = await response.text()
+  let body: unknown = undefined
+  try {
+    body = bodyText ? JSON.parse(bodyText) : undefined
+  } catch {
+    throw new ApiError(response.status, 'non_json_response', 'backend returned a non-JSON response')
+  }
+  if (!response.ok) {
+    const err = (body as { error?: { code?: string; message?: string; details?: Record<string, unknown> } })?.error
+    throw new ApiError(response.status, err?.code ?? 'http_error', err?.message ?? `HTTP ${response.status}`, err?.details)
+  }
+  return body as T
+}
+
+export const api = {
+  health: () => request<HealthStatus>('/api/health'),
+  listSources: () => request<SourceRead[]>('/api/sources'),
+  getSource: (id: number) => request<SourceDetailRead>(`/api/sources/${id}`),
+  createSource: (payload: {
+    kind: 'fixture' | 'url'
+    page_type: string
+    fixture_id?: string | null
+    url?: string | null
+    label?: string | null
+    intended_fields?: string[]
+    approval_note?: string | null
+  }) =>
+    request<SourceRead>('/api/sources', { method: 'POST', body: JSON.stringify(payload) }),
+  patchSource: (id: number, payload: { label?: string; page_type?: string; intended_fields?: string[]; approval_note?: string | null }) =>
+    request<SourceRead>(`/api/sources/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
+  deleteSource: (id: number) => request<void>(`/api/sources/${id}`, { method: 'DELETE' }),
+  ingest: (sourceId: number) => request<IngestionResult>(`/api/ingestions/${sourceId}`, { method: 'POST' }),
+  getSnapshot: (id: number) => request<SnapshotRead>(`/api/snapshots/${id}`),
+}
+
+// Static inventory of the M0 fixture corpus (ids + archetypes match the
+// manifest; the manifest itself is a repository artefact, not an API).
+export const FIXTURE_OPTIONS = [
+  { id: 'F1', archetype: 'home', label: 'Home page archetype' },
+  { id: 'F2', archetype: 'services', label: 'Services page archetype' },
+  { id: 'F3', archetype: 'contact', label: 'Contact page archetype (multi-scope hours)' },
+  { id: 'F4', archetype: 'team', label: 'Team page archetype (role categories)' },
+  { id: 'F5', archetype: 'vacancies', label: 'Vacancies page archetype' },
+  { id: 'F6', archetype: 'policies', label: 'Policies page archetype (adversarial)' },
+] as const
