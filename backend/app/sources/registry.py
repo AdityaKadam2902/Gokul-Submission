@@ -48,8 +48,9 @@ def create_source(session: Session, payload: SourceCreate) -> Source:
             )
         fixture_id = payload.fixture_id
 
-    source = Source(  # type: ignore[call-arg]
+    source = Source(
         kind=payload.kind,
+        label=payload.label,
         fixture_id=fixture_id,
         url=str(payload.url) if payload.url else None,
         domain=_domain_of(str(payload.url) if payload.url else None),

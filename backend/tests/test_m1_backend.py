@@ -71,6 +71,7 @@ def test_register_fixture_source_succeeds(client):
     assert created["policy_status"] == "manual_fixture_pending_policy_check"
     assert created["id"] > 0
     assert created["intended_fields"] == ["organisation_name"]
+    assert created["label"] == "Synthetic F3"  # label persists (regression: silently dropped)
 
 
 def test_register_url_source_is_documented_never_approved(client):

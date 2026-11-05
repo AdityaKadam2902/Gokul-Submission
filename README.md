@@ -3,8 +3,40 @@
 **Healthcare Practice & Workforce Intelligence** — a local-first, evidence-first prototype that turns a small, policy-approved and policy-gated set of public healthcare organisation pages (or, until policies are verified, clearly-labelled synthetic fixtures) into structured, source-backed records with per-fact evidence, change/conflict intelligence, human review and provenance-complete exports.
 
 > **Name status:** PracticeSignal is a **provisional** working name. No trademark, domain or collision search has been performed yet (tracked in `docs/IMPLEMENTATION_PLAN.md §9`).
-> **Status:** Milestone 0 (project foundation + synthetic fixture corpus). Milestones M1–M6 are specified in `docs/IMPLEMENTATION_PLAN.md` and not yet implemented.
+> **Status:** Milestone 1 complete (pre-AI vertical slice: source registry → synthetic-fixture ingestion → parsing → SQLite snapshots → FastAPI → React UI). M0 foundation is in the history; M2 (AI extraction) is not started.
 > **Zero-cost rule:** no paid APIs, paid models, subscriptions, paid hosting, credit cards or trials. Runtime AI is a locally installed open model; nothing is metered or key-gated.
+
+## Running M1 (reproducible setup)
+
+Requires Python ≥ 3.11 (verified 3.12.6) and Node ≥ 18 (verified v24.20.0). No accounts, keys or Ollama needed — M1 performs **no AI calls and no network access**.
+
+```bash
+# 1. Backend environment (first time only)
+python -m venv .venv
+.venv/Scripts/pip install -e ".[dev]"   # POSIX: .venv/bin/pip
+
+# 2. Frontend dependencies (first time only; package.json is at the repo root)
+npm install
+
+# 3. Start the backend (localhost-only, creates backend/data/practicesignal.db on boot)
+.venv/Scripts/python -m uvicorn backend.app.api.main:app --host 127.0.0.1 --port 8000
+
+# 4. Start the frontend dev server (second terminal)
+npm run dev                              # → http://localhost:5173
+
+# Optional production build + type checks
+npm run typecheck                        # tsc --noEmit
+npm run build                            # vite production build
+npm run generate:types                   # regenerate TS types from the live OpenAPI (D19; backend must be running)
+
+# Tests
+.venv/Scripts/python -m pytest backend/tests        # 47 tests (18 M0 conformance + 29 M1 slice)
+
+# Reset the local database (idempotent, never touches fixtures)
+bash scripts/reset_db.sh
+```
+
+Workflow in the UI: **Register source → (choose F1–F6 fixture) → Ingest → open Snapshot detail** (parsed text with heading offsets, hash, provenance) or **Re-ingest** (unchanged content is short-circuited). Health panel: `#/health`. All data is clearly labelled `SYNTHETIC FIXTURE` — fixture ingestion is never presented as a live scrape.
 
 ## What is documented where
 
@@ -34,24 +66,9 @@
 - Ollama 0.40.14 with `llama3.2:3b` already installed locally (Llama 3.2 Community License; **weights are not redistributed by this repository** — pull via Ollama yourself)
 - No GPU required; CPU-only inference is supported by design (per DECISION_LOG D4/D5).
 
-## Setup (current milestone: M0)
+## Legacy M0-only setup notes (historical)
 
-M0 is documentation + fixtures + conformance tests only. **Do not install** anything yet if following the assessment's milestone discipline; dependency installation is authorised from M1 per `docs/IMPLEMENTATION_PLAN.md`.
-
-```
-# after git clone, when M1 is authorised:
-python -m venv .venv
-pip install -e ".[dev]"          # backend + dev tooling from pyproject.toml
-cd frontend && npm install        # not yet required at M0
-```
-
-Run the M0 conformance tests (requires pytest availability):
-
-```
-pytest backend/tests/test_m0_docs_and_fixtures.py
-```
-
-Environment variables: see `.env.example`. No secrets are needed at any point.
+M0 ran documentation + fixtures + conformance tests only; its 18-test conformance suite is now part of `backend/tests` (runs under real pytest, not the earlier stdlib fallback driver). Environment variables are documented in `.env.example`; no secrets are needed at any point.
 
 ## Honest limitations (current)
 

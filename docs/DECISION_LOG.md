@@ -50,3 +50,18 @@
 ## Ambient environment statement (4 Nov 2026)
 
 Python 3.12.6 · Node v24.20.0 · npm 11.19.0 · Ollama 0.40.14 · `llama3.2:3b` present · `nomic-embed-text` present (unused in V1) · **no GPU detected** → CPU-only inference; latency budget therefore dictates single-call-per-changed-page and fixture-first evaluation (D4/D5).
+
+---
+
+## M1 addendum (5 November 2026 — vertical-slice decisions)
+
+Per the change-control rule, the following smallest-consistent decisions made during M1 are recorded here:
+
+| ID | Decision | Rationale |
+|---|---|---|
+| D23 | `page_snapshots` gains a `headings` JSON column storing `[(level, text, start_offset, end_offset)]` captured at parse time. Snapshot reads are deterministic without re-parsing HTML, and keeping the heading chain is an explicit M1 output requirement (IMPLEMENTATION_PLAN M1-AC 3/4). This stays within the two-table M1 database (D9 — a column addition to the table that owns the concern, not a speculative new table). | Snapshot reads must not depend on HTML (not stored) or on re-deriving offsets from text. |
+| D24 | `package.json` remains at the repository root (not `frontend/`), with Vite configured via a root `vite.config.ts` (`root: 'frontend'`). The M0 conformance tests define the manifest position as asserted behaviour; moving it would weaken M0 tests. Implementation-plan's `frontend/src/...` layout is honoured exactly as specified. | M0 tests are the recorded contract; Vite supports the split cleanly. |
+| D25 | `sources.organisation_id` is created as a plain nullable integer column in M1; the FK constraint lands in M2 together with the `organisations` table. SQLite obtains no half-functional FK, and no speculative table is created (D9). | D9 incremental database, applied literally. |
+| D26 | Registered-URL sources are creatable via the API but are permanently un-fetchable in M1: the API refuses the `approved_live` state entirely (422), ingestion of kind=url is a structural 409 (no fetcher exists), and no socket is ever opened — asserted by a test that monkey-patches `socket.socket` to fail. | SOURCE_REGISTER hard rule "live fetching requires an approved_live row"; zero such rows exist. |
+| D27 | Ingestion for a `blocked` source is refused with 409 (`source_blocked`); `manual_fixture_pending_policy_check` and `unavailable` sources may ingest fixtures only (local synthetic data; never the network). | Register §1 state semantics applied mechanically by code, not judgement. |
+| D28 | `approved_live` is never settable through the API. State changes happen only through the SOURCE_REGISTER §3 manual procedure recorded in the register file. | Prevents self-approval; keeps one decision path. |
