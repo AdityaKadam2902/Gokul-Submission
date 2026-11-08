@@ -13,6 +13,15 @@ export type HeadingSpan = components['schemas']['HeadingSpan']
 export type FactRead = components['schemas']['FactRead']
 export type PromptRunRead = components['schemas']['PromptRunRead']
 export type ExtractionResultRead = components['schemas']['ExtractionResultRead']
+export type ReviewQueueItemRead = components['schemas']['ReviewQueueItemRead']
+export type ReviewQueueResponse = components['schemas']['ReviewQueueResponse']
+export type ReviewMetricsRead = components['schemas']['ReviewMetricsRead']
+export type ReviewItemDetailRead = components['schemas']['ReviewItemDetailRead']
+export type ReviewActionCreate = components['schemas']['ReviewActionCreate']
+export type ReviewActionRead = components['schemas']['ReviewActionRead']
+export type ReviewHistoryResponse = components['schemas']['ReviewHistoryResponse']
+export type PracticeLifecycleEventRead = components['schemas']['PracticeLifecycleEventRead']
+export type LifecycleScanResult = components['schemas']['LifecycleScanResult']
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000'
 
@@ -87,6 +96,48 @@ export const api = {
     const q = snapshotId ? `?snapshot_id=${snapshotId}` : ''
     return request<PromptRunRead[]>(`/api/prompt-runs${q}`)
   },
+  getReviewQueue: (params?: { entity_type?: string; status?: string; limit?: number; offset?: number }) => {
+    const q = new URLSearchParams()
+    if (params?.entity_type) q.set('entity_type', params.entity_type)
+    if (params?.status) q.set('status', params.status)
+    if (params?.limit) q.set('limit', String(params.limit))
+    if (params?.offset) q.set('offset', String(params.offset))
+    return request<ReviewQueueResponse>(`/api/reviews/queue${q.toString() ? `?${q}` : ''}`)
+  },
+  getReviewMetrics: () => request<ReviewMetricsRead>('/api/reviews/metrics'),
+  getReviewItemDetail: (entityType: string, entityId: number) =>
+    request<ReviewItemDetailRead>(`/api/reviews/${entityType}/${entityId}`),
+  submitReviewAction: (entityType: string, entityId: number, payload: ReviewActionCreate) =>
+    request<ReviewActionRead>(`/api/reviews/${entityType}/${entityId}/actions`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  getReviewItemHistory: (entityType: string, entityId: number) =>
+    request<ReviewHistoryResponse>(`/api/reviews/${entityType}/${entityId}/history`),
+  listReviewActions: (params?: { entity_type?: string; reviewer?: string; action?: string; limit?: number; offset?: number }) => {
+    const q = new URLSearchParams()
+    if (params?.entity_type) q.set('entity_type', params.entity_type)
+    if (params?.reviewer) q.set('reviewer', params.reviewer)
+    if (params?.action) q.set('action', params.action)
+    if (params?.limit) q.set('limit', String(params.limit))
+    if (params?.offset) q.set('offset', String(params.offset))
+    return request<ReviewHistoryResponse>(`/api/reviews/actions${q.toString() ? `?${q}` : ''}`)
+  },
+  listLifecycleEvents: (params?: { organisation_id?: number; event_type?: string; status?: string; limit?: number; offset?: number }) => {
+    const q = new URLSearchParams()
+    if (params?.organisation_id) q.set('organisation_id', String(params.organisation_id))
+    if (params?.event_type) q.set('event_type', params.event_type)
+    if (params?.status) q.set('status', params.status)
+    if (params?.limit) q.set('limit', String(params.limit))
+    if (params?.offset) q.set('offset', String(params.offset))
+    return request<PracticeLifecycleEventRead[]>(`/api/lifecycle/events${q.toString() ? `?${q}` : ''}`)
+  },
+  getLifecycleEvent: (id: number) => request<PracticeLifecycleEventRead>(`/api/lifecycle/events/${id}`),
+  scanLifecycle: (payload?: { source_id?: number; organisation_id?: number }) =>
+    request<LifecycleScanResult>('/api/lifecycle/scan', {
+      method: 'POST',
+      body: JSON.stringify(payload ?? {}),
+    }),
 }
 
 // Static inventory of the M0 fixture corpus (ids + archetypes match the

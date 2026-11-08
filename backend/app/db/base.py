@@ -79,12 +79,26 @@ def init_db(engine: Engine | None = None) -> None:
     target = engine if engine is not None else get_engine()
     orm.Base.metadata.create_all(bind=target)
 
-    # For file-based SQLite engines, ensure M2 remediation migration runs if needed
+    # For file-based SQLite engines, ensure M2 and M3 migrations run if needed
     try:
-        from backend.app.db.migrations import migrate_m2_facts_table
+        from backend.app.db.migrations import (
+            migrate_m2_facts_table,
+            migrate_m3_001_organisations,
+            migrate_m3_002_discrepancies,
+            migrate_m3_003_change_events,
+            migrate_m3_004_opportunities,
+            migrate_m3_005_review_actions,
+            migrate_m3_006_lifecycle_events,
+        )
         db_file = get_database_file()
         if db_file.is_file():
             migrate_m2_facts_table(db_file)
+            migrate_m3_001_organisations(db_file)
+            migrate_m3_002_discrepancies(db_file)
+            migrate_m3_003_change_events(db_file)
+            migrate_m3_004_opportunities(db_file)
+            migrate_m3_005_review_actions(db_file)
+            migrate_m3_006_lifecycle_events(db_file)
     except Exception:
         pass
 

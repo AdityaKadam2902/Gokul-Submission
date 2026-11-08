@@ -722,6 +722,2365 @@
         }
       }
     },
+    "/api/organisations": {
+      "get": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "List Organisations",
+        "description": "Query healthcare practice organisations with deterministic filtering.",
+        "operationId": "list_organisations_api_organisations_get",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by unique URL-safe slug",
+              "title": "Slug"
+            },
+            "description": "Filter by unique URL-safe slug"
+          },
+          {
+            "name": "postcode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by 4-digit postcode",
+              "title": "Postcode"
+            },
+            "description": "Filter by 4-digit postcode"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by Australian state (VIC, NSW, etc.)",
+              "title": "State"
+            },
+            "description": "Filter by Australian state (VIC, NSW, etc.)"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganisationRead"
+                  },
+                  "title": "Response List Organisations Api Organisations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "Create Organisation",
+        "description": "Create a new healthcare practice organisation in the canonical registry.",
+        "operationId": "create_organisation_api_organisations_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganisationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/organisations/{org_id}": {
+      "get": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "Get Organisation",
+        "description": "Get full organisation profile including linked sources and active facts count.",
+        "operationId": "get_organisation_api_organisations__org_id__get",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationDetailRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/organisations/{org_id}/sources": {
+      "get": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "List Organisation Sources",
+        "description": "List all registered sources linked to this practice organisation.",
+        "operationId": "list_organisation_sources_api_organisations__org_id__sources_get",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganisationLinkRead"
+                  },
+                  "title": "Response List Organisation Sources Api Organisations  Org Id  Sources Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "Link Source To Organisation",
+        "description": "Link a source to an organisation with a specific relationship type.",
+        "operationId": "link_source_to_organisation_api_organisations__org_id__sources_post",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganisationLinkCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationLinkRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/organisations/{org_id}/sources/{link_id}": {
+      "patch": {
+        "tags": [
+          "organisations"
+        ],
+        "summary": "Update Organisation Source Link",
+        "description": "Deliberate operator operation to transition source link verification status (suggested -> confirmed | rejected).",
+        "operationId": "update_organisation_source_link_api_organisations__org_id__sources__link_id__patch",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Org Id"
+            }
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Link Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganisationLinkUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationLinkRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/match-candidates": {
+      "get": {
+        "tags": [
+          "entity_resolution"
+        ],
+        "summary": "List Match Candidates",
+        "description": "Query conservative entity resolution match suggestions.",
+        "operationId": "list_match_candidates_api_match_candidates_get",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by review status (suggested|needs_review|approved|rejected)",
+              "title": "Status"
+            },
+            "description": "Filter by review status (suggested|needs_review|approved|rejected)"
+          },
+          {
+            "name": "tier",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by match tier (strong_match_suggestion|possible_match|insufficient_evidence)",
+              "title": "Tier"
+            },
+            "description": "Filter by match tier (strong_match_suggestion|possible_match|insufficient_evidence)"
+          },
+          {
+            "name": "source_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by source id",
+              "title": "Source Id"
+            },
+            "description": "Filter by source id"
+          },
+          {
+            "name": "organisation_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by organisation id",
+              "title": "Organisation Id"
+            },
+            "description": "Filter by organisation id"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganisationMatchCandidateRead"
+                  },
+                  "title": "Response List Match Candidates Api Match Candidates Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/match-candidates/scan/{source_id}": {
+      "post": {
+        "tags": [
+          "entity_resolution"
+        ],
+        "summary": "Scan Source Matches",
+        "description": "Scan a source against known practice organisations and generate match candidates.",
+        "operationId": "scan_source_matches_api_match_candidates_scan__source_id__post",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganisationMatchCandidateRead"
+                  },
+                  "title": "Response Scan Source Matches Api Match Candidates Scan  Source Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sources/{source_id}/observations": {
+      "get": {
+        "tags": [
+          "observations"
+        ],
+        "summary": "Get Source Observations",
+        "description": "Retrieve chronological observation heartbeat history for a registered source.",
+        "operationId": "get_source_observations_api_sources__source_id__observations_get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Source Id"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Skip"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SourceObservationRead"
+                  },
+                  "title": "Response Get Source Observations Api Sources  Source Id  Observations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/discrepancies": {
+      "get": {
+        "tags": [
+          "discrepancies"
+        ],
+        "summary": "List Discrepancies",
+        "description": "List detected cross-source discrepancies with optional filtering.",
+        "operationId": "list_discrepancies_api_discrepancies_get",
+        "parameters": [
+          {
+            "name": "organisation_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by organisation ID",
+              "title": "Organisation Id"
+            },
+            "description": "Filter by organisation ID"
+          },
+          {
+            "name": "conflict_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by conflict type",
+              "title": "Conflict Type"
+            },
+            "description": "Filter by conflict type"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by status",
+              "title": "Status"
+            },
+            "description": "Filter by status"
+          },
+          {
+            "name": "field_key",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by field key",
+              "title": "Field Key"
+            },
+            "description": "Filter by field key"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "description": "Page limit",
+              "default": 50,
+              "title": "Limit"
+            },
+            "description": "Page limit"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Page offset",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Page offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DiscrepancyRead"
+                  },
+                  "title": "Response List Discrepancies Api Discrepancies Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/discrepancies/{discrepancy_id}": {
+      "get": {
+        "tags": [
+          "discrepancies"
+        ],
+        "summary": "Get Discrepancy",
+        "description": "Retrieve detailed discrepancy record with both conflicting facts, sources, and evidence.",
+        "operationId": "get_discrepancy_api_discrepancies__discrepancy_id__get",
+        "parameters": [
+          {
+            "name": "discrepancy_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Discrepancy Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscrepancyDetailRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/discrepancies/scan/{organisation_id}": {
+      "post": {
+        "tags": [
+          "discrepancies"
+        ],
+        "summary": "Trigger Organisation Scan",
+        "description": "Trigger discrepancy detection scan across all confirmed sources for an organisation.",
+        "operationId": "trigger_organisation_scan_api_discrepancies_scan__organisation_id__post",
+        "parameters": [
+          {
+            "name": "organisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Organisation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiscrepancyScanResultRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/changes": {
+      "get": {
+        "tags": [
+          "changes"
+        ],
+        "summary": "List Change Events",
+        "description": "List detected temporal change events with optional filtering.",
+        "operationId": "list_change_events_api_changes_get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by registered source ID",
+              "title": "Source Id"
+            },
+            "description": "Filter by registered source ID"
+          },
+          {
+            "name": "organisation_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by organisation ID",
+              "title": "Organisation Id"
+            },
+            "description": "Filter by organisation ID"
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by event type",
+              "title": "Event Type"
+            },
+            "description": "Filter by event type"
+          },
+          {
+            "name": "field_key",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by field key",
+              "title": "Field Key"
+            },
+            "description": "Filter by field key"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "description": "Page limit",
+              "default": 50,
+              "title": "Limit"
+            },
+            "description": "Page limit"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Page offset",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Page offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChangeEventRead"
+                  },
+                  "title": "Response List Change Events Api Changes Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/changes/{change_id}": {
+      "get": {
+        "tags": [
+          "changes"
+        ],
+        "summary": "Get Change Event",
+        "description": "Retrieve detailed temporal change event with linked facts, snapshots, and sources.",
+        "operationId": "get_change_event_api_changes__change_id__get",
+        "parameters": [
+          {
+            "name": "change_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Change Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeEventDetailRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/changes/scan/source/{source_id}": {
+      "post": {
+        "tags": [
+          "changes"
+        ],
+        "summary": "Trigger Source Change Scan",
+        "description": "Trigger change detection scan across all observations for a registered source.",
+        "operationId": "trigger_source_change_scan_api_changes_scan_source__source_id__post",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeScanResultRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/changes/scan/organisation/{organisation_id}": {
+      "post": {
+        "tags": [
+          "changes"
+        ],
+        "summary": "Trigger Organisation Change Scan",
+        "description": "Trigger change detection across all confirmed sources for an organisation.",
+        "operationId": "trigger_organisation_change_scan_api_changes_scan_organisation__organisation_id__post",
+        "parameters": [
+          {
+            "name": "organisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Organisation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChangeEventRead"
+                  },
+                  "title": "Response Trigger Organisation Change Scan Api Changes Scan Organisation  Organisation Id  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/freshness/policy": {
+      "get": {
+        "tags": [
+          "freshness"
+        ],
+        "summary": "Get Freshness Policy",
+        "description": "Inspect active monitoring policy configuration and category-specific thresholds.",
+        "operationId": "get_freshness_policy_api_freshness_policy_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FreshnessPolicyRead"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/freshness/source/{source_id}": {
+      "get": {
+        "tags": [
+          "freshness"
+        ],
+        "summary": "Get Source Freshness",
+        "description": "Evaluate observation freshness for a registered source.",
+        "operationId": "get_source_freshness_api_freshness_source__source_id__get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceObservationFreshnessRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/freshness/source/{source_id}/content": {
+      "get": {
+        "tags": [
+          "freshness"
+        ],
+        "summary": "Get Source Content Freshness Endpoint",
+        "description": "Evaluate content observation freshness for a registered source.",
+        "operationId": "get_source_content_freshness_endpoint_api_freshness_source__source_id__content_get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceContentFreshnessRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/freshness/fact/{fact_id}": {
+      "get": {
+        "tags": [
+          "freshness"
+        ],
+        "summary": "Get Fact Freshness",
+        "description": "Evaluate 4-dimensional freshness for a specific stored fact.",
+        "operationId": "get_fact_freshness_api_freshness_fact__fact_id__get",
+        "parameters": [
+          {
+            "name": "fact_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Fact Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactFreshnessRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/freshness/organisation/{organisation_id}": {
+      "get": {
+        "tags": [
+          "freshness"
+        ],
+        "summary": "Get Organisation Freshness",
+        "description": "Evaluate freshness metrics across all confirmed sources and linked facts for an organisation.",
+        "operationId": "get_organisation_freshness_api_freshness_organisation__organisation_id__get",
+        "parameters": [
+          {
+            "name": "organisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Organisation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganisationFreshnessSummaryRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/freshness/evaluate": {
+      "post": {
+        "tags": [
+          "freshness"
+        ],
+        "summary": "Evaluate Freshness",
+        "description": "Execute dynamic freshness evaluation with optional reference-time injection and threshold overrides.",
+        "operationId": "evaluate_freshness_api_freshness_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FreshnessEvaluateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Evaluate Freshness Api Freshness Evaluate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/opportunities": {
+      "get": {
+        "tags": [
+          "opportunities"
+        ],
+        "summary": "List Opportunities",
+        "description": "List healthcare practice recruitment opportunities with optional filtering.",
+        "operationId": "list_opportunities_api_opportunities_get",
+        "parameters": [
+          {
+            "name": "role_category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by role category (e.g. gp, nurse)",
+              "title": "Role Category"
+            },
+            "description": "Filter by role category (e.g. gp, nurse)"
+          },
+          {
+            "name": "organisation_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by organisation ID",
+              "title": "Organisation Id"
+            },
+            "description": "Filter by organisation ID"
+          },
+          {
+            "name": "source_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by source ID",
+              "title": "Source Id"
+            },
+            "description": "Filter by source ID"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by lifecycle status",
+              "title": "Status"
+            },
+            "description": "Filter by lifecycle status"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "description": "Page limit",
+              "default": 50,
+              "title": "Limit"
+            },
+            "description": "Page limit"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Page offset",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Page offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OpportunityRead"
+                  },
+                  "title": "Response List Opportunities Api Opportunities Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/opportunities/{opportunity_id}": {
+      "get": {
+        "tags": [
+          "opportunities"
+        ],
+        "summary": "Get Opportunity",
+        "description": "Retrieve detailed information and provenance for a single opportunity.",
+        "operationId": "get_opportunity_api_opportunities__opportunity_id__get",
+        "parameters": [
+          {
+            "name": "opportunity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Opportunity Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpportunityDetailRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/opportunities/scan/{source_id}": {
+      "post": {
+        "tags": [
+          "opportunities"
+        ],
+        "summary": "Trigger Source Opportunity Scan",
+        "description": "Trigger deterministic opportunity lifecycle scan for a registered source.",
+        "operationId": "trigger_source_opportunity_scan_api_opportunities_scan__source_id__post",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpportunityScanResultRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/queue": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Get Queue",
+        "description": "Retrieve unified human review queue with grounded evidence and priority.",
+        "operationId": "get_queue_api_reviews_queue_get",
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter queue by entity type",
+              "title": "Entity Type"
+            },
+            "description": "Filter queue by entity type"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter queue by status (pending, deferred, completed, all)",
+              "title": "Status"
+            },
+            "description": "Filter queue by status (pending, deferred, completed, all)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewQueueResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/metrics": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Get Metrics",
+        "description": "Retrieve review metrics and pending item totals grouped by entity type.",
+        "operationId": "get_metrics_api_reviews_metrics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewMetricsRead"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/actions": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "List Review Actions",
+        "description": "Retrieve global append-only audit trail of human decisions.",
+        "operationId": "list_review_actions_api_reviews_actions_get",
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter history by entity type",
+              "title": "Entity Type"
+            },
+            "description": "Filter history by entity type"
+          },
+          {
+            "name": "entity_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter history by entity id",
+              "title": "Entity Id"
+            },
+            "description": "Filter history by entity id"
+          },
+          {
+            "name": "reviewer",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter history by reviewer identifier",
+              "title": "Reviewer"
+            },
+            "description": "Filter history by reviewer identifier"
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter history by action taken",
+              "title": "Action"
+            },
+            "description": "Filter history by action taken"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewHistoryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{entity_type}/{entity_id}": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Get Item Detail",
+        "description": "Retrieve comprehensive detail, quotations, and decision history for a reviewable item.",
+        "operationId": "get_item_detail_api_reviews__entity_type___entity_id__get",
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "entity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Entity Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewItemDetailRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{entity_type}/{entity_id}/actions": {
+      "post": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Submit Review Action",
+        "description": "Record an immutable, append-only human decision on an intelligence entity.",
+        "operationId": "submit_review_action_api_reviews__entity_type___entity_id__actions_post",
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "entity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Entity Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewActionCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewActionRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reviews/{entity_type}/{entity_id}/history": {
+      "get": {
+        "tags": [
+          "reviews"
+        ],
+        "summary": "Get Item History",
+        "description": "Retrieve decision audit history for a specific entity.",
+        "operationId": "get_item_history_api_reviews__entity_type___entity_id__history_get",
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Entity Type"
+            }
+          },
+          {
+            "name": "entity_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Entity Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewHistoryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lifecycle/events": {
+      "get": {
+        "tags": [
+          "lifecycle"
+        ],
+        "summary": "List Lifecycle Events",
+        "description": "List detected practice lifecycle events with rich filters and pagination.",
+        "operationId": "list_lifecycle_events_api_lifecycle_events_get",
+        "parameters": [
+          {
+            "name": "organisation_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by organisation ID",
+              "title": "Organisation Id"
+            },
+            "description": "Filter by organisation ID"
+          },
+          {
+            "name": "source_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by source ID",
+              "title": "Source Id"
+            },
+            "description": "Filter by source ID"
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by event type (permanent_closure, relocation, etc.)",
+              "title": "Event Type"
+            },
+            "description": "Filter by event type (permanent_closure, relocation, etc.)"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by confidence status",
+              "title": "Status"
+            },
+            "description": "Filter by confidence status"
+          },
+          {
+            "name": "review_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter by review status (pending, accepted, rejected)",
+              "title": "Review Status"
+            },
+            "description": "Filter by review status (pending, accepted, rejected)"
+          },
+          {
+            "name": "is_branch_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Filter branch vs organisation events",
+              "title": "Is Branch Level"
+            },
+            "description": "Filter branch vs organisation events"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PracticeLifecycleEventRead"
+                  },
+                  "title": "Response List Lifecycle Events Api Lifecycle Events Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lifecycle/events/{id}": {
+      "get": {
+        "tags": [
+          "lifecycle"
+        ],
+        "summary": "Get Lifecycle Event",
+        "description": "Retrieve detailed lifecycle event information including citation quote and metadata.",
+        "operationId": "get_lifecycle_event_api_lifecycle_events__id__get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PracticeLifecycleEventRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lifecycle/organisations/{org_id}/history": {
+      "get": {
+        "tags": [
+          "lifecycle"
+        ],
+        "summary": "Get Organisation Lifecycle History",
+        "description": "Retrieve complete chronological lifecycle event history for a practice organisation.",
+        "operationId": "get_organisation_lifecycle_history_api_lifecycle_organisations__org_id__history_get",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Org Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PracticeLifecycleEventRead"
+                  },
+                  "title": "Response Get Organisation Lifecycle History Api Lifecycle Organisations  Org Id  History Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lifecycle/organisations/{org_id}/branches/{branch_locality}/history": {
+      "get": {
+        "tags": [
+          "lifecycle"
+        ],
+        "summary": "Get Branch Lifecycle History",
+        "description": "Retrieve branch-specific lifecycle history for a physical clinic location.",
+        "operationId": "get_branch_lifecycle_history_api_lifecycle_organisations__org_id__branches__branch_locality__history_get",
+        "parameters": [
+          {
+            "name": "org_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Org Id"
+            }
+          },
+          {
+            "name": "branch_locality",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Branch Locality"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PracticeLifecycleEventRead"
+                  },
+                  "title": "Response Get Branch Lifecycle History Api Lifecycle Organisations  Org Id  Branches  Branch Locality  History Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lifecycle/scan": {
+      "post": {
+        "tags": [
+          "lifecycle"
+        ],
+        "summary": "Scan Lifecycle Events",
+        "description": "Trigger a deterministic practice lifecycle scan for a source or organisation.",
+        "operationId": "scan_lifecycle_events_api_lifecycle_scan_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/LifecycleScanRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LifecycleScanResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
@@ -748,6 +3107,750 @@
   },
   "components": {
     "schemas": {
+      "ChangeEventDetailRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "previous_observation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Observation Id"
+          },
+          "current_observation_id": {
+            "type": "integer",
+            "title": "Current Observation Id"
+          },
+          "previous_snapshot_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Snapshot Id"
+          },
+          "current_snapshot_id": {
+            "type": "integer",
+            "title": "Current Snapshot Id"
+          },
+          "previous_fact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Fact Id"
+          },
+          "current_fact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Fact Id"
+          },
+          "event_type": {
+            "type": "string",
+            "title": "Event Type"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type",
+            "default": "fact"
+          },
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "scope_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Key"
+          },
+          "old_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Old Value"
+          },
+          "new_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Value"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          },
+          "diff_metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Diff Metadata"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "title": "Idempotency Key"
+          },
+          "detected_at": {
+            "type": "string",
+            "title": "Detected At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceRead"
+          },
+          "organisation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OrganisationRead"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_fact": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FactRead"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "current_fact": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FactRead"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_snapshot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SnapshotHead"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "current_snapshot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SnapshotHead"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "source_id",
+          "current_observation_id",
+          "current_snapshot_id",
+          "event_type",
+          "field_key",
+          "rationale",
+          "idempotency_key",
+          "detected_at",
+          "created_at",
+          "source"
+        ],
+        "title": "ChangeEventDetailRead"
+      },
+      "ChangeEventRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "previous_observation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Observation Id"
+          },
+          "current_observation_id": {
+            "type": "integer",
+            "title": "Current Observation Id"
+          },
+          "previous_snapshot_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Snapshot Id"
+          },
+          "current_snapshot_id": {
+            "type": "integer",
+            "title": "Current Snapshot Id"
+          },
+          "previous_fact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Fact Id"
+          },
+          "current_fact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Fact Id"
+          },
+          "event_type": {
+            "type": "string",
+            "title": "Event Type"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type",
+            "default": "fact"
+          },
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "scope_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Key"
+          },
+          "old_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Old Value"
+          },
+          "new_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Value"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          },
+          "diff_metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Diff Metadata"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "title": "Idempotency Key"
+          },
+          "detected_at": {
+            "type": "string",
+            "title": "Detected At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "source_id",
+          "current_observation_id",
+          "current_snapshot_id",
+          "event_type",
+          "field_key",
+          "rationale",
+          "idempotency_key",
+          "detected_at",
+          "created_at"
+        ],
+        "title": "ChangeEventRead"
+      },
+      "ChangeScanResultRead": {
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "observations_evaluated": {
+            "type": "integer",
+            "title": "Observations Evaluated"
+          },
+          "changes_detected": {
+            "type": "integer",
+            "title": "Changes Detected"
+          },
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/ChangeEventRead"
+            },
+            "type": "array",
+            "title": "Changes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "observations_evaluated",
+          "changes_detected"
+        ],
+        "title": "ChangeScanResultRead"
+      },
+      "DiscrepancyDetailRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "scope_key": {
+            "type": "string",
+            "title": "Scope Key"
+          },
+          "fact_a_id": {
+            "type": "integer",
+            "title": "Fact A Id"
+          },
+          "fact_b_id": {
+            "type": "integer",
+            "title": "Fact B Id"
+          },
+          "conflict_type": {
+            "type": "string",
+            "title": "Conflict Type"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "rationale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rationale"
+          },
+          "resolution_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolution Notes"
+          },
+          "resolved_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved By"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved At"
+          },
+          "detected_at": {
+            "type": "string",
+            "title": "Detected At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "fact_a": {
+            "$ref": "#/components/schemas/FactRead"
+          },
+          "fact_b": {
+            "$ref": "#/components/schemas/FactRead"
+          },
+          "source_a": {
+            "$ref": "#/components/schemas/SourceRead"
+          },
+          "source_b": {
+            "$ref": "#/components/schemas/SourceRead"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "organisation_id",
+          "field_key",
+          "scope_key",
+          "fact_a_id",
+          "fact_b_id",
+          "conflict_type",
+          "status",
+          "detected_at",
+          "created_at",
+          "fact_a",
+          "fact_b",
+          "source_a",
+          "source_b"
+        ],
+        "title": "DiscrepancyDetailRead"
+      },
+      "DiscrepancyRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "scope_key": {
+            "type": "string",
+            "title": "Scope Key"
+          },
+          "fact_a_id": {
+            "type": "integer",
+            "title": "Fact A Id"
+          },
+          "fact_b_id": {
+            "type": "integer",
+            "title": "Fact B Id"
+          },
+          "conflict_type": {
+            "type": "string",
+            "title": "Conflict Type"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "rationale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rationale"
+          },
+          "resolution_notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolution Notes"
+          },
+          "resolved_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved By"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved At"
+          },
+          "detected_at": {
+            "type": "string",
+            "title": "Detected At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "organisation_id",
+          "field_key",
+          "scope_key",
+          "fact_a_id",
+          "fact_b_id",
+          "conflict_type",
+          "status",
+          "detected_at",
+          "created_at"
+        ],
+        "title": "DiscrepancyRead"
+      },
+      "DiscrepancyScanResultRead": {
+        "properties": {
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "total_facts_scanned": {
+            "type": "integer",
+            "title": "Total Facts Scanned"
+          },
+          "comparisons_evaluated": {
+            "type": "integer",
+            "title": "Comparisons Evaluated"
+          },
+          "discrepancies_detected": {
+            "type": "integer",
+            "title": "Discrepancies Detected"
+          },
+          "discrepancies": {
+            "items": {
+              "$ref": "#/components/schemas/DiscrepancyRead"
+            },
+            "type": "array",
+            "title": "Discrepancies"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organisation_id",
+          "total_facts_scanned",
+          "comparisons_evaluated",
+          "discrepancies_detected"
+        ],
+        "title": "DiscrepancyScanResultRead"
+      },
+      "EvidenceVerificationFreshnessRead": {
+        "properties": {
+          "evidence_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "snapshot_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Id"
+          },
+          "captured_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Captured At"
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
+          },
+          "evaluated_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluated At"
+          },
+          "is_verified": {
+            "type": "boolean",
+            "title": "Is Verified"
+          },
+          "quote_length": {
+            "type": "integer",
+            "title": "Quote Length"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id",
+            "default": "ps_freshness_v1"
+          },
+          "threshold_governance": {
+            "type": "string",
+            "title": "Threshold Governance",
+            "default": "immutable_snapshot_integrity"
+          },
+          "as_of_reference_time": {
+            "type": "string",
+            "title": "As Of Reference Time"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_verified",
+          "quote_length",
+          "as_of_reference_time",
+          "rationale"
+        ],
+        "title": "EvidenceVerificationFreshnessRead"
+      },
       "ExtractionResultRead": {
         "properties": {
           "snapshot_id": {
@@ -816,6 +3919,207 @@
         ],
         "title": "ExtractionResultRead"
       },
+      "FactFreshnessRead": {
+        "properties": {
+          "fact_id": {
+            "type": "integer",
+            "title": "Fact Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "field_key": {
+            "type": "string",
+            "title": "Field Key"
+          },
+          "information_category": {
+            "type": "string",
+            "title": "Information Category"
+          },
+          "raw_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Value"
+          },
+          "observation_freshness": {
+            "$ref": "#/components/schemas/SourceObservationFreshnessRead"
+          },
+          "content_freshness": {
+            "$ref": "#/components/schemas/SourceContentFreshnessRead"
+          },
+          "evidence_freshness": {
+            "$ref": "#/components/schemas/EvidenceVerificationFreshnessRead"
+          },
+          "has_explicit_temporal_evidence": {
+            "type": "boolean",
+            "title": "Has Explicit Temporal Evidence"
+          },
+          "explicit_fact_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explicit Fact Date"
+          },
+          "fact_date_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fact Date Type"
+          },
+          "temporal_evidence_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temporal Evidence Quote"
+          },
+          "date_precision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Precision"
+          },
+          "date_range_start": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Range Start"
+          },
+          "date_range_end": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date Range End"
+          },
+          "min_fact_age_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Fact Age Days"
+          },
+          "max_fact_age_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Fact Age Days"
+          },
+          "fact_age_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fact Age Days"
+          },
+          "fact_freshness_classification": {
+            "type": "string",
+            "title": "Fact Freshness Classification"
+          },
+          "overall_classification": {
+            "type": "string",
+            "title": "Overall Classification"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "policy_threshold_days": {
+            "type": "integer",
+            "title": "Policy Threshold Days"
+          },
+          "threshold_governance": {
+            "type": "string",
+            "title": "Threshold Governance",
+            "default": "fact_category"
+          },
+          "as_of_reference_time": {
+            "type": "string",
+            "title": "As Of Reference Time"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fact_id",
+          "source_id",
+          "field_key",
+          "information_category",
+          "observation_freshness",
+          "content_freshness",
+          "evidence_freshness",
+          "has_explicit_temporal_evidence",
+          "fact_freshness_classification",
+          "overall_classification",
+          "policy_id",
+          "policy_threshold_days",
+          "as_of_reference_time",
+          "rationale"
+        ],
+        "title": "FactFreshnessRead"
+      },
       "FactRead": {
         "properties": {
           "id": {
@@ -825,6 +4129,17 @@
           "snapshot_id": {
             "type": "integer",
             "title": "Snapshot Id"
+          },
+          "prompt_run_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt Run Id"
           },
           "organisation_id": {
             "anyOf": [
@@ -868,7 +4183,14 @@
             "title": "Normalized Value"
           },
           "timezone": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Timezone"
           },
           "evidence_id": {
@@ -967,12 +4289,167 @@
           "snapshot_id",
           "field_key",
           "raw_value",
-          "timezone",
           "via",
           "status",
           "created_at"
         ],
         "title": "FactRead"
+      },
+      "FreshnessEvaluateRequest": {
+        "properties": {
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "fact_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fact Id"
+          },
+          "policy_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Id"
+          },
+          "source_observation_threshold_override": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Observation Threshold Override"
+          },
+          "category_thresholds_override": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Thresholds Override"
+          },
+          "reference_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Time"
+          }
+        },
+        "type": "object",
+        "title": "FreshnessEvaluateRequest"
+      },
+      "FreshnessPolicyRead": {
+        "properties": {
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "source_observation_threshold_days": {
+            "type": "integer",
+            "title": "Source Observation Threshold Days",
+            "default": 30
+          },
+          "source_content_threshold_days": {
+            "type": "integer",
+            "title": "Source Content Threshold Days",
+            "default": 90
+          },
+          "category_thresholds_days": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Category Thresholds Days"
+          },
+          "aging_threshold_ratio": {
+            "type": "number",
+            "title": "Aging Threshold Ratio"
+          },
+          "source_observation_overrides": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Source Observation Overrides"
+          },
+          "source_overrides": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Source Overrides"
+          },
+          "threshold_governance_documentation": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Threshold Governance Documentation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "policy_id",
+          "version",
+          "description",
+          "category_thresholds_days",
+          "aging_threshold_ratio"
+        ],
+        "title": "FreshnessPolicyRead"
       },
       "HTTPValidationError": {
         "properties": {
@@ -1116,6 +4593,1313 @@
         "title": "IngestionResult",
         "description": "Result of POST /api/ingestions/{source_id}."
       },
+      "LifecycleEventType": {
+        "type": "string",
+        "enum": [
+          "permanent_closure",
+          "temporary_closure",
+          "relocation",
+          "acquisition"
+        ],
+        "title": "LifecycleEventType",
+        "description": "Categorical type of healthcare practice lifecycle event."
+      },
+      "LifecycleScanRequest": {
+        "properties": {
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          }
+        },
+        "type": "object",
+        "title": "LifecycleScanRequest"
+      },
+      "LifecycleScanResult": {
+        "properties": {
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "events_detected": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Events Detected"
+          },
+          "by_type": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "By Type"
+          },
+          "by_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "By Status"
+          },
+          "new_events_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "New Events Count"
+          },
+          "existing_events_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Existing Events Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "events_detected",
+          "new_events_count",
+          "existing_events_count"
+        ],
+        "title": "LifecycleScanResult",
+        "description": "Summary metrics of a practice lifecycle detection scan."
+      },
+      "LifecycleStatus": {
+        "type": "string",
+        "enum": [
+          "confirmed_explicit",
+          "potential_needs_review",
+          "no_longer_observed",
+          "insufficient_evidence",
+          "conflicting_sources"
+        ],
+        "title": "LifecycleStatus",
+        "description": "Evidence confidence and verification state for practice lifecycle signals."
+      },
+      "OpportunityDetailRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "first_snapshot_id": {
+            "type": "integer",
+            "title": "First Snapshot Id"
+          },
+          "last_snapshot_id": {
+            "type": "integer",
+            "title": "Last Snapshot Id"
+          },
+          "role_category": {
+            "type": "string",
+            "title": "Role Category"
+          },
+          "role_title": {
+            "type": "string",
+            "title": "Role Title"
+          },
+          "verbatim_wording": {
+            "type": "string",
+            "title": "Verbatim Wording"
+          },
+          "contact_channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Channel"
+          },
+          "explicit_ad_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explicit Ad Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "closure_evidence_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closure Evidence Quote"
+          },
+          "consecutive_absences": {
+            "type": "integer",
+            "title": "Consecutive Absences",
+            "default": 0
+          },
+          "first_seen_at": {
+            "type": "string",
+            "title": "First Seen At"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          },
+          "organisation_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Name"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "organisation_id",
+          "source_id",
+          "first_snapshot_id",
+          "last_snapshot_id",
+          "role_category",
+          "role_title",
+          "verbatim_wording",
+          "status",
+          "first_seen_at",
+          "last_seen_at",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OpportunityDetailRead",
+        "description": "Detailed vacancy read model with contextual relations."
+      },
+      "OpportunityRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "first_snapshot_id": {
+            "type": "integer",
+            "title": "First Snapshot Id"
+          },
+          "last_snapshot_id": {
+            "type": "integer",
+            "title": "Last Snapshot Id"
+          },
+          "role_category": {
+            "type": "string",
+            "title": "Role Category"
+          },
+          "role_title": {
+            "type": "string",
+            "title": "Role Title"
+          },
+          "verbatim_wording": {
+            "type": "string",
+            "title": "Verbatim Wording"
+          },
+          "contact_channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Channel"
+          },
+          "explicit_ad_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Explicit Ad Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "closure_evidence_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closure Evidence Quote"
+          },
+          "consecutive_absences": {
+            "type": "integer",
+            "title": "Consecutive Absences",
+            "default": 0
+          },
+          "first_seen_at": {
+            "type": "string",
+            "title": "First Seen At"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "organisation_id",
+          "source_id",
+          "first_snapshot_id",
+          "last_snapshot_id",
+          "role_category",
+          "role_title",
+          "verbatim_wording",
+          "status",
+          "first_seen_at",
+          "last_seen_at",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OpportunityRead",
+        "description": "Healthcare workforce recruitment vacancy entity (D43)."
+      },
+      "OpportunityScanResultRead": {
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "opportunities_found": {
+            "type": "integer",
+            "title": "Opportunities Found"
+          },
+          "opportunities_created": {
+            "type": "integer",
+            "title": "Opportunities Created"
+          },
+          "opportunities_updated": {
+            "type": "integer",
+            "title": "Opportunities Updated"
+          },
+          "status_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Status Counts"
+          },
+          "opportunities": {
+            "items": {
+              "$ref": "#/components/schemas/OpportunityRead"
+            },
+            "type": "array",
+            "title": "Opportunities"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "opportunities_found",
+          "opportunities_created",
+          "opportunities_updated"
+        ],
+        "title": "OpportunityScanResultRead",
+        "description": "Result of deterministic opportunity scan for a source."
+      },
+      "OrganisationCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "title": "Slug"
+          },
+          "primary_domain": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Domain"
+          },
+          "corporate_parent_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corporate Parent Id"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "address": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "suburb": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suburb"
+          },
+          "postcode": {
+            "type": "string",
+            "maxLength": 16,
+            "minLength": 3,
+            "title": "Postcode"
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 16,
+            "minLength": 2,
+            "title": "State"
+          },
+          "status": {
+            "type": "string",
+            "pattern": "^(active|inactive|pending_review|merged)$",
+            "title": "Status",
+            "default": "active"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "slug",
+          "postcode",
+          "state"
+        ],
+        "title": "OrganisationCreate"
+      },
+      "OrganisationDetailRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "primary_domain": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Domain"
+          },
+          "corporate_parent_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corporate Parent Id"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "suburb": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suburb"
+          },
+          "postcode": {
+            "type": "string",
+            "title": "Postcode"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          },
+          "source_links": {
+            "items": {
+              "$ref": "#/components/schemas/OrganisationLinkRead"
+            },
+            "type": "array",
+            "title": "Source Links"
+          },
+          "active_facts_count": {
+            "type": "integer",
+            "title": "Active Facts Count",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "postcode",
+          "state",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OrganisationDetailRead"
+      },
+      "OrganisationFreshnessSummaryRead": {
+        "properties": {
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "organisation_name": {
+            "type": "string",
+            "title": "Organisation Name"
+          },
+          "confirmed_source_count": {
+            "type": "integer",
+            "title": "Confirmed Source Count"
+          },
+          "total_facts_count": {
+            "type": "integer",
+            "title": "Total Facts Count"
+          },
+          "fresh_facts_count": {
+            "type": "integer",
+            "title": "Fresh Facts Count"
+          },
+          "aging_facts_count": {
+            "type": "integer",
+            "title": "Aging Facts Count"
+          },
+          "stale_facts_count": {
+            "type": "integer",
+            "title": "Stale Facts Count"
+          },
+          "unknown_facts_count": {
+            "type": "integer",
+            "title": "Unknown Facts Count"
+          },
+          "unobservable_sources_count": {
+            "type": "integer",
+            "title": "Unobservable Sources Count"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceObservationFreshnessRead"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "as_of_reference_time": {
+            "type": "string",
+            "title": "As Of Reference Time"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "summary_rationale": {
+            "type": "string",
+            "title": "Summary Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organisation_id",
+          "organisation_name",
+          "confirmed_source_count",
+          "total_facts_count",
+          "fresh_facts_count",
+          "aging_facts_count",
+          "stale_facts_count",
+          "unknown_facts_count",
+          "unobservable_sources_count",
+          "as_of_reference_time",
+          "policy_id",
+          "summary_rationale"
+        ],
+        "title": "OrganisationFreshnessSummaryRead"
+      },
+      "OrganisationLinkCreate": {
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Source Id"
+          },
+          "relationship_type": {
+            "type": "string",
+            "pattern": "^(official_practice_site|corporate_parent|branch_page|third_party_directory)$",
+            "title": "Relationship Type"
+          },
+          "scope_path": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Path"
+          },
+          "verification_status": {
+            "type": "string",
+            "pattern": "^(suggested|confirmed|rejected)$",
+            "title": "Verification Status",
+            "default": "suggested"
+          },
+          "verified_by": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified By"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "relationship_type"
+        ],
+        "title": "OrganisationLinkCreate"
+      },
+      "OrganisationLinkRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "relationship_type": {
+            "type": "string",
+            "title": "Relationship Type"
+          },
+          "scope_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Path"
+          },
+          "verification_status": {
+            "type": "string",
+            "title": "Verification Status"
+          },
+          "verified_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified By"
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "organisation_id",
+          "source_id",
+          "relationship_type",
+          "verification_status",
+          "created_at"
+        ],
+        "title": "OrganisationLinkRead"
+      },
+      "OrganisationLinkUpdate": {
+        "properties": {
+          "verification_status": {
+            "type": "string",
+            "pattern": "^(suggested|confirmed|rejected)$",
+            "title": "Verification Status"
+          },
+          "relationship_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(official_practice_site|corporate_parent|branch_page|third_party_directory)$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relationship Type"
+          },
+          "scope_path": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 512
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Path"
+          },
+          "verified_by": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified By"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "verification_status"
+        ],
+        "title": "OrganisationLinkUpdate",
+        "description": "Operator-driven link verification status transition (suggested -> confirmed | rejected)."
+      },
+      "OrganisationMatchCandidateRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "suggested_organisation_id": {
+            "type": "integer",
+            "title": "Suggested Organisation Id"
+          },
+          "match_tier": {
+            "type": "string",
+            "title": "Match Tier"
+          },
+          "raw_metric_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Metric Score"
+          },
+          "evidence_signals": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Evidence Signals"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "source_id",
+          "suggested_organisation_id",
+          "match_tier",
+          "evidence_signals",
+          "rationale",
+          "status",
+          "created_at"
+        ],
+        "title": "OrganisationMatchCandidateRead"
+      },
+      "OrganisationRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "primary_domain": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Domain"
+          },
+          "corporate_parent_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corporate Parent Id"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "suburb": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suburb"
+          },
+          "postcode": {
+            "type": "string",
+            "title": "Postcode"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "slug",
+          "postcode",
+          "state",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "OrganisationRead"
+      },
+      "PracticeLifecycleEventRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "organisation_id": {
+            "type": "integer",
+            "title": "Organisation Id"
+          },
+          "organisation_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Name"
+          },
+          "branch_locality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Branch Locality"
+          },
+          "is_branch_level": {
+            "type": "boolean",
+            "title": "Is Branch Level",
+            "default": false
+          },
+          "event_type": {
+            "$ref": "#/components/schemas/LifecycleEventType"
+          },
+          "status": {
+            "$ref": "#/components/schemas/LifecycleStatus"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "snapshot_id": {
+            "type": "integer",
+            "title": "Snapshot Id"
+          },
+          "evidence_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "evidence_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Quote"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Date"
+          },
+          "date_precision": {
+            "$ref": "#/components/schemas/TemporalPrecision",
+            "default": "unknown"
+          },
+          "old_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Old Value"
+          },
+          "new_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Value"
+          },
+          "acquiring_organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acquiring Organisation Id"
+          },
+          "acquiring_organisation_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acquiring Organisation Name"
+          },
+          "acquiring_entity_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acquiring Entity Name"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          },
+          "metadata_json": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Metadata Json"
+          },
+          "review_status": {
+            "type": "string",
+            "title": "Review Status"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "title": "Idempotency Key"
+          },
+          "detected_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Detected At"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "organisation_id",
+          "event_type",
+          "status",
+          "source_id",
+          "snapshot_id",
+          "rationale",
+          "review_status",
+          "idempotency_key",
+          "detected_at",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "PracticeLifecycleEventRead",
+        "description": "Read model for API responses with enriched context."
+      },
       "PromptRunRead": {
         "properties": {
           "id": {
@@ -1197,6 +5981,582 @@
           "created_at"
         ],
         "title": "PromptRunRead"
+      },
+      "ReviewActionCreate": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "reason_code": {
+            "type": "string",
+            "title": "Reason Code"
+          },
+          "reviewer": {
+            "type": "string",
+            "title": "Reviewer"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "evidence_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "decision_metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Decision Metadata"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action",
+          "reason_code",
+          "reviewer"
+        ],
+        "title": "ReviewActionCreate"
+      },
+      "ReviewActionRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_id": {
+            "type": "integer",
+            "title": "Entity Id"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "previous_status": {
+            "type": "string",
+            "title": "Previous Status"
+          },
+          "new_status": {
+            "type": "string",
+            "title": "New Status"
+          },
+          "reason_code": {
+            "type": "string",
+            "title": "Reason Code"
+          },
+          "reviewer": {
+            "type": "string",
+            "title": "Reviewer"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "evidence_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "decision_metadata": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Decision Metadata"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "entity_type",
+          "entity_id",
+          "action",
+          "previous_status",
+          "new_status",
+          "reason_code",
+          "reviewer",
+          "created_at"
+        ],
+        "title": "ReviewActionRead"
+      },
+      "ReviewHistoryResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewActionRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "ReviewHistoryResponse"
+      },
+      "ReviewItemDetailRead": {
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_id": {
+            "type": "integer",
+            "title": "Entity Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "flagged_reason": {
+            "type": "string",
+            "title": "Flagged Reason"
+          },
+          "current_status": {
+            "type": "string",
+            "title": "Current Status"
+          },
+          "review_status": {
+            "type": "string",
+            "title": "Review Status"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "organisation_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Name"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "snapshot_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Id"
+          },
+          "snapshot_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Title"
+          },
+          "snapshot_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Fetched At"
+          },
+          "evidence_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Id"
+          },
+          "evidence_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Quote"
+          },
+          "evidence_start_offset": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Start Offset"
+          },
+          "evidence_end_offset": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence End Offset"
+          },
+          "entity_data": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Entity Data"
+          },
+          "discrepancy_context": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discrepancy Context"
+          },
+          "opportunity_context": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opportunity Context"
+          },
+          "change_context": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Context"
+          },
+          "lifecycle_context": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lifecycle Context"
+          },
+          "allowed_actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allowed Actions"
+          },
+          "review_history": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewActionRead"
+            },
+            "type": "array",
+            "title": "Review History"
+          }
+        },
+        "type": "object",
+        "required": [
+          "entity_type",
+          "entity_id",
+          "title",
+          "summary",
+          "flagged_reason",
+          "current_status",
+          "review_status",
+          "priority"
+        ],
+        "title": "ReviewItemDetailRead"
+      },
+      "ReviewMetricsRead": {
+        "properties": {
+          "total_pending": {
+            "type": "integer",
+            "title": "Total Pending"
+          },
+          "total_under_review": {
+            "type": "integer",
+            "title": "Total Under Review"
+          },
+          "total_completed": {
+            "type": "integer",
+            "title": "Total Completed"
+          },
+          "total_deferred": {
+            "type": "integer",
+            "title": "Total Deferred"
+          },
+          "by_entity_type": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "By Entity Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_pending",
+          "total_under_review",
+          "total_completed",
+          "total_deferred"
+        ],
+        "title": "ReviewMetricsRead"
+      },
+      "ReviewQueueItemRead": {
+        "properties": {
+          "queue_id": {
+            "type": "string",
+            "title": "Queue Id"
+          },
+          "entity_type": {
+            "type": "string",
+            "title": "Entity Type"
+          },
+          "entity_id": {
+            "type": "integer",
+            "title": "Entity Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "flagged_reason": {
+            "type": "string",
+            "title": "Flagged Reason"
+          },
+          "current_status": {
+            "type": "string",
+            "title": "Current Status"
+          },
+          "review_status": {
+            "type": "string",
+            "title": "Review Status"
+          },
+          "priority": {
+            "type": "string",
+            "title": "Priority"
+          },
+          "organisation_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Id"
+          },
+          "organisation_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation Name"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "evidence_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Quote"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "queue_id",
+          "entity_type",
+          "entity_id",
+          "title",
+          "summary",
+          "flagged_reason",
+          "current_status",
+          "review_status",
+          "priority",
+          "created_at"
+        ],
+        "title": "ReviewQueueItemRead"
+      },
+      "ReviewQueueResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewQueueItemRead"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "ReviewQueueResponse"
       },
       "SnapshotHead": {
         "properties": {
@@ -1328,6 +6688,142 @@
         ],
         "title": "SnapshotRead",
         "description": "Full snapshot detail \u2014 parsed text with heading structure + offsets."
+      },
+      "SourceContentFreshnessRead": {
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "current_version_first_observed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Version First Observed At"
+          },
+          "previous_version_observed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Version Observed At"
+          },
+          "previous_version_content_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous Version Content Hash"
+          },
+          "content_observation_age_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Observation Age Days"
+          },
+          "actual_publisher_modified_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Publisher Modified At"
+          },
+          "last_content_change_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Content Change At"
+          },
+          "content_age_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Age Days"
+          },
+          "latest_content_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Content Hash"
+          },
+          "snapshot_count": {
+            "type": "integer",
+            "title": "Snapshot Count"
+          },
+          "unchanged_reobservations_count": {
+            "type": "integer",
+            "title": "Unchanged Reobservations Count"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id",
+            "default": "ps_freshness_v1"
+          },
+          "threshold_days": {
+            "type": "integer",
+            "title": "Threshold Days",
+            "default": 90
+          },
+          "threshold_governance": {
+            "type": "string",
+            "title": "Threshold Governance",
+            "default": "source_content"
+          },
+          "as_of_reference_time": {
+            "type": "string",
+            "title": "As Of Reference Time"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "snapshot_count",
+          "unchanged_reobservations_count",
+          "as_of_reference_time",
+          "rationale"
+        ],
+        "title": "SourceContentFreshnessRead"
       },
       "SourceCreate": {
         "properties": {
@@ -1582,6 +7078,238 @@
         "title": "SourceDetailRead",
         "description": "Source detail: adds the snapshot history for the source screen."
       },
+      "SourceObservationFreshnessRead": {
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "last_attempted_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Attempted At"
+          },
+          "last_successful_observation_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Successful Observation At"
+          },
+          "last_new_snapshot_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last New Snapshot At"
+          },
+          "last_unchanged_observation_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Unchanged Observation At"
+          },
+          "last_complete_parsing_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Complete Parsing At"
+          },
+          "last_complete_extraction_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Complete Extraction At"
+          },
+          "observation_age_days": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Age Days"
+          },
+          "classification": {
+            "type": "string",
+            "title": "Classification"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "threshold_days": {
+            "type": "integer",
+            "title": "Threshold Days"
+          },
+          "threshold_governance": {
+            "type": "string",
+            "title": "Threshold Governance",
+            "default": "source_observation"
+          },
+          "latest_attempt_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Attempt Status"
+          },
+          "latest_attempt_failed": {
+            "type": "boolean",
+            "title": "Latest Attempt Failed",
+            "default": false
+          },
+          "as_of_reference_time": {
+            "type": "string",
+            "title": "As Of Reference Time"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "classification",
+          "policy_id",
+          "threshold_days",
+          "as_of_reference_time",
+          "rationale"
+        ],
+        "title": "SourceObservationFreshnessRead"
+      },
+      "SourceObservationRead": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "observed_at": {
+            "type": "string",
+            "title": "Observed At"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "snapshot_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Id"
+          },
+          "content_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Hash"
+          },
+          "content_changed": {
+            "type": "boolean",
+            "title": "Content Changed"
+          },
+          "parsing_completeness": {
+            "type": "string",
+            "title": "Parsing Completeness"
+          },
+          "extraction_completeness": {
+            "type": "string",
+            "title": "Extraction Completeness"
+          },
+          "headings_count": {
+            "type": "integer",
+            "title": "Headings Count"
+          },
+          "character_count": {
+            "type": "integer",
+            "title": "Character Count"
+          },
+          "observation_sequence": {
+            "type": "integer",
+            "title": "Observation Sequence"
+          },
+          "error_details": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Details"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "source_id",
+          "observed_at",
+          "outcome",
+          "content_changed",
+          "parsing_completeness",
+          "extraction_completeness",
+          "headings_count",
+          "character_count",
+          "observation_sequence",
+          "created_at"
+        ],
+        "title": "SourceObservationRead"
+      },
       "SourcePatch": {
         "properties": {
           "label": {
@@ -1790,6 +7518,17 @@
           "updated_at"
         ],
         "title": "SourceRead"
+      },
+      "TemporalPrecision": {
+        "type": "string",
+        "enum": [
+          "day",
+          "month",
+          "year",
+          "unknown"
+        ],
+        "title": "TemporalPrecision",
+        "description": "Precision of explicitly stated temporal evidence (day, month, year, or unknown/missing)."
       },
       "ValidationError": {
         "properties": {

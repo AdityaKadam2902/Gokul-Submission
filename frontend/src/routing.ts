@@ -1,5 +1,5 @@
 /* Shared routing types: hash-based navigation without extra dependencies. */
-export type Route = 'sources' | 'source' | 'snapshot' | 'facts' | 'prompt-runs' | 'health'
+export type Route = 'sources' | 'source' | 'snapshot' | 'facts' | 'prompt-runs' | 'health' | 'reviews'
 export type Loc = { page: Route; id?: number }
 export type Nav = (loc: Loc) => void
 
@@ -12,6 +12,7 @@ export function parseHash(): Loc {
   if (page === 'facts') return { page: 'facts' }
   if (page === 'prompt-runs') return { page: 'prompt-runs' }
   if (page === 'health') return { page: 'health' }
+  if (page === 'reviews') return { page: 'reviews' }
   return { page: 'sources' }
 }
 

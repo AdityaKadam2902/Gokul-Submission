@@ -211,6 +211,694 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/organisations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Organisations
+         * @description Query healthcare practice organisations with deterministic filtering.
+         */
+        get: operations["list_organisations_api_organisations_get"];
+        put?: never;
+        /**
+         * Create Organisation
+         * @description Create a new healthcare practice organisation in the canonical registry.
+         */
+        post: operations["create_organisation_api_organisations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisations/{org_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Organisation
+         * @description Get full organisation profile including linked sources and active facts count.
+         */
+        get: operations["get_organisation_api_organisations__org_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisations/{org_id}/sources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Organisation Sources
+         * @description List all registered sources linked to this practice organisation.
+         */
+        get: operations["list_organisation_sources_api_organisations__org_id__sources_get"];
+        put?: never;
+        /**
+         * Link Source To Organisation
+         * @description Link a source to an organisation with a specific relationship type.
+         */
+        post: operations["link_source_to_organisation_api_organisations__org_id__sources_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisations/{org_id}/sources/{link_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Organisation Source Link
+         * @description Deliberate operator operation to transition source link verification status (suggested -> confirmed | rejected).
+         */
+        patch: operations["update_organisation_source_link_api_organisations__org_id__sources__link_id__patch"];
+        trace?: never;
+    };
+    "/api/match-candidates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Match Candidates
+         * @description Query conservative entity resolution match suggestions.
+         */
+        get: operations["list_match_candidates_api_match_candidates_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/match-candidates/scan/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Scan Source Matches
+         * @description Scan a source against known practice organisations and generate match candidates.
+         */
+        post: operations["scan_source_matches_api_match_candidates_scan__source_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sources/{source_id}/observations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Source Observations
+         * @description Retrieve chronological observation heartbeat history for a registered source.
+         */
+        get: operations["get_source_observations_api_sources__source_id__observations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discrepancies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Discrepancies
+         * @description List detected cross-source discrepancies with optional filtering.
+         */
+        get: operations["list_discrepancies_api_discrepancies_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discrepancies/{discrepancy_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Discrepancy
+         * @description Retrieve detailed discrepancy record with both conflicting facts, sources, and evidence.
+         */
+        get: operations["get_discrepancy_api_discrepancies__discrepancy_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/discrepancies/scan/{organisation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Trigger Organisation Scan
+         * @description Trigger discrepancy detection scan across all confirmed sources for an organisation.
+         */
+        post: operations["trigger_organisation_scan_api_discrepancies_scan__organisation_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/changes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Change Events
+         * @description List detected temporal change events with optional filtering.
+         */
+        get: operations["list_change_events_api_changes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/changes/{change_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Change Event
+         * @description Retrieve detailed temporal change event with linked facts, snapshots, and sources.
+         */
+        get: operations["get_change_event_api_changes__change_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/changes/scan/source/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Trigger Source Change Scan
+         * @description Trigger change detection scan across all observations for a registered source.
+         */
+        post: operations["trigger_source_change_scan_api_changes_scan_source__source_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/changes/scan/organisation/{organisation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Trigger Organisation Change Scan
+         * @description Trigger change detection across all confirmed sources for an organisation.
+         */
+        post: operations["trigger_organisation_change_scan_api_changes_scan_organisation__organisation_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/freshness/policy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Freshness Policy
+         * @description Inspect active monitoring policy configuration and category-specific thresholds.
+         */
+        get: operations["get_freshness_policy_api_freshness_policy_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/freshness/source/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Source Freshness
+         * @description Evaluate observation freshness for a registered source.
+         */
+        get: operations["get_source_freshness_api_freshness_source__source_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/freshness/source/{source_id}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Source Content Freshness Endpoint
+         * @description Evaluate content observation freshness for a registered source.
+         */
+        get: operations["get_source_content_freshness_endpoint_api_freshness_source__source_id__content_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/freshness/fact/{fact_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Fact Freshness
+         * @description Evaluate 4-dimensional freshness for a specific stored fact.
+         */
+        get: operations["get_fact_freshness_api_freshness_fact__fact_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/freshness/organisation/{organisation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Organisation Freshness
+         * @description Evaluate freshness metrics across all confirmed sources and linked facts for an organisation.
+         */
+        get: operations["get_organisation_freshness_api_freshness_organisation__organisation_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/freshness/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Evaluate Freshness
+         * @description Execute dynamic freshness evaluation with optional reference-time injection and threshold overrides.
+         */
+        post: operations["evaluate_freshness_api_freshness_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/opportunities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Opportunities
+         * @description List healthcare practice recruitment opportunities with optional filtering.
+         */
+        get: operations["list_opportunities_api_opportunities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/opportunities/{opportunity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Opportunity
+         * @description Retrieve detailed information and provenance for a single opportunity.
+         */
+        get: operations["get_opportunity_api_opportunities__opportunity_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/opportunities/scan/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Trigger Source Opportunity Scan
+         * @description Trigger deterministic opportunity lifecycle scan for a registered source.
+         */
+        post: operations["trigger_source_opportunity_scan_api_opportunities_scan__source_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/queue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Queue
+         * @description Retrieve unified human review queue with grounded evidence and priority.
+         */
+        get: operations["get_queue_api_reviews_queue_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Metrics
+         * @description Retrieve review metrics and pending item totals grouped by entity type.
+         */
+        get: operations["get_metrics_api_reviews_metrics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/actions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Review Actions
+         * @description Retrieve global append-only audit trail of human decisions.
+         */
+        get: operations["list_review_actions_api_reviews_actions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/{entity_type}/{entity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Item Detail
+         * @description Retrieve comprehensive detail, quotations, and decision history for a reviewable item.
+         */
+        get: operations["get_item_detail_api_reviews__entity_type___entity_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/{entity_type}/{entity_id}/actions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit Review Action
+         * @description Record an immutable, append-only human decision on an intelligence entity.
+         */
+        post: operations["submit_review_action_api_reviews__entity_type___entity_id__actions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/{entity_type}/{entity_id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Item History
+         * @description Retrieve decision audit history for a specific entity.
+         */
+        get: operations["get_item_history_api_reviews__entity_type___entity_id__history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lifecycle/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Lifecycle Events
+         * @description List detected practice lifecycle events with rich filters and pagination.
+         */
+        get: operations["list_lifecycle_events_api_lifecycle_events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lifecycle/events/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Lifecycle Event
+         * @description Retrieve detailed lifecycle event information including citation quote and metadata.
+         */
+        get: operations["get_lifecycle_event_api_lifecycle_events__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lifecycle/organisations/{org_id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Organisation Lifecycle History
+         * @description Retrieve complete chronological lifecycle event history for a practice organisation.
+         */
+        get: operations["get_organisation_lifecycle_history_api_lifecycle_organisations__org_id__history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lifecycle/organisations/{org_id}/branches/{branch_locality}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Branch Lifecycle History
+         * @description Retrieve branch-specific lifecycle history for a physical clinic location.
+         */
+        get: operations["get_branch_lifecycle_history_api_lifecycle_organisations__org_id__branches__branch_locality__history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lifecycle/scan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Scan Lifecycle Events
+         * @description Trigger a deterministic practice lifecycle scan for a source or organisation.
+         */
+        post: operations["scan_lifecycle_events_api_lifecycle_scan_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/": {
         parameters: {
             query?: never;
@@ -232,6 +920,229 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ChangeEventDetailRead */
+        ChangeEventDetailRead: {
+            /** Id */
+            id: number;
+            /** Source Id */
+            source_id: number;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Previous Observation Id */
+            previous_observation_id?: number | null;
+            /** Current Observation Id */
+            current_observation_id: number;
+            /** Previous Snapshot Id */
+            previous_snapshot_id?: number | null;
+            /** Current Snapshot Id */
+            current_snapshot_id: number;
+            /** Previous Fact Id */
+            previous_fact_id?: number | null;
+            /** Current Fact Id */
+            current_fact_id?: number | null;
+            /** Event Type */
+            event_type: string;
+            /**
+             * Entity Type
+             * @default fact
+             */
+            entity_type: string;
+            /** Field Key */
+            field_key: string;
+            /** Scope Key */
+            scope_key?: string | null;
+            /** Old Value */
+            old_value?: string | null;
+            /** New Value */
+            new_value?: string | null;
+            /** Rationale */
+            rationale: string;
+            /** Diff Metadata */
+            diff_metadata?: {
+                [key: string]: unknown;
+            };
+            /** Idempotency Key */
+            idempotency_key: string;
+            /** Detected At */
+            detected_at: string;
+            /** Created At */
+            created_at: string;
+            source: components["schemas"]["SourceRead"];
+            organisation?: components["schemas"]["OrganisationRead"] | null;
+            previous_fact?: components["schemas"]["FactRead"] | null;
+            current_fact?: components["schemas"]["FactRead"] | null;
+            previous_snapshot?: components["schemas"]["SnapshotHead"] | null;
+            current_snapshot?: components["schemas"]["SnapshotHead"] | null;
+        };
+        /** ChangeEventRead */
+        ChangeEventRead: {
+            /** Id */
+            id: number;
+            /** Source Id */
+            source_id: number;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Previous Observation Id */
+            previous_observation_id?: number | null;
+            /** Current Observation Id */
+            current_observation_id: number;
+            /** Previous Snapshot Id */
+            previous_snapshot_id?: number | null;
+            /** Current Snapshot Id */
+            current_snapshot_id: number;
+            /** Previous Fact Id */
+            previous_fact_id?: number | null;
+            /** Current Fact Id */
+            current_fact_id?: number | null;
+            /** Event Type */
+            event_type: string;
+            /**
+             * Entity Type
+             * @default fact
+             */
+            entity_type: string;
+            /** Field Key */
+            field_key: string;
+            /** Scope Key */
+            scope_key?: string | null;
+            /** Old Value */
+            old_value?: string | null;
+            /** New Value */
+            new_value?: string | null;
+            /** Rationale */
+            rationale: string;
+            /** Diff Metadata */
+            diff_metadata?: {
+                [key: string]: unknown;
+            };
+            /** Idempotency Key */
+            idempotency_key: string;
+            /** Detected At */
+            detected_at: string;
+            /** Created At */
+            created_at: string;
+        };
+        /** ChangeScanResultRead */
+        ChangeScanResultRead: {
+            /** Source Id */
+            source_id: number;
+            /** Observations Evaluated */
+            observations_evaluated: number;
+            /** Changes Detected */
+            changes_detected: number;
+            /** Changes */
+            changes?: components["schemas"]["ChangeEventRead"][];
+        };
+        /** DiscrepancyDetailRead */
+        DiscrepancyDetailRead: {
+            /** Id */
+            id: number;
+            /** Organisation Id */
+            organisation_id: number;
+            /** Field Key */
+            field_key: string;
+            /** Scope Key */
+            scope_key: string;
+            /** Fact A Id */
+            fact_a_id: number;
+            /** Fact B Id */
+            fact_b_id: number;
+            /** Conflict Type */
+            conflict_type: string;
+            /** Status */
+            status: string;
+            /** Rationale */
+            rationale?: string | null;
+            /** Resolution Notes */
+            resolution_notes?: string | null;
+            /** Resolved By */
+            resolved_by?: string | null;
+            /** Resolved At */
+            resolved_at?: string | null;
+            /** Detected At */
+            detected_at: string;
+            /** Created At */
+            created_at: string;
+            fact_a: components["schemas"]["FactRead"];
+            fact_b: components["schemas"]["FactRead"];
+            source_a: components["schemas"]["SourceRead"];
+            source_b: components["schemas"]["SourceRead"];
+        };
+        /** DiscrepancyRead */
+        DiscrepancyRead: {
+            /** Id */
+            id: number;
+            /** Organisation Id */
+            organisation_id: number;
+            /** Field Key */
+            field_key: string;
+            /** Scope Key */
+            scope_key: string;
+            /** Fact A Id */
+            fact_a_id: number;
+            /** Fact B Id */
+            fact_b_id: number;
+            /** Conflict Type */
+            conflict_type: string;
+            /** Status */
+            status: string;
+            /** Rationale */
+            rationale?: string | null;
+            /** Resolution Notes */
+            resolution_notes?: string | null;
+            /** Resolved By */
+            resolved_by?: string | null;
+            /** Resolved At */
+            resolved_at?: string | null;
+            /** Detected At */
+            detected_at: string;
+            /** Created At */
+            created_at: string;
+        };
+        /** DiscrepancyScanResultRead */
+        DiscrepancyScanResultRead: {
+            /** Organisation Id */
+            organisation_id: number;
+            /** Total Facts Scanned */
+            total_facts_scanned: number;
+            /** Comparisons Evaluated */
+            comparisons_evaluated: number;
+            /** Discrepancies Detected */
+            discrepancies_detected: number;
+            /** Discrepancies */
+            discrepancies?: components["schemas"]["DiscrepancyRead"][];
+        };
+        /** EvidenceVerificationFreshnessRead */
+        EvidenceVerificationFreshnessRead: {
+            /** Evidence Id */
+            evidence_id?: number | null;
+            /** Snapshot Id */
+            snapshot_id?: number | null;
+            /** Captured At */
+            captured_at?: string | null;
+            /** Checked At */
+            checked_at?: string | null;
+            /** Evaluated At */
+            evaluated_at?: string | null;
+            /** Is Verified */
+            is_verified: boolean;
+            /** Quote Length */
+            quote_length: number;
+            /**
+             * Policy Id
+             * @default ps_freshness_v1
+             */
+            policy_id: string;
+            /**
+             * Threshold Governance
+             * @default immutable_snapshot_integrity
+             */
+            threshold_governance: string;
+            /** As Of Reference Time */
+            as_of_reference_time: string;
+            /** Rationale */
+            rationale: string;
+        };
         /** ExtractionResultRead */
         ExtractionResultRead: {
             /** Snapshot Id */
@@ -258,6 +1169,61 @@ export interface components {
             prompt_version: string;
             /** Message */
             message: string;
+        };
+        /** FactFreshnessRead */
+        FactFreshnessRead: {
+            /** Fact Id */
+            fact_id: number;
+            /** Source Id */
+            source_id: number;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Field Key */
+            field_key: string;
+            /** Information Category */
+            information_category: string;
+            /** Raw Value */
+            raw_value?: string | null;
+            observation_freshness: components["schemas"]["SourceObservationFreshnessRead"];
+            content_freshness: components["schemas"]["SourceContentFreshnessRead"];
+            evidence_freshness: components["schemas"]["EvidenceVerificationFreshnessRead"];
+            /** Has Explicit Temporal Evidence */
+            has_explicit_temporal_evidence: boolean;
+            /** Explicit Fact Date */
+            explicit_fact_date?: string | null;
+            /** Fact Date Type */
+            fact_date_type?: string | null;
+            /** Temporal Evidence Quote */
+            temporal_evidence_quote?: string | null;
+            /** Date Precision */
+            date_precision?: string | null;
+            /** Date Range Start */
+            date_range_start?: string | null;
+            /** Date Range End */
+            date_range_end?: string | null;
+            /** Min Fact Age Days */
+            min_fact_age_days?: number | null;
+            /** Max Fact Age Days */
+            max_fact_age_days?: number | null;
+            /** Fact Age Days */
+            fact_age_days?: number | null;
+            /** Fact Freshness Classification */
+            fact_freshness_classification: string;
+            /** Overall Classification */
+            overall_classification: string;
+            /** Policy Id */
+            policy_id: string;
+            /** Policy Threshold Days */
+            policy_threshold_days: number;
+            /**
+             * Threshold Governance
+             * @default fact_category
+             */
+            threshold_governance: string;
+            /** As Of Reference Time */
+            as_of_reference_time: string;
+            /** Rationale */
+            rationale: string;
         };
         /** FactRead */
         FactRead: {
@@ -299,6 +1265,64 @@ export interface components {
             needs_review_reason?: string | null;
             /** Created At */
             created_at: string;
+        };
+        /** FreshnessEvaluateRequest */
+        FreshnessEvaluateRequest: {
+            /** Source Id */
+            source_id?: number | null;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Fact Id */
+            fact_id?: number | null;
+            /** Policy Id */
+            policy_id?: string | null;
+            /** Source Observation Threshold Override */
+            source_observation_threshold_override?: number | null;
+            /** Category Thresholds Override */
+            category_thresholds_override?: {
+                [key: string]: number;
+            } | null;
+            /** Reference Time */
+            reference_time?: string | null;
+        };
+        /** FreshnessPolicyRead */
+        FreshnessPolicyRead: {
+            /** Policy Id */
+            policy_id: string;
+            /** Version */
+            version: string;
+            /** Description */
+            description: string;
+            /**
+             * Source Observation Threshold Days
+             * @default 30
+             */
+            source_observation_threshold_days: number;
+            /**
+             * Source Content Threshold Days
+             * @default 90
+             */
+            source_content_threshold_days: number;
+            /** Category Thresholds Days */
+            category_thresholds_days: {
+                [key: string]: number;
+            };
+            /** Aging Threshold Ratio */
+            aging_threshold_ratio: number;
+            /** Source Observation Overrides */
+            source_observation_overrides?: {
+                [key: string]: number;
+            };
+            /** Source Overrides */
+            source_overrides?: {
+                [key: string]: {
+                    [key: string]: number;
+                };
+            };
+            /** Threshold Governance Documentation */
+            threshold_governance_documentation?: {
+                [key: string]: string;
+            };
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -357,6 +1381,435 @@ export interface components {
             /** Message */
             message: string;
         };
+        /**
+         * LifecycleEventType
+         * @description Categorical type of healthcare practice lifecycle event.
+         * @enum {string}
+         */
+        LifecycleEventType: "permanent_closure" | "temporary_closure" | "relocation" | "acquisition";
+        /** LifecycleScanRequest */
+        LifecycleScanRequest: {
+            /** Source Id */
+            source_id?: number | null;
+            /** Organisation Id */
+            organisation_id?: number | null;
+        };
+        /**
+         * LifecycleScanResult
+         * @description Summary metrics of a practice lifecycle detection scan.
+         */
+        LifecycleScanResult: {
+            /** Source Id */
+            source_id?: number | null;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Events Detected */
+            events_detected: number;
+            /** By Type */
+            by_type?: {
+                [key: string]: number;
+            };
+            /** By Status */
+            by_status?: {
+                [key: string]: number;
+            };
+            /** New Events Count */
+            new_events_count: number;
+            /** Existing Events Count */
+            existing_events_count: number;
+        };
+        /**
+         * LifecycleStatus
+         * @description Evidence confidence and verification state for practice lifecycle signals.
+         * @enum {string}
+         */
+        LifecycleStatus: "confirmed_explicit" | "potential_needs_review" | "no_longer_observed" | "insufficient_evidence" | "conflicting_sources";
+        /**
+         * OpportunityDetailRead
+         * @description Detailed vacancy read model with contextual relations.
+         */
+        OpportunityDetailRead: {
+            /** Id */
+            id: number;
+            /** Organisation Id */
+            organisation_id: number;
+            /** Source Id */
+            source_id: number;
+            /** First Snapshot Id */
+            first_snapshot_id: number;
+            /** Last Snapshot Id */
+            last_snapshot_id: number;
+            /** Role Category */
+            role_category: string;
+            /** Role Title */
+            role_title: string;
+            /** Verbatim Wording */
+            verbatim_wording: string;
+            /** Contact Channel */
+            contact_channel?: string | null;
+            /** Explicit Ad Id */
+            explicit_ad_id?: string | null;
+            /** Status */
+            status: string;
+            /** Closure Evidence Quote */
+            closure_evidence_quote?: string | null;
+            /**
+             * Consecutive Absences
+             * @default 0
+             */
+            consecutive_absences: number;
+            /** First Seen At */
+            first_seen_at: string;
+            /** Last Seen At */
+            last_seen_at: string;
+            /** Closed At */
+            closed_at?: string | null;
+            /** Created At */
+            created_at: string;
+            /** Updated At */
+            updated_at: string;
+            /** Organisation Name */
+            organisation_name?: string | null;
+            /** Source Url */
+            source_url?: string | null;
+        };
+        /**
+         * OpportunityRead
+         * @description Healthcare workforce recruitment vacancy entity (D43).
+         */
+        OpportunityRead: {
+            /** Id */
+            id: number;
+            /** Organisation Id */
+            organisation_id: number;
+            /** Source Id */
+            source_id: number;
+            /** First Snapshot Id */
+            first_snapshot_id: number;
+            /** Last Snapshot Id */
+            last_snapshot_id: number;
+            /** Role Category */
+            role_category: string;
+            /** Role Title */
+            role_title: string;
+            /** Verbatim Wording */
+            verbatim_wording: string;
+            /** Contact Channel */
+            contact_channel?: string | null;
+            /** Explicit Ad Id */
+            explicit_ad_id?: string | null;
+            /** Status */
+            status: string;
+            /** Closure Evidence Quote */
+            closure_evidence_quote?: string | null;
+            /**
+             * Consecutive Absences
+             * @default 0
+             */
+            consecutive_absences: number;
+            /** First Seen At */
+            first_seen_at: string;
+            /** Last Seen At */
+            last_seen_at: string;
+            /** Closed At */
+            closed_at?: string | null;
+            /** Created At */
+            created_at: string;
+            /** Updated At */
+            updated_at: string;
+        };
+        /**
+         * OpportunityScanResultRead
+         * @description Result of deterministic opportunity scan for a source.
+         */
+        OpportunityScanResultRead: {
+            /** Source Id */
+            source_id: number;
+            /** Opportunities Found */
+            opportunities_found: number;
+            /** Opportunities Created */
+            opportunities_created: number;
+            /** Opportunities Updated */
+            opportunities_updated: number;
+            /** Status Counts */
+            status_counts?: {
+                [key: string]: number;
+            };
+            /** Opportunities */
+            opportunities?: components["schemas"]["OpportunityRead"][];
+        };
+        /** OrganisationCreate */
+        OrganisationCreate: {
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /** Primary Domain */
+            primary_domain?: string | null;
+            /** Corporate Parent Id */
+            corporate_parent_id?: number | null;
+            /** Phone */
+            phone?: string | null;
+            /** Address */
+            address?: string | null;
+            /** Suburb */
+            suburb?: string | null;
+            /** Postcode */
+            postcode: string;
+            /** State */
+            state: string;
+            /**
+             * Status
+             * @default active
+             */
+            status: string;
+        };
+        /** OrganisationDetailRead */
+        OrganisationDetailRead: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /** Primary Domain */
+            primary_domain?: string | null;
+            /** Corporate Parent Id */
+            corporate_parent_id?: number | null;
+            /** Phone */
+            phone?: string | null;
+            /** Address */
+            address?: string | null;
+            /** Suburb */
+            suburb?: string | null;
+            /** Postcode */
+            postcode: string;
+            /** State */
+            state: string;
+            /** Status */
+            status: string;
+            /** Created At */
+            created_at: string;
+            /** Updated At */
+            updated_at: string;
+            /** Source Links */
+            source_links?: components["schemas"]["OrganisationLinkRead"][];
+            /**
+             * Active Facts Count
+             * @default 0
+             */
+            active_facts_count: number;
+        };
+        /** OrganisationFreshnessSummaryRead */
+        OrganisationFreshnessSummaryRead: {
+            /** Organisation Id */
+            organisation_id: number;
+            /** Organisation Name */
+            organisation_name: string;
+            /** Confirmed Source Count */
+            confirmed_source_count: number;
+            /** Total Facts Count */
+            total_facts_count: number;
+            /** Fresh Facts Count */
+            fresh_facts_count: number;
+            /** Aging Facts Count */
+            aging_facts_count: number;
+            /** Stale Facts Count */
+            stale_facts_count: number;
+            /** Unknown Facts Count */
+            unknown_facts_count: number;
+            /** Unobservable Sources Count */
+            unobservable_sources_count: number;
+            /** Sources */
+            sources?: components["schemas"]["SourceObservationFreshnessRead"][];
+            /** As Of Reference Time */
+            as_of_reference_time: string;
+            /** Policy Id */
+            policy_id: string;
+            /** Summary Rationale */
+            summary_rationale: string;
+        };
+        /** OrganisationLinkCreate */
+        OrganisationLinkCreate: {
+            /** Source Id */
+            source_id: number;
+            /** Relationship Type */
+            relationship_type: string;
+            /** Scope Path */
+            scope_path?: string | null;
+            /**
+             * Verification Status
+             * @default suggested
+             */
+            verification_status: string;
+            /** Verified By */
+            verified_by?: string | null;
+        };
+        /** OrganisationLinkRead */
+        OrganisationLinkRead: {
+            /** Id */
+            id: number;
+            /** Organisation Id */
+            organisation_id: number;
+            /** Source Id */
+            source_id: number;
+            /** Relationship Type */
+            relationship_type: string;
+            /** Scope Path */
+            scope_path?: string | null;
+            /** Verification Status */
+            verification_status: string;
+            /** Verified By */
+            verified_by?: string | null;
+            /** Verified At */
+            verified_at?: string | null;
+            /** Created At */
+            created_at: string;
+        };
+        /**
+         * OrganisationLinkUpdate
+         * @description Operator-driven link verification status transition (suggested -> confirmed | rejected).
+         */
+        OrganisationLinkUpdate: {
+            /** Verification Status */
+            verification_status: string;
+            /** Relationship Type */
+            relationship_type?: string | null;
+            /** Scope Path */
+            scope_path?: string | null;
+            /** Verified By */
+            verified_by?: string | null;
+        };
+        /** OrganisationMatchCandidateRead */
+        OrganisationMatchCandidateRead: {
+            /** Id */
+            id: number;
+            /** Source Id */
+            source_id: number;
+            /** Suggested Organisation Id */
+            suggested_organisation_id: number;
+            /** Match Tier */
+            match_tier: string;
+            /** Raw Metric Score */
+            raw_metric_score?: number | null;
+            /** Evidence Signals */
+            evidence_signals: {
+                [key: string]: unknown;
+            };
+            /** Rationale */
+            rationale: string;
+            /** Status */
+            status: string;
+            /** Reviewed By */
+            reviewed_by?: string | null;
+            /** Reviewed At */
+            reviewed_at?: string | null;
+            /** Created At */
+            created_at: string;
+        };
+        /** OrganisationRead */
+        OrganisationRead: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /** Primary Domain */
+            primary_domain?: string | null;
+            /** Corporate Parent Id */
+            corporate_parent_id?: number | null;
+            /** Phone */
+            phone?: string | null;
+            /** Address */
+            address?: string | null;
+            /** Suburb */
+            suburb?: string | null;
+            /** Postcode */
+            postcode: string;
+            /** State */
+            state: string;
+            /** Status */
+            status: string;
+            /** Created At */
+            created_at: string;
+            /** Updated At */
+            updated_at: string;
+        };
+        /**
+         * PracticeLifecycleEventRead
+         * @description Read model for API responses with enriched context.
+         */
+        PracticeLifecycleEventRead: {
+            /** Id */
+            id: number;
+            /** Organisation Id */
+            organisation_id: number;
+            /** Organisation Name */
+            organisation_name?: string | null;
+            /** Branch Locality */
+            branch_locality?: string | null;
+            /**
+             * Is Branch Level
+             * @default false
+             */
+            is_branch_level: boolean;
+            event_type: components["schemas"]["LifecycleEventType"];
+            status: components["schemas"]["LifecycleStatus"];
+            /** Source Id */
+            source_id: number;
+            /** Source Url */
+            source_url?: string | null;
+            /** Snapshot Id */
+            snapshot_id: number;
+            /** Evidence Id */
+            evidence_id?: number | null;
+            /** Evidence Quote */
+            evidence_quote?: string | null;
+            /** Effective Date */
+            effective_date?: string | null;
+            /** @default unknown */
+            date_precision: components["schemas"]["TemporalPrecision"];
+            /** Old Value */
+            old_value?: string | null;
+            /** New Value */
+            new_value?: string | null;
+            /** Acquiring Organisation Id */
+            acquiring_organisation_id?: number | null;
+            /** Acquiring Organisation Name */
+            acquiring_organisation_name?: string | null;
+            /** Acquiring Entity Name */
+            acquiring_entity_name?: string | null;
+            /** Rationale */
+            rationale: string;
+            /** Metadata Json */
+            metadata_json?: {
+                [key: string]: unknown;
+            };
+            /** Review Status */
+            review_status: string;
+            /** Reviewed By */
+            reviewed_by?: string | null;
+            /** Reviewed At */
+            reviewed_at?: string | null;
+            /** Idempotency Key */
+            idempotency_key: string;
+            /**
+             * Detected At
+             * Format: date-time
+             */
+            detected_at: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
         /** PromptRunRead */
         PromptRunRead: {
             /** Id */
@@ -389,6 +1842,187 @@ export interface components {
             };
             /** Created At */
             created_at: string;
+        };
+        /** ReviewActionCreate */
+        ReviewActionCreate: {
+            /** Action */
+            action: string;
+            /** Reason Code */
+            reason_code: string;
+            /** Reviewer */
+            reviewer: string;
+            /** Notes */
+            notes?: string | null;
+            /** Evidence Id */
+            evidence_id?: number | null;
+            /** Decision Metadata */
+            decision_metadata?: {
+                [key: string]: unknown;
+            };
+        };
+        /** ReviewActionRead */
+        ReviewActionRead: {
+            /** Id */
+            id: number;
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Id */
+            entity_id: number;
+            /** Action */
+            action: string;
+            /** Previous Status */
+            previous_status: string;
+            /** New Status */
+            new_status: string;
+            /** Reason Code */
+            reason_code: string;
+            /** Reviewer */
+            reviewer: string;
+            /** Notes */
+            notes?: string | null;
+            /** Evidence Id */
+            evidence_id?: number | null;
+            /** Decision Metadata */
+            decision_metadata?: {
+                [key: string]: unknown;
+            };
+            /** Created At */
+            created_at: string;
+        };
+        /** ReviewHistoryResponse */
+        ReviewHistoryResponse: {
+            /** Items */
+            items: components["schemas"]["ReviewActionRead"][];
+            /** Total */
+            total: number;
+            /** Limit */
+            limit: number;
+            /** Offset */
+            offset: number;
+        };
+        /** ReviewItemDetailRead */
+        ReviewItemDetailRead: {
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Id */
+            entity_id: number;
+            /** Title */
+            title: string;
+            /** Summary */
+            summary: string;
+            /** Flagged Reason */
+            flagged_reason: string;
+            /** Current Status */
+            current_status: string;
+            /** Review Status */
+            review_status: string;
+            /** Priority */
+            priority: string;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Organisation Name */
+            organisation_name?: string | null;
+            /** Source Id */
+            source_id?: number | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Snapshot Id */
+            snapshot_id?: number | null;
+            /** Snapshot Title */
+            snapshot_title?: string | null;
+            /** Snapshot Fetched At */
+            snapshot_fetched_at?: string | null;
+            /** Evidence Id */
+            evidence_id?: number | null;
+            /** Evidence Quote */
+            evidence_quote?: string | null;
+            /** Evidence Start Offset */
+            evidence_start_offset?: number | null;
+            /** Evidence End Offset */
+            evidence_end_offset?: number | null;
+            /** Entity Data */
+            entity_data?: {
+                [key: string]: unknown;
+            };
+            /** Discrepancy Context */
+            discrepancy_context?: {
+                [key: string]: unknown;
+            } | null;
+            /** Opportunity Context */
+            opportunity_context?: {
+                [key: string]: unknown;
+            } | null;
+            /** Change Context */
+            change_context?: {
+                [key: string]: unknown;
+            } | null;
+            /** Lifecycle Context */
+            lifecycle_context?: {
+                [key: string]: unknown;
+            } | null;
+            /** Allowed Actions */
+            allowed_actions?: string[];
+            /** Review History */
+            review_history?: components["schemas"]["ReviewActionRead"][];
+        };
+        /** ReviewMetricsRead */
+        ReviewMetricsRead: {
+            /** Total Pending */
+            total_pending: number;
+            /** Total Under Review */
+            total_under_review: number;
+            /** Total Completed */
+            total_completed: number;
+            /** Total Deferred */
+            total_deferred: number;
+            /** By Entity Type */
+            by_entity_type?: {
+                [key: string]: number;
+            };
+        };
+        /** ReviewQueueItemRead */
+        ReviewQueueItemRead: {
+            /** Queue Id */
+            queue_id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Entity Id */
+            entity_id: number;
+            /** Title */
+            title: string;
+            /** Summary */
+            summary: string;
+            /** Flagged Reason */
+            flagged_reason: string;
+            /** Current Status */
+            current_status: string;
+            /** Review Status */
+            review_status: string;
+            /** Priority */
+            priority: string;
+            /** Organisation Id */
+            organisation_id?: number | null;
+            /** Organisation Name */
+            organisation_name?: string | null;
+            /** Source Id */
+            source_id?: number | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Evidence Quote */
+            evidence_quote?: string | null;
+            /** Created At */
+            created_at: string;
+        };
+        /** ReviewQueueResponse */
+        ReviewQueueResponse: {
+            /** Items */
+            items: components["schemas"]["ReviewQueueItemRead"][];
+            /** Total */
+            total: number;
+            /** Limit */
+            limit: number;
+            /** Offset */
+            offset: number;
         };
         /**
          * SnapshotHead
@@ -440,6 +2074,50 @@ export interface components {
              * @default false
              */
             source_fixture: boolean;
+        };
+        /** SourceContentFreshnessRead */
+        SourceContentFreshnessRead: {
+            /** Source Id */
+            source_id: number;
+            /** Current Version First Observed At */
+            current_version_first_observed_at?: string | null;
+            /** Previous Version Observed At */
+            previous_version_observed_at?: string | null;
+            /** Previous Version Content Hash */
+            previous_version_content_hash?: string | null;
+            /** Content Observation Age Days */
+            content_observation_age_days?: number | null;
+            /** Actual Publisher Modified At */
+            actual_publisher_modified_at?: string | null;
+            /** Last Content Change At */
+            last_content_change_at?: string | null;
+            /** Content Age Days */
+            content_age_days?: number | null;
+            /** Latest Content Hash */
+            latest_content_hash?: string | null;
+            /** Snapshot Count */
+            snapshot_count: number;
+            /** Unchanged Reobservations Count */
+            unchanged_reobservations_count: number;
+            /**
+             * Policy Id
+             * @default ps_freshness_v1
+             */
+            policy_id: string;
+            /**
+             * Threshold Days
+             * @default 90
+             */
+            threshold_days: number;
+            /**
+             * Threshold Governance
+             * @default source_content
+             */
+            threshold_governance: string;
+            /** As Of Reference Time */
+            as_of_reference_time: string;
+            /** Rationale */
+            rationale: string;
         };
         /** SourceCreate */
         SourceCreate: {
@@ -507,6 +2185,78 @@ export interface components {
             /** Snapshots */
             snapshots?: components["schemas"]["SnapshotHead"][];
         };
+        /** SourceObservationFreshnessRead */
+        SourceObservationFreshnessRead: {
+            /** Source Id */
+            source_id: number;
+            /** Last Attempted At */
+            last_attempted_at?: string | null;
+            /** Last Successful Observation At */
+            last_successful_observation_at?: string | null;
+            /** Last New Snapshot At */
+            last_new_snapshot_at?: string | null;
+            /** Last Unchanged Observation At */
+            last_unchanged_observation_at?: string | null;
+            /** Last Complete Parsing At */
+            last_complete_parsing_at?: string | null;
+            /** Last Complete Extraction At */
+            last_complete_extraction_at?: string | null;
+            /** Observation Age Days */
+            observation_age_days?: number | null;
+            /** Classification */
+            classification: string;
+            /** Policy Id */
+            policy_id: string;
+            /** Threshold Days */
+            threshold_days: number;
+            /**
+             * Threshold Governance
+             * @default source_observation
+             */
+            threshold_governance: string;
+            /** Latest Attempt Status */
+            latest_attempt_status?: string | null;
+            /**
+             * Latest Attempt Failed
+             * @default false
+             */
+            latest_attempt_failed: boolean;
+            /** As Of Reference Time */
+            as_of_reference_time: string;
+            /** Rationale */
+            rationale: string;
+        };
+        /** SourceObservationRead */
+        SourceObservationRead: {
+            /** Id */
+            id: number;
+            /** Source Id */
+            source_id: number;
+            /** Observed At */
+            observed_at: string;
+            /** Outcome */
+            outcome: string;
+            /** Snapshot Id */
+            snapshot_id?: number | null;
+            /** Content Hash */
+            content_hash?: string | null;
+            /** Content Changed */
+            content_changed: boolean;
+            /** Parsing Completeness */
+            parsing_completeness: string;
+            /** Extraction Completeness */
+            extraction_completeness: string;
+            /** Headings Count */
+            headings_count: number;
+            /** Character Count */
+            character_count: number;
+            /** Observation Sequence */
+            observation_sequence: number;
+            /** Error Details */
+            error_details?: string | null;
+            /** Created At */
+            created_at: string;
+        };
         /**
          * SourcePatch
          * @description Operator-editable fields only; policy/robots state is not API-editable.
@@ -558,6 +2308,12 @@ export interface components {
             /** Last Snapshot Hash */
             last_snapshot_hash?: string | null;
         };
+        /**
+         * TemporalPrecision
+         * @description Precision of explicitly stated temporal evidence (day, month, year, or unknown/missing).
+         * @enum {string}
+         */
+        TemporalPrecision: "day" | "month" | "year" | "unknown";
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -1027,6 +2783,1207 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PromptRunRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_organisations_api_organisations_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by unique URL-safe slug */
+                slug?: string | null;
+                /** @description Filter by 4-digit postcode */
+                postcode?: string | null;
+                /** @description Filter by Australian state (VIC, NSW, etc.) */
+                state?: string | null;
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_organisation_api_organisations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganisationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_organisation_api_organisations__org_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                org_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationDetailRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_organisation_sources_api_organisations__org_id__sources_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                org_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationLinkRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    link_source_to_organisation_api_organisations__org_id__sources_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                org_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganisationLinkCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationLinkRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_organisation_source_link_api_organisations__org_id__sources__link_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                org_id: number;
+                link_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrganisationLinkUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationLinkRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_match_candidates_api_match_candidates_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by review status (suggested|needs_review|approved|rejected) */
+                status?: string | null;
+                /** @description Filter by match tier (strong_match_suggestion|possible_match|insufficient_evidence) */
+                tier?: string | null;
+                /** @description Filter by source id */
+                source_id?: number | null;
+                /** @description Filter by organisation id */
+                organisation_id?: number | null;
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationMatchCandidateRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scan_source_matches_api_match_candidates_scan__source_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                source_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationMatchCandidateRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_source_observations_api_sources__source_id__observations_get: {
+        parameters: {
+            query?: {
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                source_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceObservationRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_discrepancies_api_discrepancies_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by organisation ID */
+                organisation_id?: number | null;
+                /** @description Filter by conflict type */
+                conflict_type?: string | null;
+                /** @description Filter by status */
+                status?: string | null;
+                /** @description Filter by field key */
+                field_key?: string | null;
+                /** @description Page limit */
+                limit?: number;
+                /** @description Page offset */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscrepancyRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_discrepancy_api_discrepancies__discrepancy_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discrepancy_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscrepancyDetailRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trigger_organisation_scan_api_discrepancies_scan__organisation_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organisation_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscrepancyScanResultRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_change_events_api_changes_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by registered source ID */
+                source_id?: number | null;
+                /** @description Filter by organisation ID */
+                organisation_id?: number | null;
+                /** @description Filter by event type */
+                event_type?: string | null;
+                /** @description Filter by field key */
+                field_key?: string | null;
+                /** @description Page limit */
+                limit?: number;
+                /** @description Page offset */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangeEventRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_change_event_api_changes__change_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                change_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangeEventDetailRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trigger_source_change_scan_api_changes_scan_source__source_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                source_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangeScanResultRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trigger_organisation_change_scan_api_changes_scan_organisation__organisation_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organisation_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChangeEventRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_freshness_policy_api_freshness_policy_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FreshnessPolicyRead"];
+                };
+            };
+        };
+    };
+    get_source_freshness_api_freshness_source__source_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                source_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceObservationFreshnessRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_source_content_freshness_endpoint_api_freshness_source__source_id__content_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                source_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceContentFreshnessRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_fact_freshness_api_freshness_fact__fact_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fact_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactFreshnessRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_organisation_freshness_api_freshness_organisation__organisation_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                organisation_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrganisationFreshnessSummaryRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_freshness_api_freshness_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FreshnessEvaluateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_opportunities_api_opportunities_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by role category (e.g. gp, nurse) */
+                role_category?: string | null;
+                /** @description Filter by organisation ID */
+                organisation_id?: number | null;
+                /** @description Filter by source ID */
+                source_id?: number | null;
+                /** @description Filter by lifecycle status */
+                status?: string | null;
+                /** @description Page limit */
+                limit?: number;
+                /** @description Page offset */
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OpportunityRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_opportunity_api_opportunities__opportunity_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                opportunity_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OpportunityDetailRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trigger_source_opportunity_scan_api_opportunities_scan__source_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                source_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OpportunityScanResultRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_queue_api_reviews_queue_get: {
+        parameters: {
+            query?: {
+                /** @description Filter queue by entity type */
+                entity_type?: string | null;
+                /** @description Filter queue by status (pending, deferred, completed, all) */
+                status?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewQueueResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_metrics_api_reviews_metrics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewMetricsRead"];
+                };
+            };
+        };
+    };
+    list_review_actions_api_reviews_actions_get: {
+        parameters: {
+            query?: {
+                /** @description Filter history by entity type */
+                entity_type?: string | null;
+                /** @description Filter history by entity id */
+                entity_id?: number | null;
+                /** @description Filter history by reviewer identifier */
+                reviewer?: string | null;
+                /** @description Filter history by action taken */
+                action?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewHistoryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_item_detail_api_reviews__entity_type___entity_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entity_type: string;
+                entity_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewItemDetailRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_review_action_api_reviews__entity_type___entity_id__actions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entity_type: string;
+                entity_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewActionCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewActionRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_item_history_api_reviews__entity_type___entity_id__history_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path: {
+                entity_type: string;
+                entity_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewHistoryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_lifecycle_events_api_lifecycle_events_get: {
+        parameters: {
+            query?: {
+                /** @description Filter by organisation ID */
+                organisation_id?: number | null;
+                /** @description Filter by source ID */
+                source_id?: number | null;
+                /** @description Filter by event type (permanent_closure, relocation, etc.) */
+                event_type?: string | null;
+                /** @description Filter by confidence status */
+                status?: string | null;
+                /** @description Filter by review status (pending, accepted, rejected) */
+                review_status?: string | null;
+                /** @description Filter branch vs organisation events */
+                is_branch_level?: boolean | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PracticeLifecycleEventRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_lifecycle_event_api_lifecycle_events__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PracticeLifecycleEventRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_organisation_lifecycle_history_api_lifecycle_organisations__org_id__history_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                org_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PracticeLifecycleEventRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_branch_lifecycle_history_api_lifecycle_organisations__org_id__branches__branch_locality__history_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                org_id: number;
+                branch_locality: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PracticeLifecycleEventRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scan_lifecycle_events_api_lifecycle_scan_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["LifecycleScanRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LifecycleScanResult"];
                 };
             };
             /** @description Validation Error */

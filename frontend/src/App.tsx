@@ -9,6 +9,7 @@ import { SourceDetailPage } from './pages/SourceDetailPage'
 import { SourcesPage } from './pages/SourcesPage'
 import { FactsPage } from './pages/FactsPage'
 import { PromptRunsPage } from './pages/PromptRunsPage'
+import { ReviewQueuePage } from './pages/ReviewQueuePage'
 import { parseHash, navTo, type Loc } from './routing'
 
 
@@ -54,6 +55,7 @@ export default function App() {
         <nav className="top-nav">
           <a href="#/sources" className={active('sources') || active('source') || active('snapshot')}>Sources</a>
           <a href="#/facts" className={active('facts')}>Candidate Facts</a>
+          <a href="#/reviews" className={active('reviews')}>Review Queue</a>
           <a href="#/prompt-runs" className={active('prompt-runs')}>Prompt Audits</a>
           <a href="#/health" className={active('health')}>Health</a>
         </nav>
@@ -72,6 +74,7 @@ export default function App() {
         {loc.page === 'source' && loc.id != null && <SourceDetailPage id={loc.id} nav={nav} />}
         {loc.page === 'snapshot' && loc.id != null && <SnapshotPage id={loc.id} nav={nav} />}
         {loc.page === 'facts' && <FactsPage nav={nav} />}
+        {loc.page === 'reviews' && <ReviewQueuePage nav={nav} />}
         {loc.page === 'prompt-runs' && <PromptRunsPage nav={nav} />}
         {loc.page === 'health' && <HealthPage />}
       </main>

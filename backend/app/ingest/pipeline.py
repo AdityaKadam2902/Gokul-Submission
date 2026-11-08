@@ -30,32 +30,69 @@ logger = get_logger(__name__)
 
 
 def run_ingestion(session: Session, source: Source) -> snapshot_store.IngestOutcome:
-    # 1. Policy gate first — before any loader/parser/fetch could run.
-    policy_gate.validate_ingestion_ready(source)
+    from backend.app.intelligence.observation_tracker import record_observation
 
-    if source.kind == "url":  # unreachable in M1 but kept explicit for the gate contract
-        raise LiveFetchNotAuthorised(
-            "live fetch stage does not exist in M1; register a fixture source instead",
-            details={"source_id": source.id},
+    try:
+        # 1. Policy gate first — before any loader/parser/fetch could run.
+        policy_gate.validate_ingestion_ready(source)
+
+        if source.kind == "url":  # unreachable in M1 but kept explicit for the gate contract
+            raise LiveFetchNotAuthorised(
+                "live fetch stage does not exist in M1; register a fixture source instead",
+                details={"source_id": source.id},
+            )
+
+        # 2. Load the bound synthetic fixture (local disk; never the network).
+        fixture = load_fixture(source.fixture_id or "")
+        if source.page_type != "other" and fixture.archetype != source.page_type:
+            raise ValidationError_(
+                f"page_type '{source.page_type}' disagrees with fixture archetype "
+                f"'{fixture.archetype}' for source {source.id}",
+                details={"source_id": source.id, "fixture_id": fixture.id},
+            )
+
+        # 3. Parse to structured text (headings + exact offsets).
+        parsed = text_extract.parse(fixture.html)
+        logger.info(
+            "parsed source_id=%d fixture=%s title=%s headings=%d chars=%d",
+            source.id, fixture.id, safe_preview(parsed.title or "", 60),
+            len(parsed.headings), len(parsed.text),
         )
 
-    # 2. Load the bound synthetic fixture (local disk; never the network).
-    fixture = load_fixture(source.fixture_id or "")
-    if source.page_type != "other" and fixture.archetype != source.page_type:
-        raise ValidationError_(
-            f"page_type '{source.page_type}' disagrees with fixture archetype "
-            f"'{fixture.archetype}' for source {source.id}",
-            details={"source_id": source.id, "fixture_id": fixture.id},
+        # 4. Hash + persist (short-circuit if unchanged).
+        snapshot, outcome = snapshot_store.persist_snapshot(session, source, parsed)
+
+        # 5. Record observation heartbeat (M3.1)
+        obs_outcome = "success_unchanged" if outcome.unchanged else "success_new_snapshot"
+        record_observation(
+            session=session,
+            source_id=source.id,
+            outcome=obs_outcome,
+            snapshot_id=snapshot.id,
+            content_hash=outcome.content_hash,
+            content_changed=not outcome.unchanged,
+            parsing_completeness="complete",
+            extraction_completeness="not_run",
+            headings_count=len(parsed.headings),
+            character_count=len(parsed.text),
         )
-
-    # 3. Parse to structured text (headings + exact offsets).
-    parsed = text_extract.parse(fixture.html)
-    logger.info(
-        "parsed source_id=%d fixture=%s title=%s headings=%d chars=%d",
-        source.id, fixture.id, safe_preview(parsed.title or "", 60),
-        len(parsed.headings), len(parsed.text),
-    )
-
-    # 4. Hash + persist (short-circuit if unchanged).
-    snapshot, outcome = snapshot_store.persist_snapshot(session, source, parsed)
-    return outcome
+        return outcome
+    except Exception as exc:
+        # Record failed or incomplete observation heartbeat without masking the error
+        try:
+            session.rollback()
+            is_incomplete = getattr(exc, "is_incomplete", False) or "incomplete" in type(exc).__name__.lower()
+            record_observation(
+                session=session,
+                source_id=source.id,
+                outcome="incomplete" if is_incomplete else "failed",
+                snapshot_id=None,
+                content_changed=False,
+                parsing_completeness="partial" if is_incomplete else "failed",
+                extraction_completeness="not_run",
+                error_details=str(exc),
+            )
+            session.flush()
+        except Exception as record_err:
+            logger.warning("failed_to_record_observation error=%s", record_err)
+        raise
