@@ -1,0 +1,22 @@
+{
+  "id": "F10_a",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_beta_discrepancy",
+  "intended_purpose": "Source 1 publishing telephone formatted with brackets and spacing.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F10-A",
+    "url": "https://stjude-medical.example.org/contact"
+  },
+  "extracted_fact": {
+    "field_key": "public_phone",
+    "scope_key": "reception",
+    "raw_value": "(03) 9419 8888",
+    "normalized_value": "+61394198888"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Contact St Jude Medical</title></head><body><h1>Contact Us</h1><p>Main Reception Telephone: (03) 9419 8888.</p></body></html>"
+}

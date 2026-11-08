@@ -1,0 +1,26 @@
+{
+  "id": "F12_pathology",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_beta_discrepancy",
+  "intended_purpose": "Pathology collection hours published for on-site laboratory.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F12-PATHOLOGY",
+    "url": "https://directory.example.org/st-jude-pathology"
+  },
+  "extracted_fact": {
+    "field_key": "opening_hours",
+    "scope_key": "pathology",
+    "raw_value": "Monday to Friday 07:30 to 12:00",
+    "normalized_value": "Mo-Fr 07:30-12:00"
+  },
+  "expected_outcome": {
+    "discrepancy_detected": false,
+    "rationale": "Clinic consultation hours (scope: clinic) and Pathology collection hours (scope: pathology) are incompatible scopes. Gating prevents raising a false-positive conflict."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Pathology Hours</title></head><body><h1>On-site Pathology Collection</h1><p>Monday to Friday 07:30 to 12:00</p></body></html>"
+}

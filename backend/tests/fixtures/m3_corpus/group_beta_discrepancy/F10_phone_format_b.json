@@ -1,0 +1,26 @@
+{
+  "id": "F10_b",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_beta_discrepancy",
+  "intended_purpose": "Source 2 publishing telephone as continuous unpunctuated digits.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F10-B",
+    "url": "https://directory.example.org/st-jude-melbourne"
+  },
+  "extracted_fact": {
+    "field_key": "public_phone",
+    "scope_key": "reception",
+    "raw_value": "0394198888",
+    "normalized_value": "+61394198888"
+  },
+  "expected_outcome": {
+    "discrepancy_detected": false,
+    "rationale": "Both values normalize to identical E.164 string (+61394198888). Formatting differences must not trigger a discrepancy."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>St Jude Directory Entry</title></head><body><h1>St Jude Medical</h1><p>Call reception on 0394198888 for booking assistance.</p></body></html>"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "F7_b",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Third-party healthcare directory profile citing the exact official website domain and branch postcode.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000",
+    "primary_domain": "stjude-medical.example.org",
+    "phone": "+61394198888",
+    "address": "120 Collins St",
+    "suburb": "Melbourne",
+    "postcode": "3000",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F7-B",
+    "kind": "fixture",
+    "page_type": "other",
+    "url": "https://directory.example.org/listings/st-jude-family-medical",
+    "domain": "directory.example.org",
+    "label": "Australian Clinics Directory — St Jude Listing"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "st-jude-family-medical-3000",
+    "match_tier": "strong_match_suggestion",
+    "evidence_signals": {
+      "domain_match": true,
+      "postcode_match": true,
+      "local_phone_match": true,
+      "corporate_phone_detected": false
+    },
+    "zero_auto_merge": true
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>St Jude Family Medical Centre Profile — National Healthcare Directory</title></head><body><header><h1>National Healthcare Directory</h1></header><main><article><h2>St Jude Family Medical Centre</h2><p>Address: 120 Collins St, Melbourne VIC 3000</p><p>Phone: (03) 9419 8888</p><p>Official Practice Website: <a href=\"https://stjude-medical.example.org\">https://stjude-medical.example.org</a></p><p>Specialties: General Practice, Preventative Health, Chronic Disease Management.</p></article></main><footer><p>Directory data verified for public informational use.</p></footer></body></html>"
+}

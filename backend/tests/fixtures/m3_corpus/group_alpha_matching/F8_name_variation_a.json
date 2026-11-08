@@ -1,0 +1,29 @@
+{
+  "id": "F8_a",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Primary source with formal legal practice name.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000",
+    "primary_domain": "stjude.example.org",
+    "phone": "+61394198888",
+    "address": "120 Collins St",
+    "suburb": "Melbourne",
+    "postcode": "3000",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F8-A",
+    "kind": "fixture",
+    "page_type": "home",
+    "url": "https://stjude.example.org/",
+    "domain": "stjude.example.org",
+    "label": "St Jude Legal Portal"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "st-jude-family-medical-3000"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>St Jude Family Medical Centre</title></head><body><h1>St Jude Family Medical Centre</h1><p>Located at 120 Collins St, Melbourne VIC 3000. Telephone: (03) 9419 8888.</p></body></html>"
+}

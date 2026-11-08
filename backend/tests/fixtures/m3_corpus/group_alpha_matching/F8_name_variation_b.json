@@ -1,0 +1,39 @@
+{
+  "id": "F8_b",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Secondary directory listing using colloquial name variation ('St Jude Family Medical' omitting 'Centre').",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000",
+    "primary_domain": "stjude.example.org",
+    "phone": "+61394198888",
+    "address": "120 Collins St",
+    "suburb": "Melbourne",
+    "postcode": "3000",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F8-B",
+    "kind": "fixture",
+    "page_type": "other",
+    "url": "https://directory.example.org/listings/st-jude-fm",
+    "domain": "directory.example.org",
+    "label": "City Health Hub — St Jude Family Medical"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "st-jude-family-medical-3000",
+    "match_tier": "possible_match",
+    "raw_metric_score_range": [85.0, 95.0],
+    "evidence_signals": {
+      "domain_match": false,
+      "postcode_match": true,
+      "local_phone_match": true,
+      "street_address_match": true
+    },
+    "zero_auto_merge": true,
+    "review_status": "needs_review"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>St Jude Family Medical — Practice Details</title></head><body><h1>St Jude Family Medical</h1><p>General healthcare services at 120 Collins St, Melbourne VIC 3000. Phone: (03) 9419 8888.</p></body></html>"
+}

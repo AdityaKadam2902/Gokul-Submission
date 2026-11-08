@@ -1,0 +1,29 @@
+{
+  "id": "F9_precinct_suite1",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "General Practice clinic in Suite 1 of medical building sharing postcode 3128.",
+  "ground_truth_organisation": {
+    "name": "Metropolitan Medical Centre — Box Hill",
+    "slug": "metropolitan-medical-box-hill-3128",
+    "primary_domain": "metrohealth.example.org",
+    "phone": "+61398901111",
+    "address": "Suite 1, 450 Station St",
+    "suburb": "Box Hill",
+    "postcode": "3128",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F9-SUITE-1",
+    "kind": "fixture",
+    "page_type": "contact",
+    "url": "https://metrohealth.example.org/clinics/box-hill-suite1",
+    "domain": "metrohealth.example.org",
+    "label": "Box Hill GP Clinic Suite 1"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "metropolitan-medical-box-hill-3128"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Metropolitan Medical Centre — Suite 1</title></head><body><h1>Metropolitan Medical Centre</h1><p>Suite 1, 450 Station St, Box Hill VIC 3128. Phone: (03) 9890 1111.</p></body></html>"
+}

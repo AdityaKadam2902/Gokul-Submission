@@ -1,0 +1,31 @@
+{
+  "id": "F11_b",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_beta_discrepancy",
+  "intended_purpose": "Source 2 publishing conflicting reception telephone B for the same scope.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F11-B",
+    "url": "https://directory.example.org/st-jude"
+  },
+  "extracted_fact": {
+    "field_key": "public_phone",
+    "scope_key": "general",
+    "raw_value": "(03) 9419 9999",
+    "normalized_value": "+61394199999",
+    "status": "accepted"
+  },
+  "expected_outcome": {
+    "discrepancy_detected": true,
+    "conflict_type": "value_mismatch",
+    "field_key": "public_phone",
+    "scope_key": "general",
+    "status": "detected",
+    "rationale": "Independent sources publish genuinely conflicting telephone numbers for general practice scope. Requires review."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Directory Listing — St Jude</title></head><body><h1>Directory Entry</h1><p>General Practice Phone: (03) 9419 9999.</p></body></html>"
+}

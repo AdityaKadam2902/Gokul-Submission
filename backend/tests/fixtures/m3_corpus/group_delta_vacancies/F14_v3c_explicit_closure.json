@@ -1,0 +1,23 @@
+{
+  "id": "F14_v3c",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_delta_vacancies",
+  "intended_purpose": "Affirmative verbatim closure evidence banner for a specific vacancy.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F14",
+    "url": "https://stjude-medical.example.org/careers"
+  },
+  "expected_outcome": {
+    "explicit_ad_id": "GP-2026-04",
+    "status": "explicitly_closed",
+    "closure_evidence_quote": "Applications for VR GP role (Ref: GP-2026-04) are now closed.",
+    "marked_as_filled": false,
+    "rationale": "Transition to explicitly_closed strictly requires verified verbatim closure quotation."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Careers at St Jude Medical</title></head><body><h1>Careers at St Jude Medical</h1><div class=\"notice\"><p>Applications for VR GP role (Ref: GP-2026-04) are now closed.</p></div></body></html>"
+}

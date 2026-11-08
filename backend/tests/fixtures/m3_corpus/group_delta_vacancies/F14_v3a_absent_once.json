@@ -1,0 +1,23 @@
+{
+  "id": "F14_v3a",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_delta_vacancies",
+  "intended_purpose": "First complete successful observation where the vacancy is absent from page.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F14",
+    "url": "https://stjude-medical.example.org/careers"
+  },
+  "expected_outcome": {
+    "observation_count_absent": 1,
+    "status": "unconfirmed_prior",
+    "marked_as_filled": false,
+    "marked_as_no_longer_observed": false,
+    "rationale": "First absence across successful crawls places vacancy in intermediate unconfirmed_prior status. It remains active in recruiter view."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Careers at St Jude Medical</title></head><body><h1>Careers at St Jude Medical</h1><p>We do not currently have any active clinical vacancies. Please check back regularly.</p></body></html>"
+}

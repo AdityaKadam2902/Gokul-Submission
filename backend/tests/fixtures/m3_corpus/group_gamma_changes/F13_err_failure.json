@@ -1,0 +1,27 @@
+{
+  "id": "F13_err",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_gamma_changes",
+  "intended_purpose": "Negative test fixture: crawler failure / network error simulation.",
+  "ground_truth_organisation": {
+    "name": "Oakwood Medical Clinic",
+    "slug": "oakwood-medical-clinic-3141"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F13",
+    "url": "https://oakwood-clinic.example.org/"
+  },
+  "simulation_parameters": {
+    "http_error_code": 500,
+    "error_message": "Internal Server Error"
+  },
+  "expected_outcome": {
+    "observation_outcome": "failed",
+    "snapshot_created": false,
+    "change_events_emitted": 0,
+    "consecutive_missing_counter_incremented": false,
+    "rationale": "A failed crawl must generate zero content-change events and must not alter fact freshness or vacancy states."
+  },
+  "html": ""
+}

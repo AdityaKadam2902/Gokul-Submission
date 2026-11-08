@@ -1,0 +1,22 @@
+{
+  "id": "F9_neg_generic",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Negative test fixture: generic clinic name without street address, domain, or phone.",
+  "ground_truth_organisation": null,
+  "source_identity": {
+    "source_id_label": "SRC-F9-NEG",
+    "kind": "fixture",
+    "page_type": "home",
+    "url": "https://generic-medical.example.org/",
+    "domain": "generic-medical.example.org",
+    "label": "Generic Family Health Clinic"
+  },
+  "expected_outcome": {
+    "match_tier": "insufficient_evidence",
+    "emit_match_candidate": false,
+    "rationale": "Generic practice name lacking address, postcode, and phone cannot be matched to any organisation."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Family Healthcare Clinic</title></head><body><h1>Family Healthcare Clinic</h1><p>Dedicated to caring for your health. Booking portal currently offline.</p></body></html>"
+}

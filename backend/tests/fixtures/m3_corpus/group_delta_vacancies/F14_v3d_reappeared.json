@@ -1,0 +1,23 @@
+{
+  "id": "F14_v3d",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_delta_vacancies",
+  "intended_purpose": "Subsequent crawl where previously unobserved opportunity reappears.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F14",
+    "url": "https://stjude-medical.example.org/careers"
+  },
+  "expected_outcome": {
+    "explicit_ad_id": "GP-2026-04",
+    "status": "advertised",
+    "duplicate_created": false,
+    "change_event_emitted": "fact_reappeared",
+    "rationale": "Re-observed vacancy matching explicit_ad_id restores status to advertised and updates last_seen_at without duplicate record creation."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Careers at St Jude Medical</title></head><body><h1>Careers at St Jude Medical</h1><section class=\"job-opening\"><h2>VR General Practitioner</h2><p class=\"ref\">Ref: GP-2026-04</p><p>Seeking VR General Practitioner, 70% billings, immediate start. Ref: GP-2026-04. Contact: hr@stjude-medical.example.org</p></section></body></html>"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "F9_box_hill",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Branch clinic in Box Hill under corporate network domain.",
+  "ground_truth_organisation": {
+    "name": "Metropolitan Medical Centre — Box Hill",
+    "slug": "metropolitan-medical-box-hill-3128",
+    "primary_domain": "metrohealth.example.org",
+    "phone": "+61398901111",
+    "address": "450 Station St",
+    "suburb": "Box Hill",
+    "postcode": "3128",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F9-BOX-HILL",
+    "kind": "fixture",
+    "page_type": "contact",
+    "url": "https://metrohealth.example.org/clinics/box-hill",
+    "domain": "metrohealth.example.org",
+    "label": "MetroHealth Box Hill Clinic"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "metropolitan-medical-box-hill-3128"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Metropolitan Medical Centre — Box Hill Clinic</title></head><body><h1>Metropolitan Medical Centre — Box Hill</h1><p>Address: 450 Station St, Box Hill VIC 3128. Telephone: (03) 9890 1111.</p></body></html>"
+}

@@ -1,0 +1,229 @@
+{
+  "manifest_version": "3.0",
+  "milestone": "M3.0",
+  "description": "PracticeSignal synthetic multi-source evaluation corpus for entity resolution, cross-source discrepancies, observation heartbeats, snapshot diffing, vacancy lifecycles, and fact ownership.",
+  "synthetic_attestation": {
+    "all_data_invented": true,
+    "no_real_organisation_used": true,
+    "no_real_person_used": true,
+    "no_real_contact_details_used": true,
+    "no_live_scrape_represented_or_performed": true,
+    "reserved_example_domains_used": true,
+    "decision_log_refs": ["D2", "D12", "D20", "D39", "D40", "D41", "D42", "D43", "D44", "D45", "D46", "D47"]
+  },
+  "fixture_provenance": {
+    "generator": "hand-authored synthetic intelligence corpus (M3.0)",
+    "reviewer": "locally identified reviewer",
+    "regeneration_policy": "all fixtures are human-curated synthetic test anchors; live scraping strictly forbidden"
+  },
+  "groups": [
+    {
+      "group_id": "group_alpha_matching",
+      "description": "Conservative organisation matching, lookalike branch isolation, precinct suites, and corporate phone rejection."
+    },
+    {
+      "group_id": "group_beta_discrepancy",
+      "description": "Cross-source factual discrepancies, phone normalization, departmental scope isolation, and unscoped review."
+    },
+    {
+      "group_id": "group_gamma_changes",
+      "description": "Source observation heartbeats, unchanged crawl short-circuits, extraction omissions, and consecutive absence diffs."
+    },
+    {
+      "group_id": "group_delta_vacancies",
+      "description": "Healthcare recruitment vacancy identity, title modifications, consecutive absence transitions, and explicit closures."
+    },
+    {
+      "group_id": "group_epsilon_fact_ownership",
+      "description": "Multi-branch corporate page fact ownership mapping via snapshot heading context."
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "F7_a",
+      "file": "group_alpha_matching/F7_exact_domain_a.json",
+      "group": "group_alpha_matching",
+      "purpose": "Official practice site for exact domain scenario."
+    },
+    {
+      "id": "F7_b",
+      "file": "group_alpha_matching/F7_exact_domain_b.json",
+      "group": "group_alpha_matching",
+      "purpose": "Directory citing exact domain and postcode for strong match suggestion."
+    },
+    {
+      "id": "F8_a",
+      "file": "group_alpha_matching/F8_name_variation_a.json",
+      "group": "group_alpha_matching",
+      "purpose": "Official practice site with formal legal name."
+    },
+    {
+      "id": "F8_b",
+      "file": "group_alpha_matching/F8_name_variation_b.json",
+      "group": "group_alpha_matching",
+      "purpose": "Directory entry with name variation and same postcode for possible match tier."
+    },
+    {
+      "id": "F9_box_hill",
+      "file": "group_alpha_matching/F9_branch_box_hill.json",
+      "group": "group_alpha_matching",
+      "purpose": "Box Hill branch clinic under corporate domain."
+    },
+    {
+      "id": "F9_frankston",
+      "file": "group_alpha_matching/F9_branch_frankston.json",
+      "group": "group_alpha_matching",
+      "purpose": "Frankston branch clinic under corporate domain; asserts 100% branch isolation."
+    },
+    {
+      "id": "F9_neg_generic",
+      "file": "group_alpha_matching/F9_neg_generic.json",
+      "group": "group_alpha_matching",
+      "purpose": "Generic practice name lacking address; asserts insufficient evidence."
+    },
+    {
+      "id": "F9_precinct_suite1",
+      "file": "group_alpha_matching/F9_precinct_suite1.json",
+      "group": "group_alpha_matching",
+      "purpose": "Suite 1 GP clinic in multi-suite precinct."
+    },
+    {
+      "id": "F9_precinct_suite4",
+      "file": "group_alpha_matching/F9_precinct_suite4.json",
+      "group": "group_alpha_matching",
+      "purpose": "Suite 4 Specialist clinic in same precinct; asserts separate organisation."
+    },
+    {
+      "id": "F9_shared_phone",
+      "file": "group_alpha_matching/F9_shared_1300_phone.json",
+      "group": "group_alpha_matching",
+      "purpose": "Practice citing national 1300 phone; asserts rejection from matching practices."
+    },
+    {
+      "id": "F10_a",
+      "file": "group_beta_discrepancy/F10_phone_format_a.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Practice phone with brackets/spacing formatting."
+    },
+    {
+      "id": "F10_b",
+      "file": "group_beta_discrepancy/F10_phone_format_b.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Practice phone with raw digits; asserts E.164 agreement with no discrepancy."
+    },
+    {
+      "id": "F11_a",
+      "file": "group_beta_discrepancy/F11_phone_conflict_a.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Source A phone for general reception."
+    },
+    {
+      "id": "F11_b",
+      "file": "group_beta_discrepancy/F11_phone_conflict_b.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Source B conflicting phone for general reception; asserts detected discrepancy."
+    },
+    {
+      "id": "F12_clinic",
+      "file": "group_beta_discrepancy/F12_hours_clinic.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Clinic consultation opening hours."
+    },
+    {
+      "id": "F12_pathology",
+      "file": "group_beta_discrepancy/F12_hours_pathology.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Pathology collection opening hours; asserts scope isolation suppresses discrepancy."
+    },
+    {
+      "id": "F12_unscoped_a",
+      "file": "group_beta_discrepancy/F12_hours_unscoped_a.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Opening hours with NULL scope A."
+    },
+    {
+      "id": "F12_unscoped_b",
+      "file": "group_beta_discrepancy/F12_hours_unscoped_b.json",
+      "group": "group_beta_discrepancy",
+      "purpose": "Opening hours with NULL scope B; asserts needs_review outcome (NULL != NULL)."
+    },
+    {
+      "id": "F13_v1",
+      "file": "group_gamma_changes/F13_v1_baseline.json",
+      "group": "group_gamma_changes",
+      "purpose": "Initial baseline observation for temporal snapshot monitoring."
+    },
+    {
+      "id": "F13_unchanged",
+      "file": "group_gamma_changes/F13_unchanged.json",
+      "group": "group_gamma_changes",
+      "purpose": "Identical re-crawl; asserts success_unchanged heartbeat with zero new snapshots."
+    },
+    {
+      "id": "F13_v2",
+      "file": "group_gamma_changes/F13_v2_modified.json",
+      "group": "group_gamma_changes",
+      "purpose": "Second crawl with modified phone and added physiotherapy service."
+    },
+    {
+      "id": "F13_v3",
+      "file": "group_gamma_changes/F13_v3_omitted.json",
+      "group": "group_gamma_changes",
+      "purpose": "Third crawl with physiotherapy omitted; asserts 2-crawl absence rule."
+    },
+    {
+      "id": "F13_err",
+      "file": "group_gamma_changes/F13_err_failure.json",
+      "group": "group_gamma_changes",
+      "purpose": "Simulated crawler failure; asserts zero change events emitted."
+    },
+    {
+      "id": "F13_omit",
+      "file": "group_gamma_changes/F13_omit_extraction.json",
+      "group": "group_gamma_changes",
+      "purpose": "Extraction omission test; asserts DOM check suppresses false removal alert."
+    },
+    {
+      "id": "F14_v1",
+      "file": "group_delta_vacancies/F14_v1_advertised.json",
+      "group": "group_delta_vacancies",
+      "purpose": "Initial observation of GP vacancy with explicit Job Reference ID."
+    },
+    {
+      "id": "F14_v2",
+      "file": "group_delta_vacancies/F14_v2_changed.json",
+      "group": "group_delta_vacancies",
+      "purpose": "Re-crawl with modified title/remuneration; asserts changed status without duplicate."
+    },
+    {
+      "id": "F14_v3a",
+      "file": "group_delta_vacancies/F14_v3a_absent_once.json",
+      "group": "group_delta_vacancies",
+      "purpose": "Vacancy absent on 1st complete crawl; asserts unconfirmed_prior status."
+    },
+    {
+      "id": "F14_v3b",
+      "file": "group_delta_vacancies/F14_v3b_absent_twice.json",
+      "group": "group_delta_vacancies",
+      "purpose": "Vacancy absent across 2 consecutive crawls; asserts no_longer_observed status."
+    },
+    {
+      "id": "F14_v3c",
+      "file": "group_delta_vacancies/F14_v3c_explicit_closure.json",
+      "group": "group_delta_vacancies",
+      "purpose": "Explicit closure banner; asserts explicitly_closed status with citation quote."
+    },
+    {
+      "id": "F14_v3d",
+      "file": "group_delta_vacancies/F14_v3d_reappeared.json",
+      "group": "group_delta_vacancies",
+      "purpose": "Re-observed vacancy; asserts restoration to advertised status without duplicate."
+    },
+    {
+      "id": "F15_multibranch",
+      "file": "group_epsilon_fact_ownership/F15_multibranch_page.json",
+      "group": "group_epsilon_fact_ownership",
+      "purpose": "Multi-branch corporate page testing heading-context fact ownership mapping."
+    }
+  ]
+}

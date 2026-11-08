@@ -1,0 +1,26 @@
+{
+  "id": "F13_omit",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_gamma_changes",
+  "intended_purpose": "Negative defense test: successful page crawl where AI extraction omits a fact still present in raw HTML/text.",
+  "ground_truth_organisation": {
+    "name": "Oakwood Medical Clinic",
+    "slug": "oakwood-medical-clinic-3141"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F13",
+    "url": "https://oakwood-clinic.example.org/"
+  },
+  "simulated_extraction": {
+    "extracted_fields": ["public_phone", "opening_hours"],
+    "omitted_fields": ["service_names"]
+  },
+  "expected_outcome": {
+    "dom_verification_check": "passed_value_present_in_text",
+    "classification": "extraction_omission",
+    "change_events_emitted": 0,
+    "rationale": "DOM text verification confirms 'General Practice' is still present in snapshot text. Omission by extraction is suppressed from generating a removal event."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Oakwood Medical Clinic</title></head><body><h1>Oakwood Medical Clinic</h1><p>Main Telephone: (03) 9123 9999</p><p>Opening Hours: Monday to Friday 08:00 to 17:00</p><section><h2>Clinical Services</h2><ul><li>General Practice</li></ul></section></body></html>"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "F9_precinct_suite4",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Specialist medical suites in Suite 4 of same building (450 Station St 3128) sharing corporate host domain.",
+  "ground_truth_organisation": {
+    "name": "Metropolitan Specialist Suites — Box Hill",
+    "slug": "metropolitan-specialist-box-hill-3128",
+    "primary_domain": "metrohealth.example.org",
+    "phone": "+61398904444",
+    "address": "Suite 4, 450 Station St",
+    "suburb": "Box Hill",
+    "postcode": "3128",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F9-SUITE-4",
+    "kind": "fixture",
+    "page_type": "contact",
+    "url": "https://metrohealth.example.org/clinics/box-hill-suite4",
+    "domain": "metrohealth.example.org",
+    "label": "Box Hill Specialist Suites 4"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "metropolitan-specialist-box-hill-3128",
+    "disallowed_matches": ["metropolitan-medical-box-hill-3128"],
+    "match_tier": "insufficient_evidence",
+    "rationale": "Different practice suites (Suite 1 GP vs Suite 4 Specialists) sharing a building and root domain must not be auto-merged without explicit evidence."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Metropolitan Specialist Suites — Suite 4</title></head><body><h1>Metropolitan Specialist Suites</h1><p>Suite 4, 450 Station St, Box Hill VIC 3128. Phone: (03) 9890 4444. Cardiology and Endocrinology consultations.</p></body></html>"
+}

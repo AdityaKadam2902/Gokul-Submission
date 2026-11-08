@@ -1,0 +1,27 @@
+{
+  "id": "F12_unscoped_b",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_beta_discrepancy",
+  "intended_purpose": "Source 2 with unscoped opening hours differing from Source 1.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F12-UNSCOPED-B",
+    "url": "https://source-b.example.org/hours"
+  },
+  "extracted_fact": {
+    "field_key": "opening_hours",
+    "scope_key": null,
+    "raw_value": "Monday to Friday 08:30 to 17:30",
+    "normalized_value": "Mo-Fr 08:30-17:30"
+  },
+  "expected_outcome": {
+    "discrepancy_detected": false,
+    "review_required": true,
+    "rationale": "A NULL scope key does not compare equal to another NULL scope key. Unscoped differences route to needs_review rather than asserting a definite conflict."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Hours B</title></head><body><p>Operating: Monday to Friday 08:30 to 17:30</p></body></html>"
+}

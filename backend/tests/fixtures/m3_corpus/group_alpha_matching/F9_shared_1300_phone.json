@@ -1,0 +1,31 @@
+{
+  "id": "F9_shared_phone",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Negative test fixture: practice citing a shared national 1300 contact number without matching local street address.",
+  "ground_truth_organisation": {
+    "name": "Coastal Family Healthcare",
+    "slug": "coastal-family-healthcare-4217",
+    "primary_domain": "coastal-health.example.org",
+    "phone": "+611300000123",
+    "address": "88 Esplanade",
+    "suburb": "Surfers Paradise",
+    "postcode": "4217",
+    "state": "QLD"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F9-SHARED-PHONE",
+    "kind": "fixture",
+    "page_type": "contact",
+    "url": "https://coastal-health.example.org/contact",
+    "domain": "coastal-health.example.org",
+    "label": "Coastal Family Healthcare Contact"
+  },
+  "expected_outcome": {
+    "disallowed_matches": ["metropolitan-medical-box-hill-3128", "st-jude-family-medical-3000"],
+    "match_tier": "insufficient_evidence",
+    "rationale": "Shared corporate/national 1300 or 1800 numbers without matching local street address are rejected from triggering practice matches."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Coastal Family Healthcare — Contact</title></head><body><h1>Coastal Family Healthcare</h1><p>National appointments and enquiries: 1300 000 123. Location: 88 Esplanade, Surfers Paradise QLD 4217.</p></body></html>"
+}

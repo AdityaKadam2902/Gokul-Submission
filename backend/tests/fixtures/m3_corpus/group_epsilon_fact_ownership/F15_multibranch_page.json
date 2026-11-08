@@ -1,0 +1,67 @@
+{
+  "id": "F15_multibranch",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_epsilon_fact_ownership",
+  "intended_purpose": "Single corporate multi-branch page testing heading-context fact ownership mapping (D47).",
+  "participating_organisations": [
+    {
+      "name": "Metropolitan Medical Centre — Box Hill",
+      "slug": "metropolitan-medical-box-hill-3128",
+      "suburb": "Box Hill",
+      "postcode": "3128"
+    },
+    {
+      "name": "Metropolitan Medical Centre — Frankston",
+      "slug": "metropolitan-medical-frankston-3199",
+      "suburb": "Frankston",
+      "postcode": "3199"
+    }
+  ],
+  "source_identity": {
+    "source_id_label": "SRC-F15",
+    "kind": "fixture",
+    "page_type": "contact",
+    "url": "https://metrohealth.example.org/locations",
+    "domain": "metrohealth.example.org",
+    "label": "MetroHealth Corporate Locations Directory"
+  },
+  "expected_outcome": {
+    "ownership_mappings": [
+      {
+        "heading_context": "Box Hill Family Practice",
+        "field_key": "public_phone",
+        "raw_value": "(03) 9890 1111",
+        "resolved_organisation_slug": "metropolitan-medical-box-hill-3128"
+      },
+      {
+        "heading_context": "Box Hill Family Practice",
+        "field_key": "public_address",
+        "raw_value": "450 Station St, Box Hill VIC 3128",
+        "resolved_organisation_slug": "metropolitan-medical-box-hill-3128"
+      },
+      {
+        "heading_context": "Frankston Medical Centre",
+        "field_key": "public_phone",
+        "raw_value": "(03) 9783 2222",
+        "resolved_organisation_slug": "metropolitan-medical-frankston-3199"
+      },
+      {
+        "heading_context": "Frankston Medical Centre",
+        "field_key": "public_address",
+        "raw_value": "12 Nepean Hwy, Frankston VIC 3199",
+        "resolved_organisation_slug": "metropolitan-medical-frankston-3199"
+      },
+      {
+        "heading_context": "MetroHealth Corporate Headquarters",
+        "field_key": "public_phone",
+        "raw_value": "1300 000 123",
+        "resolved_organisation_slug": null,
+        "review_required": true,
+        "reason_code": "corporate_level_unassigned"
+      }
+    ],
+    "domain_only_assignment_permitted": false
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>MetroHealth Locations</title></head><body><header><h1>MetroHealth Network Locations</h1></header><main><section><h2>Box Hill Family Practice</h2><p>Address: 450 Station St, Box Hill VIC 3128</p><p>Phone: (03) 9890 1111</p><p>Services: General Practice, Childhood Immunisations</p></section><section><h2>Frankston Medical Centre</h2><p>Address: 12 Nepean Hwy, Frankston VIC 3199</p><p>Phone: (03) 9783 2222</p><p>Services: General Practice, Skin Cancer Clinic</p></section><section><h2>MetroHealth Corporate Headquarters</h2><p>Central Enquiries Phone: 1300 000 123</p><p>Email: corporate@metrohealth.example.org</p></section></main></body></html>"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "F13_v1",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_gamma_changes",
+  "intended_purpose": "Initial baseline observation for temporal snapshot monitoring.",
+  "ground_truth_organisation": {
+    "name": "Oakwood Medical Clinic",
+    "slug": "oakwood-medical-clinic-3141"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F13",
+    "url": "https://oakwood-clinic.example.org/"
+  },
+  "expected_outcome": {
+    "observation_outcome": "success_new_snapshot",
+    "observation_sequence": 1,
+    "snapshot_created": true,
+    "change_events_emitted": 0,
+    "initial_facts_count": 3
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Oakwood Medical Clinic — Homepage</title></head><body><h1>Oakwood Medical Clinic</h1><p>Main Telephone: (03) 9123 4567</p><p>Opening Hours: Monday to Friday 08:00 to 17:00</p><section><h2>Clinical Services</h2><ul><li>General Practice</li></ul></section></body></html>"
+}

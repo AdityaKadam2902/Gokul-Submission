@@ -1,0 +1,32 @@
+{
+  "id": "F9_frankston",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Branch clinic in Frankston sharing corporate brand name and root domain with Box Hill branch.",
+  "ground_truth_organisation": {
+    "name": "Metropolitan Medical Centre — Frankston",
+    "slug": "metropolitan-medical-frankston-3199",
+    "primary_domain": "metrohealth.example.org",
+    "phone": "+61397832222",
+    "address": "12 Nepean Hwy",
+    "suburb": "Frankston",
+    "postcode": "3199",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F9-FRANKSTON",
+    "kind": "fixture",
+    "page_type": "contact",
+    "url": "https://metrohealth.example.org/clinics/frankston",
+    "domain": "metrohealth.example.org",
+    "label": "MetroHealth Frankston Clinic"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "metropolitan-medical-frankston-3199",
+    "disallowed_matches": ["metropolitan-medical-box-hill-3128"],
+    "match_tier": "insufficient_evidence",
+    "rationale": "Different postcodes (3128 vs 3199) and different local phones mandate strict branch isolation. Zero match candidate emitted."
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Metropolitan Medical Centre — Frankston Clinic</title></head><body><h1>Metropolitan Medical Centre — Frankston</h1><p>Address: 12 Nepean Hwy, Frankston VIC 3199. Telephone: (03) 9783 2222.</p></body></html>"
+}

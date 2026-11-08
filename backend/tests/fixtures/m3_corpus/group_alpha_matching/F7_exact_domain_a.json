@@ -1,0 +1,30 @@
+{
+  "id": "F7_a",
+  "synthetic": true,
+  "synthetic_watermark": "PRACTICESIGNAL_SYNTHETIC_FIXTURE_DO_NOT_TREAT_AS_REAL_DATA",
+  "group": "group_alpha_matching",
+  "intended_purpose": "Primary official practice website for exact domain matching scenario.",
+  "ground_truth_organisation": {
+    "name": "St Jude Family Medical Centre",
+    "slug": "st-jude-family-medical-3000",
+    "primary_domain": "stjude-medical.example.org",
+    "phone": "+61394198888",
+    "address": "120 Collins St",
+    "suburb": "Melbourne",
+    "postcode": "3000",
+    "state": "VIC"
+  },
+  "source_identity": {
+    "source_id_label": "SRC-F7-A",
+    "kind": "fixture",
+    "page_type": "home",
+    "url": "https://stjude-medical.example.org/",
+    "domain": "stjude-medical.example.org",
+    "label": "St Jude Medical Official Website"
+  },
+  "expected_outcome": {
+    "target_organisation_slug": "st-jude-family-medical-3000",
+    "relationship_type": "official_practice_site"
+  },
+  "html": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>St Jude Family Medical Centre — Melbourne CBD</title></head><body><header><h1>St Jude Family Medical Centre</h1><nav><a href=\"/\">Home</a><a href=\"/services\">Services</a><a href=\"/contact\">Contact</a></nav></header><main><h2>Comprehensive General Practice in Melbourne</h2><p>Welcome to St Jude Family Medical Centre located at 120 Collins St, Melbourne VIC 3000. Our general practitioners provide trusted family medicine.</p><p>Contact our reception at (03) 9419 8888 for appointments.</p></main><footer><p>St Jude Family Medical Centre · 120 Collins St, Melbourne VIC 3000 · Phone: (03) 9419 8888 · Website: https://stjude-medical.example.org</p></footer></body></html>"
+}
