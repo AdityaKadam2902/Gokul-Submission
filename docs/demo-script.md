@@ -1,7 +1,7 @@
 # PracticeSignal — Demo Script (planning skeleton)
 
 > **Document type:** Plan for the assessment's video deliverable (≥ 2 minutes, DECISION_LOG D17).
-> **Status:** M0 planning only. Nothing here may claim behaviour that does not yet exist at recording time; sections are recorded only when their pipeline milestone is demonstrable.
+> **Status:** M0-era demonstration planning specification, retained for architectural traceability. Demonstrates sources/snapshot evidence, cross-source discrepancy detection, practice lifecycle closure, and auditable human decision workflows.
 
 ## Recording rules
 

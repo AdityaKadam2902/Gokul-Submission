@@ -229,7 +229,7 @@ flowchart TD
   - `scripts/evaluate_m3.py`: Automated benchmark evaluation script.
   - `backend/tests/test_m3_end_to_end.py`: Comprehensive end-to-end integration test.
   - `docs/M3_EVALUATION_REPORT.md`: Measured results report documenting raw counts and percentages.
-  - `docs/AI_DEVELOPMENT_HANDOFF.md`: Updated handover documentation.
+  - `docs/TECHNICAL_CHALLENGES.md`: Engineering deep dive and technical challenge documentation.
 - **Tests to Execute:**
   - Complete backend test suite (`pytest backend/tests -v`). Target: 110+ passing tests (67 M2 baseline + ~45 M3 tests).
   - Complete frontend verification (`npm run typecheck` and `vite build`).
@@ -238,7 +238,7 @@ flowchart TD
   - [ ] All 67 M0–M2 regression tests pass with zero failures.
   - [ ] 100% of M3 synthetic scenarios pass with documented raw counts and percentages.
   - [ ] Zero unhandled frontend TypeScript errors; production build succeeds cleanly.
-  - [ ] Working tree is clean and documented in `AI_DEVELOPMENT_HANDOFF.md`.
+  - [ ] Working tree is clean and documented in `TECHNICAL_CHALLENGES.md`.
 
 ---
 
@@ -276,4 +276,4 @@ flowchart TD
 | `frontend/src/components/*` | M3.1–M3.6 | React UI views for M3 intelligence | New & extended files |
 | `scripts/evaluate_m3.py` | M3.7 | Synthetic benchmark evaluation script | New file |
 | `backend/tests/test_m3_end_to_end.py` | M3.7 | Full integration test suite | New file |
-| `docs/AI_DEVELOPMENT_HANDOFF.md` | M3.7 | Handover state documentation | Extend existing file |
+| `docs/TECHNICAL_CHALLENGES.md` | M3.7 | Engineering deep dive & technical challenges | Comprehensive technical documentation |
