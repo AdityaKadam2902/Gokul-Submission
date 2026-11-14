@@ -84,10 +84,10 @@ def to_snapshot_read(snapshot: PageSnapshot, source: Source) -> dict:
         "fixture": bool(snapshot.fixture),
         "headings": [
             {
-                "level": int(h.get("level", 0)),
-                "text": str(h.get("text", "")),
-                "start_offset": int(h.get("start_offset", 0)),
-                "end_offset": int(h.get("end_offset", 0)),
+                "level": int(h["level"] if isinstance(h, dict) else (h[0] if isinstance(h, (list, tuple)) and len(h) > 0 else 0)),
+                "text": str(h["text"] if isinstance(h, dict) else (h[1] if isinstance(h, (list, tuple)) and len(h) > 1 else "")),
+                "start_offset": int(h["start_offset"] if isinstance(h, dict) else (h[2] if isinstance(h, (list, tuple)) and len(h) > 2 else 0)),
+                "end_offset": int(h["end_offset"] if isinstance(h, dict) else (h[3] if isinstance(h, (list, tuple)) and len(h) > 3 else 0)),
             }
             for h in (snapshot.headings or [])
         ],

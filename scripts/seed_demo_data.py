@@ -199,10 +199,10 @@ def seed():
             content_hash=_sha256(snap1_text),
             parser_version="html_clean_v2",
             headings=[
-                (1, "Welcome to St Jude Medical Centre Box Hill", 0, 43),
-                (2, "Contact Details", 137, 152),
-                (2, "Operating Hours", 274, 289),
-                (2, "Practice Registration & ABN", 373, 400),
+                {"level": 1, "text": "Welcome to St Jude Medical Centre Box Hill", "start_offset": 0, "end_offset": 43},
+                {"level": 2, "text": "Contact Details", "start_offset": 137, "end_offset": 152},
+                {"level": 2, "text": "Operating Hours", "start_offset": 274, "end_offset": 289},
+                {"level": 2, "text": "Practice Registration & ABN", "start_offset": 373, "end_offset": 400},
             ],
         )
 
@@ -223,7 +223,7 @@ def seed():
             content_hash=_sha256(snap2_text),
             parser_version="html_clean_v2",
             headings=[
-                (1, "AusHealth Directory — Victorian Clinics Directory", 0, 50),
+                {"level": 1, "text": "AusHealth Directory — Victorian Clinics Directory", "start_offset": 0, "end_offset": 50},
             ],
         )
 
@@ -243,9 +243,9 @@ def seed():
             content_hash=_sha256(snap3_text),
             parser_version="html_clean_v2",
             headings=[
-                (1, "Box Hill Family Practice — Important Operational Notices", 0, 56),
-                (2, "Notice of Permanent Branch Closure", 58, 92),
-                (2, "Corporate Acquisition Announcement", 366, 401),
+                {"level": 1, "text": "Box Hill Family Practice — Important Operational Notices", "start_offset": 0, "end_offset": 56},
+                {"level": 2, "text": "Notice of Permanent Branch Closure", "start_offset": 58, "end_offset": 92},
+                {"level": 2, "text": "Corporate Acquisition Announcement", "start_offset": 366, "end_offset": 401},
             ],
         )
 
@@ -266,8 +266,8 @@ def seed():
             content_hash=_sha256(snap4_text),
             parser_version="html_clean_v2",
             headings=[
-                (1, "Melbourne Metro Healthcare — Workforce Opportunities & Vacancies", 0, 65),
-                (2, "Position: VR General Practitioner (Full-Time or Part-Time)", 67, 126),
+                {"level": 1, "text": "Melbourne Metro Healthcare — Workforce Opportunities & Vacancies", "start_offset": 0, "end_offset": 65},
+                {"level": 2, "text": "Position: VR General Practitioner (Full-Time or Part-Time)", "start_offset": 67, "end_offset": 126},
             ],
         )
 
