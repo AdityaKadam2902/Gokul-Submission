@@ -1,7 +1,7 @@
 # PracticeSignal — Prompt Engineering Log
 
-> **Document type:** Real iteration history of prompt templates (assessment deliverable #3, DECISION_LOG D17).
-> **Status:** Structure ready at M0; **no completed iteration entries yet** — entries are added only when a template is actually revised during M2+ evaluation. Nothing in this file is a fabricated experiment.
+> **Document type:** Iteration history of prompt templates (DECISION_LOG D17).  
+> **Master Documentation:** For full prompt engineering methodology, iterative refinement comparisons, and development prompts, see [`PROMPT_DOCUMENTATION.md`](../PROMPT_DOCUMENTATION.md).
 
 ## Template inventory at M0
 

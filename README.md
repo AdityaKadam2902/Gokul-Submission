@@ -9,6 +9,7 @@
 [![SQLite](https://img.shields.io/badge/Storage-SQLite_WAL_(Anti--Tamper_Triggers)-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Tests](https://img.shields.io/badge/Automated_Tests-299_Passing_(100%25)-brightgreen)](https://github.com/AdityaKadam2902/Gokul-Submission)
 [![Cost](https://img.shields.io/badge/API_Cost-%E2%82%B90_Zero--Cost-success)](https://github.com/AdityaKadam2902/Gokul-Submission)
+[![Prompt Engineering](https://img.shields.io/badge/Prompt_Engineering-Documented_Iterations-blueviolet)](PROMPT_DOCUMENTATION.md)
 [![Architecture](https://img.shields.io/badge/Architecture-Deterministic_Hybrid_Intelligence-orange)](docs/TECHNICAL_CHALLENGES.md)
 
 **A local-first, evidence-grounded healthcare practice and workforce intelligence platform.**  
@@ -329,6 +330,7 @@ Gokul-Submission/
 ├── .env.example                       # Documented environment variables template
 ├── .gitignore                         # Complete exclusion list (venv, node_modules, sqlite, caches)
 ├── ARCHITECTURE.md                    # Core architectural specification & system boundaries
+├── PROMPT_DOCUMENTATION.md            # Comprehensive prompt engineering & AI methodology doc
 ├── README.md                          # Master technical overview & engineering documentation
 ├── package.json                       # Frontend dependencies, scripts, and build tasks
 ├── pyproject.toml                     # Backend dependencies, metadata, and pytest configuration
