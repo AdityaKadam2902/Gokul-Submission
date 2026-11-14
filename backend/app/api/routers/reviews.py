@@ -59,10 +59,10 @@ def get_queue(
     """Retrieve unified human review queue with grounded evidence and priority."""
     return get_review_queue(
         session=db,
-        entity_type=entity_type,
-        status=status,
-        limit=limit,
-        offset=offset,
+        entity_type=entity_type if isinstance(entity_type, str) else None,
+        status=status if isinstance(status, str) else None,
+        limit=limit if isinstance(limit, int) else 50,
+        offset=offset if isinstance(offset, int) else 0,
     )
 
 
@@ -85,12 +85,12 @@ def list_review_actions(
     """Retrieve global append-only audit trail of human decisions."""
     return get_review_history(
         session=db,
-        entity_type=entity_type,
-        entity_id=entity_id,
-        reviewer=reviewer,
-        action=action,
-        limit=limit,
-        offset=offset,
+        entity_type=entity_type if isinstance(entity_type, str) else None,
+        entity_id=entity_id if isinstance(entity_id, int) else None,
+        reviewer=reviewer if isinstance(reviewer, str) else None,
+        action=action if isinstance(action, str) else None,
+        limit=limit if isinstance(limit, int) else 50,
+        offset=offset if isinstance(offset, int) else 0,
     )
 
 

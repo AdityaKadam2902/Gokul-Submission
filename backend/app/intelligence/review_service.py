@@ -1122,13 +1122,13 @@ def get_review_history(
     """Retrieve immutable chronological audit history of review actions."""
     q = select(ReviewActionORM).order_by(ReviewActionORM.created_at.desc())
 
-    if entity_type:
+    if isinstance(entity_type, str) and entity_type:
         q = q.where(ReviewActionORM.entity_type == entity_type)
-    if entity_id is not None:
+    if isinstance(entity_id, int):
         q = q.where(ReviewActionORM.entity_id == entity_id)
-    if reviewer:
+    if isinstance(reviewer, str) and reviewer:
         q = q.where(ReviewActionORM.reviewer == reviewer)
-    if action:
+    if isinstance(action, str) and action:
         q = q.where(ReviewActionORM.action == action)
 
     total_count = session.execute(select(func.count()).select_from(q.subquery())).scalar_one()
